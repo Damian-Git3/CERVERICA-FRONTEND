@@ -1,0 +1,102 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+@font-face {
+  font-family: "Futura";
+  src: url("../public/fonts/futura.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --color-principal: #ed9224;
+  --color-card: rgba(186, 183, 180, 0.3);
+  --color-secundario: #f5d9ab;
+  --color-gris: rgba(128, 128, 128, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Futura, sans-serif;
+}
+
+body {
+  background-image: url(../public/img/background.jpg);
+}
+
+main {
+  margin: 1.5rem 2.5rem 2.5rem 2.5rem;
+}
+
+.nav-link {
+  color: black;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.nav-link:hover {
+  color: var(--color-principal);
+}
+
+.active {
+  color: var(--color-principal);
+}
+
+.p-carousel-container {
+  margin-bottom: 1rem;
+}
+
+.p-highlight .p-link {
+  background-color: var(--color-principal);
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.dropdown {
+  padding: 0.5rem;
+  border: 1px solid var(--color-principal);
+}
+
+.input {
+  padding: 0.5rem;
+  border: 1px solid var(--color-principal);
+  text-align: center;
+}
+
+.btn-favoritos {
+  padding: 8px;
+  color: var(--color-principal);
+}
+
+.btn-favoritos:hover {
+  background-color: var(--color-principal);
+  color: black;
+  border: 0;
+}
+
+.btn-favoritos.seleccionado {
+  background-color: var(--color-principal);
+  color: black;
+  border: 0;
+}
+
+.btn-favoritos.seleccionado:hover {
+  border: 1px solid;
+  color: var(--color-principal);
+  background-color: transparent;
+}
+
+.btn-favoritos .p-button-icon {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.btn-favoritos .p-button-label {
+  margin-right: 1rem;
+}

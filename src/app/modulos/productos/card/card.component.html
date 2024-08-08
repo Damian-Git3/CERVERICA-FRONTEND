@@ -1,0 +1,82 @@
+<div class="contenedor-card">
+  <div class="card-producto" [attr.data-badge]="producto.nuevo ? 'new' : null">
+    <div class="card-header">
+      <div class="product-precio">{{ "$" + producto.precioPaquete1 }}</div>
+      <i
+        [className]="producto.favorito ? 'pi pi-heart-fill' : 'pi pi-heart'"
+        (click)="
+          producto.favorito
+            ? eliminarFavoritos(1, producto.id)
+            : agregarFavoritos(producto.id)
+        "
+      ></i>
+    </div>
+
+    <div class="card-imagen">
+      <img
+        src="./img/fondos/{{ producto.rutaFondo }}"
+        alt="Fondo cerveza"
+        class="fondo-cerveza"
+      />
+      <div class="contenedor-botella">
+        <img
+          src="./img/botellas/{{ producto.imagen }}"
+          alt="Imagén cerveza"
+          class="botella-cerveza"
+        />
+      </div>
+    </div>
+
+    <div class="card-info">
+      <div class="product-nombre">
+        {{ producto.nombre }}
+      </div>
+
+      <div class="product-especificaciones">
+        {{ producto.especificaciones }}
+      </div>
+    </div>
+
+    <div class="card-cantidades">
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: cantidadSeleccionada == 1 }"
+        (click)="actualizarCantidadSeleccionada(1)"
+      >
+        1
+      </button>
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: cantidadSeleccionada == 6 }"
+        (click)="actualizarCantidadSeleccionada(6)"
+      >
+        6
+      </button>
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: cantidadSeleccionada == 12 }"
+        (click)="actualizarCantidadSeleccionada(12)"
+      >
+        12
+      </button>
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: cantidadSeleccionada == 24 }"
+        (click)="actualizarCantidadSeleccionada(24)"
+      >
+        24
+      </button>
+    </div>
+
+    <span
+      class="cart__button"
+      (click)="agregarCarrito($event, producto.id)"
+      role="button"
+    >
+      <span class="add__to-cart">Agregar al carrito</span>
+      <span class="added">Agregado</span>
+      <i class="pi pi-shopping-cart"></i>
+      <i class="pi pi-box"></i>
+    </span>
+  </div>
+</div>

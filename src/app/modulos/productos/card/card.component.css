@@ -1,0 +1,315 @@
+.contenedor-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-producto {
+  background-color: var(--color-card);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1),
+    0 12px 24px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease-in;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  width: 250px;
+  cursor: pointer;
+}
+
+.card-producto:hover {
+  transform: translateY(-10px);
+  transition: 0.3s ease-in;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.2),
+    0 18px 36px rgba(0, 0, 0, 0.2);
+}
+
+.card-producto:hover [data-badge] {
+  transform: translateY(-10px);
+  transition: transform 0.3s ease-in;
+}
+
+.card-producto .card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.card-producto .card-header .product-precio {
+  color: var(--color-principal);
+  font-weight: bold;
+}
+
+.card-producto .card-imagen {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  min-height: 300px;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.card-producto .card-imagen .fondo-cerveza {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transition: all 1s ease-in-out;
+}
+
+.card-producto:hover .card-imagen .fondo-cerveza {
+  transform: scale(1.2);
+}
+
+.card-producto .card-imagen .contenedor-botella {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-producto .card-imagen .botella-cerveza {
+  max-width: 100%;
+  height: 250px;
+}
+
+.card-producto .card-info {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-producto .card-info .product-nombre {
+  color: black;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.card-producto .card-info .product-especificaciones {
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.pi-heart:hover::before {
+  font-size: 1.5rem;
+  transition: 0.5s;
+  content: "\e9e1";
+  color: red;
+}
+
+.pi-heart-fill {
+  color: red;
+}
+
+.pi-heart-fill:hover::before {
+  font-size: 1.5rem;
+  transition: 0.5s;
+  content: "\e984";
+  color: black;
+}
+
+/* ADD BUTTON CART */
+
+.cart__button {
+  position: relative;
+  width: 90%;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 1rem;
+  background-color: var(--color-principal);
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  margin-bottom: 1rem;
+}
+
+.add__to-cart,
+.added,
+.pi-shopping-cart,
+.pi-box {
+  pointer-events: none; /* Deshabilita los eventos de puntero para los elementos internos */
+}
+
+.cart__button:hover {
+  transform: scale(1.05); /* Expande el botón un 5% */
+  opacity: 0.75; /* Cambia la opacidad al 75% */
+}
+
+.cart__button:active {
+  transform: scale(0.9);
+}
+
+.cart__button .pi-shopping-cart {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: -10%;
+  font-size: 1.5rem;
+  transform: translate(-50%, -50%);
+}
+
+.cart__button .pi-box {
+  position: absolute;
+  z-index: 3;
+  top: -20%;
+  left: 52%;
+  font-size: 0.875rem;
+  transform: translate(-50%, -50%);
+}
+
+.cart__button span {
+  position: absolute;
+  left: 50%;
+  z-index: 3;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cart__button span.add__to-cart {
+  opacity: 1;
+  width: 100%;
+  text-align: center;
+}
+
+.cart__button span.added {
+  opacity: 0;
+}
+
+.cart__button.clicked .pi-shopping-cart {
+  animation: cart 1.5s ease-in-out forwards;
+}
+
+.cart__button.clicked .pi-box {
+  animation: box 1.5s ease-in-out forwards;
+}
+
+.cart__button.clicked span.add__to-cart {
+  animation: txt1 1.5s ease-in-out forwards;
+}
+
+.cart__button.clicked span.added {
+  animation: txt2 1.5s ease-in-out forwards;
+}
+
+@keyframes cart {
+  0% {
+    left: -10%;
+  }
+
+  40%,
+  60% {
+    left: 50%;
+  }
+
+  100% {
+    left: 110%;
+  }
+}
+
+@keyframes box {
+  0%,
+  40% {
+    top: -20%;
+  }
+
+  60% {
+    top: 40%;
+    left: 52%;
+  }
+
+  100% {
+    top: 40%;
+    left: 112%;
+  }
+}
+
+@keyframes txt1 {
+  0% {
+    opacity: 1;
+  }
+
+  20%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes txt2 {
+  0%,
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/*BADGE*/
+
+[data-badge] {
+  position: relative;
+}
+
+[data-badge]:before {
+  font-family: sans-serif;
+  content: "text";
+  font-size: 13px;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 7em;
+  position: absolute;
+  height: 1.5em;
+  top: 4em;
+  left: 2em;
+  transform: rotate(-35deg);
+  z-index: 10;
+}
+
+[data-badge="new"]:before {
+  content: "¡Nuevo! 🔥";
+  background: var(--color-principal);
+  color: black;
+}
+
+/** CARD CANTIDADES **/
+.card-cantidades {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.card-cantidades .btn-cantidad {
+  border: 1px solid var(--color-principal);
+  font-weight: bold;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 1.9rem;
+  text-align: center;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.card-cantidades .btn-cantidad:hover {
+  background-color: var(--color-principal);
+  color: white;
+}
+
+.card-cantidades .btn-cantidad.seleccionado {
+  background-color: var(--color-principal);
+  color: white;
+}

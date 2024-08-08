@@ -1,0 +1,28 @@
+.barra-navegacion {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.barra-navegacion .contenedor-enlaces {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .barra-navegacion .contenedor-enlaces {
+    flex-direction: row
+  }
+}
+
+@media (min-width: 768px) {
+  .barra-navegacion {
+    flex-direction: row;
+  }
+}

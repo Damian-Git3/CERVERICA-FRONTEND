@@ -1,0 +1,162 @@
+<div class="login" #contenedorLogin>
+  <div class="box">
+    <div class="inner-box">
+      <div class="forms-wrap">
+        <form
+          class="sign-in-form"
+          [formGroup]="formLogin"
+          (ngSubmit)="iniciarSesion()"
+        >
+          <div class="logo">
+            <img src="./img/logo-completo.png" alt="easyclass" />
+          </div>
+
+          <div class="heading">
+            <h2>Bienvenido de nuevo!</h2>
+            <h4>Aún no estas registrado?</h4>
+            <button class="toggle" type="button">Registrarse</button>
+          </div>
+
+          <div class="actual-form">
+            <div class="input-wrap">
+              <input
+                type="email"
+                minlength="4"
+                class="input-field"
+                formControlName="email"
+                autocomplete="off"
+                required
+              />
+              <label>Email</label>
+            </div>
+
+            <div class="input-wrap">
+              <input
+                type="password"
+                minlength="4"
+                formControlName="password"
+                class="input-field"
+                autocomplete="off"
+                required
+              />
+              <label>Contraseña</label>
+            </div>
+
+            <div class="mensajes-error" #mensajesLogin></div>
+
+            <button
+              type="submit"
+              class="sign-btn"
+              [disabled]="formLogin.invalid"
+            >
+              Ingresar
+            </button>
+          </div>
+        </form>
+
+        <form
+          class="sign-up-form"
+          [formGroup]="formCrearCuenta"
+          (ngSubmit)="crearCuenta()"
+        >
+          <div class="logo">
+            <img src="./img/logo-completo.png" alt="easyclass" />
+          </div>
+
+          <div class="heading">
+            <h2>Crear cuenta</h2>
+            <h4>Ya tienes una cuenta?</h4>
+            <button class="toggle" type="button">Iniciar sesión</button>
+          </div>
+
+          <div class="actual-form">
+            <div class="input-wrap">
+              <input
+                type="text"
+                minlength="4"
+                class="input-field"
+                autocomplete="off"
+                formControlName="fullName"
+                required
+              />
+              <label>Nombre</label>
+            </div>
+
+            <div class="input-wrap">
+              <input
+                type="email"
+                class="input-field"
+                autocomplete="off"
+                formControlName="email"
+                required
+              />
+              <label>Correo</label>
+            </div>
+
+            <div class="input-wrap">
+              <input
+                type="password"
+                minlength="4"
+                class="input-field"
+                autocomplete="off"
+                formControlName="password"
+                required
+              />
+              <label>Contraseña</label>
+            </div>
+
+            <div class="mensajes-error" #mensajesCrearCuenta></div>
+
+            <button
+              type="submit"
+              class="sign-btn"
+              [disabled]="formCrearCuenta.invalid"
+            >
+              Registrar
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div
+        class="carousel"
+        #carousel
+        style="background-image: url('./img/fondos/fondo_ay.jpg')"
+      >
+        <div class="images-wrapper">
+          <img
+            src="./img/botellas/botella_ayipa_mx.png"
+            class="image img-1 show"
+            alt=""
+          />
+          <img
+            src="./img/botellas/botella_cabotella_mx.png"
+            class="image img-2"
+            alt=""
+          />
+          <img
+            src="./img/botellas/botella_escorpion_mx.png"
+            class="image img-3"
+            alt=""
+          />
+        </div>
+
+        <div class="text-slider">
+          <div class="text-wrap">
+            <div class="text-group">
+              <h2>¡Salud al buen rollo!</h2>
+              <h2>Haz de cada sorbo una aventura</h2>
+              <h2>¡Cerveza fría y buena vibra garantizada!</h2>
+            </div>
+          </div>
+
+          <div class="bullets">
+            <span class="active" data-value="1"></span>
+            <span data-value="2"></span>
+            <span data-value="3"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
