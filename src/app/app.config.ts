@@ -7,6 +7,7 @@ import {
   provideAnimations,
   BrowserAnimationsModule,
 } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
     BrowserModule,
     BrowserAnimationsModule,
     provideAnimations(),
+    provideHttpClient(),
   ],
 };

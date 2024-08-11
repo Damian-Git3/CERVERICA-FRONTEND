@@ -1,0 +1,63 @@
+
+<div class="contenedor-principal">
+  <div class="contenedor-inicio">
+    <div class="contenedor-informacion-productos">
+      <div class="informacion">
+        <h2>Rendimiento</h2>
+        <h1>Un lugar para buena cerveza</h1>
+        <p>Deja que tus emociones salgan con una cerveza en la mano.</p>
+        <p>El sabor que te hace sentir increíble</p>
+      </div>
+      <div class="productos">
+        <!-- Skeleton loader -->
+        <p-skeleton
+          *ngIf="!productosCarousel"
+          [width]="'100%'"
+          [height]="'200px'"
+        ></p-skeleton>
+
+        <!-- Carrusel de productos -->
+        <p-carousel
+          *ngIf="productosCarousel"
+          [value]="productosCarousel"
+          [numVisible]="3"
+          [numScroll]="3"
+          [circular]="true"
+          [responsiveOptions]="responsiveOptions"
+          autoplayInterval="3000"
+        >
+          <ng-template let-producto pTemplate="item" class="card">
+            <div class="card-carousel">
+              <div class="contenedor-imagen">
+                <img
+                  src="./img/fondos/{{ producto.rutaFondo }}"
+                  alt="Fondo cerveza"
+                  class="fondo-cerveza"
+                />
+                <div class="contenedor-botella">
+                  <img
+                    src="./img/botellas/{{ producto.imagen }}"
+                    alt="Imagén cerveza"
+                    class="botella-cerveza"
+                  />
+                </div>
+              </div>
+              <div class="product-nombre">
+                {{ producto.nombre }}
+              </div>
+              <div class="product-especificaciones">
+                {{ producto.especificaciones }}
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+
+    <div class="contenedor-imagen-producto">
+      <img src="./img/cerveza-landing.png" alt="Cerveza" />
+    </div>
+  </div>
+
+  <p class="leyenda-inicio">*Ingerir alcohol es dañino para la salud</p>
+</div>

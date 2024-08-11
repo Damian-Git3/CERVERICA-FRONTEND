@@ -6,48 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <nav class="barra-navegacion">
-      <div class="contenedor-logo">
-        <p-image src="./img/logo-navbar.png" alt="Logo Cerverica" width="100" />
-      </div>
-
-      <div class="contenedor-enlaces">
-        <a
-          class="nav-link"
-          [routerLink]="['/']"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Inicio
-        </a>
-        <a
-          class="nav-link"
-          [routerLink]="['/productos']"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Productos
-        </a>
-        <a
-          class="nav-link"
-          [routerLink]="['/nosotros']"
-          routerLinkActive="active"
-          >Nosotros
-        </a>
-      </div>
-
-      <div class="contenedor-usuario">
-        <a class="nav-link" [routerLink]="['/perfil']">
-          <i class="pi pi-user"></i>
-        </a>
-        <p-button icon="pi pi-heart" styleClass="nav-link" [link]="true" />
-        <p-button
-          icon="pi pi-shopping-cart"
-          styleClass="nav-link"
-          [link]="true"
-        />
-      </div>
-    </nav>
+  
 
     <main>
       <router-outlet></router-outlet>
