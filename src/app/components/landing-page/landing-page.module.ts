@@ -13,6 +13,7 @@ import { LandingPageRouting } from './landing-page.routing';
 import { RouterOutlet } from '@angular/router';
 import { LandingPageComponent } from './landing-page.component';
 import { ProductosService } from '../../services/productos/productos.service';
+import { CarritoComponent } from './carrito/carrito.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ProductosService } from '../../services/productos/productos.service';
     LoginComponent,
     PerfilComponent,
     NavbarLandingComponent,
+    CarritoComponent,
   ],
   imports: [CommonModule, RouterOutlet, LandingPageRouting, InputTextModule, PrimeModule],
   exports: [],

@@ -7,6 +7,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 
 import { LoginComponent } from './login/login.component';
 import { authGuard } from '../../guards/auth/auth.guard';
+import { CarritoComponent } from './carrito/carrito.component';
 
 const routes: Routes = [
   {
@@ -14,7 +15,7 @@ const routes: Routes = [
     component: LandingPageComponent,
     children: [
       {
-        path: 'inicio',
+        path: '',
         component: InicioComponent,
       },
       {
@@ -32,6 +33,12 @@ const routes: Routes = [
       {
         path: 'perfil',
         component: PerfilComponent,
+        canActivate: [authGuard],
+      },
+      {
+        path: 'carrito',
+        component: CarritoComponent,
+        pathMatch: 'full',
         canActivate: [authGuard],
       },
       {
