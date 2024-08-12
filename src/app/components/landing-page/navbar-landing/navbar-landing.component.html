@@ -29,9 +29,12 @@
       </div>
 
       <div class="contenedor-usuario">
-        <a class="nav-link" [routerLink]="['perfil']">
-          <i class="pi pi-user"></i>
-        </a>
+        <p-button
+          icon="pi pi-user"
+          styleClass="nav-link"
+          [link]="true"
+          [routerLink]="['perfil']"
+        ></p-button>
         <p-button icon="pi pi-heart" styleClass="nav-link" [link]="true" />
         <p-button
           icon="pi pi-shopping-cart"

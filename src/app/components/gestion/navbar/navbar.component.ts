@@ -4,32 +4,29 @@ import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+  styleUrl: './navbar.component.css',
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   opciones: MenuItem[] = [];
-  constructor() {
+  constructor(
+    
+  ) {
     this.opciones = [
       {
-        label: 'Clientes',
-        icon: 'pi pi-users',
+        label: 'Usuarios',
+        icon: 'fa-solid fa-user',
         routerLink: '/clientes',
       },
       {
         label: 'Empleados',
-        icon: 'pi pi-address-book',
+        icon: 'fa-solid fa-users',
         routerLink: '/empleados',
       },
       {
-        label: 'Giphy',
-        icon: 'pi pi-image',
-        routerLink: '/giphy',
-      },
-      {
-        label: 'Tareas',
+        label: 'Producciones',
         icon: 'pi pi-list',
-        routerLink: '/tareas',
-      },
+        routerLink: '/producciones',
+      }
     ];
   }
 

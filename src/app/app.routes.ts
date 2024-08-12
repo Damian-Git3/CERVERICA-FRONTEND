@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginModule } from './components/login/login.module';
-import { SharedModule } from './components/shared/shared.module';
 import { LandingModule } from './components/landing-page/landing-page.module';
+import { GestionModule } from './components/gestion/gestion.module';
 
 
 export const routes: Routes = [
@@ -15,8 +15,8 @@ export const routes: Routes = [
     loadChildren: () => LoginModule,
   },
   {
-    path: 'inicio',
-    loadChildren: () => SharedModule,
+    path: 'gestion',
+    loadChildren: () => GestionModule,
   },
   {
     path: 'landing-page',

@@ -27,7 +27,13 @@ import { CarritoComponent } from './carrito/carrito.component';
     NavbarLandingComponent,
     CarritoComponent,
   ],
-  imports: [CommonModule, RouterOutlet, LandingPageRouting, InputTextModule, PrimeModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    LandingPageRouting,
+    InputTextModule,
+    PrimeModule,
+  ],
   exports: [],
   providers: [ProductosService],
 })

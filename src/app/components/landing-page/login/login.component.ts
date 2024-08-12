@@ -91,7 +91,7 @@ export class LoginComponent implements AfterViewInit {
       fullName: this.formCrearCuenta.value.fullName,
       email: this.formCrearCuenta.value.email,
       password: this.formCrearCuenta.value.password,
-      roles: ['cliente'],
+      role: 'cliente',
     };
 
     this._AccountService.registrarCuenta(usuarioRegistrar).subscribe({
