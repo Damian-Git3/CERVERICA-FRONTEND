@@ -18,7 +18,7 @@
   --color-gris: rgba(128, 128, 128, 1);
 }
 
-:host ::ng-deep .p-input-icon-left > input {
+.p-input-icon-left > input {
     padding-left: 2.5rem;
     padding-right: 0.5rem;
     padding-top: 0.5rem;
