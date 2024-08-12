@@ -156,6 +156,18 @@ export class CarritoComponent {
           },
           error: (error) => {
             if (error.status == 409) {
+              this._CompartidoService.solicitarActualizarProductos();
+
+              const listaProductos =
+                error.error.productosCarritoEliminados.join(', ');
+
+              const mensajeDetalle = `Lamentamos el inconveniente, pero nos quedamos sin stock en las siguientes cervezas: ${listaProductos}`;
+
+              this._MessageService.add({
+                severity: 'info',
+                summary: 'Cervezas sin stock',
+                detail: mensajeDetalle,
+              });
             } else {
               console.log(error);
             }
@@ -224,9 +236,7 @@ export class CarritoComponent {
         productoCarrito.precioPaquete = precioPaquete;
 
         this.totalPrecioCervezas +=
-          productoCarrito.cantidadLote *
-          productoCarrito.cantidad *
-          precioPaquete;
+          productoCarrito.cantidad * productoCarrito.precioPaquete;
       });
     });
   }

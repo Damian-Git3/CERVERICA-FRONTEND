@@ -4,6 +4,7 @@ import { CarritoService } from '../carrito/carrito.service';
 import { AuthService } from '../auth/auth.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { ProductoCarrito } from '../../interfaces/carrito/producto-carrito';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,19 @@ export class CompartidoService {
 
   guardarSesion(sesion: SesionDTO) {
     localStorage.setItem('usuarioSesion', JSON.stringify(sesion));
+  }
+
+  solicitarActualizarProductos() {
+    this._CarritoService
+      .obtenerProductosCarrito(this.obtenerSesion().token)
+      .subscribe({
+        next: (productosCarrito: ProductoCarrito[]) => {
+          this._CarritoService.asignarListaProductosCarrito(productosCarrito);
+        },
+        error: (e) => {
+          console.error('Error al obtener productos carrito:', e);
+        },
+      });
   }
 
   obtenerSesion(): SesionDTO {

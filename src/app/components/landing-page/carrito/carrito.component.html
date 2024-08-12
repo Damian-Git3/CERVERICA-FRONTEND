@@ -277,6 +277,6 @@
       <span>{{ totalPrecioCervezas | currency : "MXN" }}</span>
     </div>
 
-    <button class="checkout" (click)="realizarPedido()">PAGAR</button>
+    <button class="checkout" (click)="realizarPedido()" [disabled]="this.contadorProductosCarrito == 0">PAGAR</button>
   </div>
 </div>

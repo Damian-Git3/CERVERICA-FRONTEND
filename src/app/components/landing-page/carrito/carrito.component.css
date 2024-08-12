@@ -156,6 +156,18 @@
   opacity: 0.75;
 }
 
+.checkout[disabled] {
+  background-color: #cccccc; /* Color de fondo cuando está deshabilitado */
+  color: #666666; /* Color del texto cuando está deshabilitado */
+  cursor: not-allowed; /* Cambiar el cursor a 'not-allowed' */
+  opacity: 0.5; /* Reducir la opacidad */
+}
+
+.checkout[disabled]:hover {
+  transform: none; /* Deshabilitar la transformación al pasar el mouse */
+  opacity: 0.5; /* Mantener la opacidad reducida */
+}
+
 /** CREDIT CARD **/
 
 .container {
