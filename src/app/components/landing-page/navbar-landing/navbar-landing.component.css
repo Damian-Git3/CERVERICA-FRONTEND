@@ -15,9 +15,16 @@
   gap: 1rem;
 }
 
+.barra-navegacion .contenedor-acciones-usuario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 @media (min-width: 768px) {
   .barra-navegacion .contenedor-enlaces {
-    flex-direction: row
+    flex-direction: row;
   }
 }
 
@@ -25,4 +32,8 @@
   .barra-navegacion {
     flex-direction: row;
   }
+}
+
+.no-wrap{
+  text-wrap: nowrap;
 }

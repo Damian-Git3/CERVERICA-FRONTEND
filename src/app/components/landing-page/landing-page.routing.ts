@@ -8,6 +8,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { LoginComponent } from './login/login.component';
 import { authGuard } from '../../guards/auth/auth.guard';
 import { CarritoComponent } from './carrito/carrito.component';
+import { carritoGuard } from '../../guards/carrito/carrito.guard';
+import { CuentaComponent } from './cuenta/cuenta.component';
 
 const routes: Routes = [
   {
@@ -15,31 +17,40 @@ const routes: Routes = [
     component: LandingPageComponent,
     children: [
       {
-        path: '',
+        path: 'inicio',
+        pathMatch: 'full',
         component: InicioComponent,
+        canActivate: [carritoGuard],
       },
       {
         path: 'productos',
+        pathMatch: 'full',
         component: ProductosComponent,
+        canActivate: [carritoGuard],
       },
       {
         path: 'nosotros',
+        pathMatch: 'full',
         component: NosotrosComponent,
+        canActivate: [carritoGuard],
       },
       {
         path: 'login',
+        pathMatch: 'full',
         component: LoginComponent,
+        canActivate: [carritoGuard],
       },
       {
-        path: 'perfil',
-        component: PerfilComponent,
-        canActivate: [authGuard],
+        path: 'cuenta',
+        pathMatch: 'full',
+        component: CuentaComponent,
+        canActivate: [carritoGuard, authGuard],
       },
       {
         path: 'carrito',
-        component: CarritoComponent,
         pathMatch: 'full',
-        canActivate: [authGuard],
+        component: CarritoComponent,
+        canActivate: [authGuard, carritoGuard],
       },
       {
         path: '**',

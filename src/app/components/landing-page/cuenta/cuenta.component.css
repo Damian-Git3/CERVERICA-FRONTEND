@@ -1,0 +1,93 @@
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.contenedor-cuenta {
+  width: 100%;
+}
+
+.contenedor-modulos {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr;
+  margin-top: 5rem;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .contenedor-modulos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contenedor-cuenta {
+    width: 70%;
+  }
+
+  .modulo {
+    width: 80%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contenedor-modulos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.modulo {
+  width: 100%;
+  display: flex;
+  background-color: var(--color-secundario);
+  padding: 2rem;
+  border-radius: 10px;
+  transition: 0.5s;
+  cursor: pointer;
+  flex-direction: column;
+}
+
+.modulo:hover {
+  background-color: var(--color-principal);
+  color: white;
+}
+
+.modulo .imagen {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modulo .información {
+  width: 100%;
+  margin-left: 0;
+  text-align: center;
+  margin-top: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .modulo {
+    flex-direction: row;
+  }
+
+  .modulo .imagen {
+    width: 20%;
+  }
+
+  .modulo .información {
+    width: 80%;
+    margin-top: 0;
+    margin-left: 3rem;
+  }
+}
+
+.modulo .imagen i {
+  font-size: 2.5rem;
+}

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ImageModule } from 'primeng/image';
 import { ButtonModule } from 'primeng/button';
 import { CarouselModule } from 'primeng/carousel';
@@ -12,10 +12,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   exports: [
     ImageModule,
     ButtonModule,
@@ -29,7 +32,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InputGroupModule,
     InputGroupAddonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule,
+    BadgeModule,
+    NgOptimizedImage,
+    ProgressBarModule,
   ],
 })
 export class PrimeModule {}

@@ -11,4 +11,6 @@ export interface Producto {
   fecha_registrado: string;
   favorito: boolean;
   nuevo: boolean;
+  cantidadEnStock: number;
+  estaEnCarrito: boolean;
 }

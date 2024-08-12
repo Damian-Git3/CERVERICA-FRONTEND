@@ -48,7 +48,7 @@ export function initializeLoginAnimations(
   }
 
   // Inicia el slider automático cada 3 segundos
-  setInterval(autoSlide, 5000);
+  const intervalId = setInterval(autoSlide, 5000);
 
   inputs.forEach((inp) => {
     inp.addEventListener('focus', () => {
@@ -80,4 +80,6 @@ export function initializeLoginAnimations(
       currentIndex = index; // Actualiza el índice actual
     });
   });
+
+  return intervalId;
 }

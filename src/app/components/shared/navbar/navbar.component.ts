@@ -6,7 +6,7 @@ import { MenuItem } from 'primeng/api';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent implements OnInit {
   opciones: MenuItem[] = [];
   constructor() {
     this.opciones = [

@@ -3,4 +3,7 @@ export interface SesionDTO {
     isSuccess: boolean;
     message: string;
     refreshToken: string;
+    idUsuario: string;
+    nombre: string;
+    rol: string
 }

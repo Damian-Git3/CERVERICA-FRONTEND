@@ -122,7 +122,7 @@
   width: 90%;
   height: 40px;
   border-radius: 10px;
-  margin-top: 1rem;
+  margin-top: .5rem;
   background-color: var(--color-principal);
   font-size: 1rem;
   font-weight: 500;
@@ -277,6 +277,7 @@
   top: 4em;
   left: 2em;
   transform: rotate(-35deg);
+  border-radius: 5px;
   z-index: 10;
 }
 
@@ -284,6 +285,46 @@
   content: "¡Nuevo! 🔥";
   background: var(--color-principal);
   color: black;
+}
+
+[data-badge="OutStock"]:before {
+  content: "Acabado";
+  background: #e72929;
+  color: white;
+}
+
+.paquetes-seleccionados {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paquetes-seleccionados .boton {
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 1rem;
+  background-color: var(--color-principal);
+  font-size: 1rem;
+  font-weight: 500;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  margin-bottom: 1rem;
+}
+
+.paquetes-seleccionados .boton:hover {
+  transform: scale(1.05);
+  opacity: 0.75;
+}
+
+.paquetes-seleccionados .boton:disabled {
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  border: 1px solid #c0c0c0;
+  cursor: not-allowed;
 }
 
 /** CARD CANTIDADES **/
@@ -312,4 +353,18 @@
 .card-cantidades .btn-cantidad.seleccionado {
   background-color: var(--color-principal);
   color: white;
+}
+
+.card-cantidades .btn-cantidad:disabled {
+  background-color: #e0e0e0; /* Color de fondo para botones desactivados */
+  color: #a0a0a0; /* Color del texto para botones desactivados */
+  border: 1px solid #c0c0c0; /* Color del borde para botones desactivados */
+  cursor: not-allowed; /* Cambia el cursor cuando el botón está desactivado */
+}
+
+.disabled {
+  background-color: #e0e0e0; /* Color de fondo para botones desactivados */
+  color: #a0a0a0; /* Color del texto para botones desactivados */
+  border: 1px solid #c0c0c0; /* Color del borde para botones desactivados */
+  cursor: not-allowed; /* Cambia el cursor cuando el botón está desactivado */
 }

@@ -37,8 +37,11 @@
     *ngFor="let producto of productos"
     [producto]="producto"
     [favoritosUsuario]="favoritosUsuario"
+    [productosCarrito]="productosCarrito"
     (actualizarProductos)="actualizarProductos()"
     (agregarFavorito)="agregarFavorito($event)"
+    (agregarProductoCarrito)="agregarProductoCarrito($event)"
+    (actualizarProductoCarrito)="actualizarProductoCarrito($event)"
     (eliminarFavorito)="eliminarFavorito($event)"
   ></app-card>
 </div>

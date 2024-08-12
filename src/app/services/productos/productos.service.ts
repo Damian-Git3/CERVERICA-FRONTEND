@@ -19,6 +19,8 @@ export class ProductosService {
   }
 
   obtenerProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this._baseURL}/obtener-recetas-landing`);
+    return this.http.get<Producto[]>(
+      `${this._baseURL}/obtener-recetas-landing`
+    );
   }
 }

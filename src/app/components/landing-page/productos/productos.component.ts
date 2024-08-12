@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
-import { FavoritoUsuario } from '../../../interfaces/favorito-usuario';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { Producto } from '../../../interfaces/productos/producto';
 import { FavoritosService } from '../../../services/favoritos/favoritos.service';
 import { ProductosService } from '../../../services/productos/productos.service';
-
+import { CompartidoService } from '../../../services/compartido/compartido.service';
+import { AuthService } from '../../../services/auth/auth.service';
+import { CarritoService } from '../../../services/carrito/carrito.service';
+import { ProductoCarrito } from '../../../interfaces/carrito/producto-carrito';
+import { FavoritoUsuario } from '../../../interfaces/favoritos/favorito-usuario';
 
 @Component({
   selector: 'app-productos',
@@ -11,9 +14,11 @@ import { ProductosService } from '../../../services/productos/productos.service'
   styleUrl: './productos.component.css',
 })
 export class ProductosComponent {
+  @Output() actualizarCarrito = new EventEmitter<ProductoCarrito>();
   productosOriginales: Producto[] = [];
+  productosCarrito: ProductoCarrito[] = [];
   productos: Producto[] = [];
-  filtros: any[] = [
+  filtros: { label: string; value: string }[] = [
     { label: 'Todos', value: 'todo' },
     { label: 'Lo más nuevo', value: 'nuevo' },
     { label: 'Por precio (menor a mayor)', value: 'precioAsc' },
@@ -26,6 +31,10 @@ export class ProductosComponent {
   mostrandoFavoritos: boolean = false;
   favoritosUsuario: FavoritoUsuario[] = [];
 
+  _CompartidoService = inject(CompartidoService);
+  _AuthService = inject(AuthService);
+  _CarritoService = inject(CarritoService);
+
   constructor(
     private _productosService: ProductosService,
     private _favoritosService: FavoritosService
@@ -33,7 +42,11 @@ export class ProductosComponent {
 
   actualizarProductos(): void {
     const favoritosSet = new Set(
-      this.favoritosUsuario.map((favorito) => favorito.idProducto)
+      this.favoritosUsuario.map((favorito) => favorito.idReceta)
+    );
+
+    const productosCarritoSet = new Set(
+      this.productosCarrito.map((productoCarrito) => productoCarrito.idReceta)
     );
 
     this.productosOriginales.forEach((producto) => {
@@ -98,9 +111,19 @@ export class ProductosComponent {
     this.actualizarProductos();
   }
 
-  eliminarFavorito(idProductoEliminar: number): void {
+  agregarProductoCarrito(productoCarrito: ProductoCarrito): void {
+    this._CarritoService.agregarListaProductosCarrito(productoCarrito);
+  }
+
+  actualizarProductoCarrito(productoCarrito: ProductoCarrito): void {
+    console.log(productoCarrito);
+
+    //this._CarritoService.actualizarListaProductosCarrito(productoCarrito);
+  }
+
+  eliminarFavorito(idRecetaEliminar: number): void {
     this.favoritosUsuario = this.favoritosUsuario.filter(
-      (favorito) => favorito.idProducto !== idProductoEliminar
+      (favorito) => favorito.idReceta !== idRecetaEliminar
     );
     this.actualizarProductos();
   }
@@ -113,6 +136,9 @@ export class ProductosComponent {
 
   ngOnInit(): void {
     this.obtenerProductos();
+    this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
+      this.productosCarrito = productosCarrito;
+    });
   }
 
   obtenerProductos() {
@@ -121,7 +147,9 @@ export class ProductosComponent {
         this.productos = productosResponse;
         this.productosOriginales = productosResponse;
 
-        this.obtenerFavoritosUsuario(1);
+        if (this._CompartidoService.obtenerSesion() != null) {
+          this.obtenerFavoritosUsuario();
+        }
       },
       error: (e) => {
         console.log(e);
@@ -129,17 +157,23 @@ export class ProductosComponent {
     });
   }
 
-  obtenerFavoritosUsuario(idUsuario: number) {
-    this._favoritosService.obtenerFavoritos(idUsuario).subscribe({
-      next: (favoritosUsuario: FavoritoUsuario[]) => {
-        this.favoritosUsuario = favoritosUsuario;
+  obtenerFavoritosUsuario() {
+    this._favoritosService
+      .obtenerFavoritos(this._CompartidoService.obtenerSesion().token)
+      .subscribe({
+        next: (favoritosUsuario: FavoritoUsuario[]) => {
+          this.favoritosUsuario = favoritosUsuario;
 
-        this.actualizarProductos();
-      },
-      error: (e) => {
-        console.log(e);
-      },
-    });
+          this.actualizarProductos();
+        },
+        error: (e) => {
+          if ((e.status = 401)) {
+            this._CompartidoService.tokenExpirado();
+          } else {
+            console.log(e);
+          }
+        },
+      });
   }
 
   private esReciente(fecha: string): boolean {

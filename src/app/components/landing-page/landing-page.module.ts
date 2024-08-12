@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { InicioComponent } from './inicio/inicio.component';
 import { ProductosComponent } from './productos/productos.component';
 import { NosotrosComponent } from './nosotros/nosotros.component';
-import { InputTextModule } from 'primeng/inputtext';
 import { CardComponent } from './productos/card/card.component';
 import { LoginComponent } from './login/login.component';
 import { PerfilComponent } from './perfil/perfil.component';
@@ -14,6 +13,8 @@ import { RouterOutlet } from '@angular/router';
 import { LandingPageComponent } from './landing-page.component';
 import { ProductosService } from '../../services/productos/productos.service';
 import { CarritoComponent } from './carrito/carrito.component';
+import { MessageService } from 'primeng/api';
+import { CuentaComponent } from './cuenta/cuenta.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,9 @@ import { CarritoComponent } from './carrito/carrito.component';
     PerfilComponent,
     NavbarLandingComponent,
     CarritoComponent,
+    CuentaComponent,
   ],
-  imports: [CommonModule, RouterOutlet, LandingPageRouting, InputTextModule, PrimeModule],
+  imports: [CommonModule, RouterOutlet, LandingPageRouting, PrimeModule],
   exports: [],
   providers: [ProductosService],
 })

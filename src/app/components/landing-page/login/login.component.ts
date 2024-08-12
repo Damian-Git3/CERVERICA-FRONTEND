@@ -12,6 +12,9 @@ import { RegistrarDTO } from '../../../interfaces/usuario/registrar-dto';
 import { AccountService } from '../../../services/account/account.service';
 import { CompartidoService } from '../../../services/compartido/compartido.service';
 import { initializeLoginAnimations } from './animations';
+import { MessageService } from 'primeng/api';
+import { AuthService } from '../../../services/auth/auth.service';
+import { CarritoService } from '../../../services/carrito/carrito.service';
 
 @Component({
   selector: 'app-login',
@@ -30,6 +33,13 @@ export class LoginComponent implements AfterViewInit {
   router = inject(Router);
   _AccountService = inject(AccountService);
   _CompartidosService = inject(CompartidoService);
+  _MessageService = inject(MessageService);
+  _AuthService = inject(AuthService);
+  _CarritoService = inject(CarritoService);
+
+  private intervalId: any;
+  iniciandoSesion: boolean = false;
+  creandoCuenta: boolean = false;
 
   constructor() {
     this.formLogin = this.formBuilder.group({
@@ -45,10 +55,21 @@ export class LoginComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    initializeLoginAnimations(this.contenedorLogin, this.carousel);
+    this.intervalId = initializeLoginAnimations(
+      this.contenedorLogin,
+      this.carousel
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   iniciarSesion() {
+    this.iniciandoSesion = true;
+
     let usuarioIngresar: LoginDTO = {
       email: this.formLogin.value.email,
       password: this.formLogin.value.password,
@@ -56,17 +77,24 @@ export class LoginComponent implements AfterViewInit {
 
     this._AccountService.iniciarSesion(usuarioIngresar).subscribe({
       next: (response) => {
-        console.log(response);
-
         if (response.isSuccess == false) {
           this.mensajesLogin.nativeElement.innerHTML = `<p>${response.message}</p>`;
-        }
+        } else {
+          this._MessageService.add({
+            severity: 'success',
+            summary: `Bienvenido ${response.nombre}!`,
+            detail: '¡Qué gusto verte de nuevo!',
+          });
 
-        //this._CompartidosService.guardarSesion(response);
-        //this.router.navigate(['layout']);
+          this._CompartidosService.guardarSesion(response);
+
+          this._AuthService.login();
+
+          this.router.navigateByUrl('/perfil');
+        }
       },
       complete: () => {
-        console.log('Completado');
+        this.iniciandoSesion = false;
       },
       error: (error) => {
         if (error.error.isSuccess == false) {
@@ -87,35 +115,55 @@ export class LoginComponent implements AfterViewInit {
   }
 
   crearCuenta() {
+    this.creandoCuenta = true;
+
     let usuarioRegistrar: RegistrarDTO = {
       fullName: this.formCrearCuenta.value.fullName,
       email: this.formCrearCuenta.value.email,
       password: this.formCrearCuenta.value.password,
-      roles: ['cliente'],
+      role: 'cliente',
     };
 
     this._AccountService.registrarCuenta(usuarioRegistrar).subscribe({
       next: (response) => {
-        console.log(response);
-
         if (response.isSuccess == false) {
-          this.mensajesLogin.nativeElement.innerHTML = `<p>${response.message}</p>`;
+          this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${response.message}</p>`;
         }
-        //this._CompartidosService.guardarSesion(response);
-        //this.router.navigate(['layout']);
       },
       complete: () => {
-        console.log('Completado');
+        this.contenedorLogin.nativeElement.classList.remove('sign-up-mode');
+
+        this._MessageService.add({
+          severity: 'success',
+          summary: 'Cuenta creada correctamente',
+          detail: 'Inicia sesión con tu información',
+        });
+
+        this.formCrearCuenta.reset();
+
+        this.creandoCuenta = false;
       },
       error: (error) => {
-        if (error.error) {
-          let errors = this._CompartidosService.extractErrorPassword(
-            error.error
+        if (error.error.isSuccess == false) {
+          this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
+
+          let errors = this._CompartidosService.extractErrors(
+            error.error.errors
           );
 
-          this.mensajesCrearCuenta.nativeElement.innerHTML = errors
+          this.mensajesCrearCuenta.nativeElement.innerHTML += errors
             .map((error) => `<p>${error}</p>`)
             .join('');
+        } else {
+          if (error.error) {
+            let errors = this._CompartidosService.extractErrorPassword(
+              error.error
+            );
+
+            this.mensajesCrearCuenta.nativeElement.innerHTML = errors
+              .map((error) => `<p>${error}</p>`)
+              .join('');
+          }
         }
       },
     });

@@ -8,6 +8,7 @@ import {
   BrowserAnimationsModule,
 } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +17,6 @@ export const appConfig: ApplicationConfig = {
     BrowserAnimationsModule,
     provideAnimations(),
     provideHttpClient(),
+    MessageService,
   ],
 };
