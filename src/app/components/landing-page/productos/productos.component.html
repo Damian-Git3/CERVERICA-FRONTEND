@@ -1,47 +1,22 @@
 <h1>Nuestros productos 🍺</h1>
 
 <div class="filtros">
-  <p-button
-    label="Favoritos"
-    icon="pi pi-heart"
-    outlined="true"
-    styleClass="btn-favoritos"
-    [styleClass]="
+  <p-button label="Favoritos" icon="pi pi-heart" outlined="true" styleClass="btn-favoritos" [styleClass]="
       mostrandoFavoritos ? 'btn-favoritos seleccionado' : 'btn-favoritos'
-    "
-    (onClick)="mostrarFavoritos()"
-  />
+    " (onClick)="mostrarFavoritos()" />
 
-  <input
-    type="text"
-    class="input"
-    pInputText
-    [(ngModel)]="filtroBusqueda"
-    placeholder="Busqueda..."
-    (ngModelChange)="actualizarProductos()"
-  />
+  <input type="text" class="input" pInputText [(ngModel)]="filtroBusqueda" placeholder="Busqueda..."
+    (ngModelChange)="actualizarProductos()" />
 
-  <p-dropdown
-    [options]="filtros"
-    [(ngModel)]="filtroSeleccionado"
-    (onChange)="actualizarProductos()"
-    optionLabel="label"
-    placeholder="Selecciona un filtro"
-    styleClass="dropdown"
-  >
+  <p-dropdown [options]="filtros" [(ngModel)]="filtroSeleccionado" (onChange)="actualizarProductos()"
+    optionLabel="label" placeholder="Selecciona un filtro" styleClass="dropdown">
   </p-dropdown>
 </div>
 
 <div class="contenedor-productos">
-  <app-card
-    *ngFor="let producto of productos"
-    [producto]="producto"
-    [favoritosUsuario]="favoritosUsuario"
-    [productosCarrito]="productosCarrito"
-    (actualizarProductos)="actualizarProductos()"
-    (agregarFavorito)="agregarFavorito($event)"
+  <app-card *ngFor="let producto of productos" [producto]="producto" [favoritosUsuario]="favoritosUsuario"
+    (actualizarProductos)="actualizarProductos()" (agregarFavorito)="agregarFavorito($event)"
     (agregarProductoCarrito)="agregarProductoCarrito($event)"
     (actualizarProductoCarrito)="actualizarProductoCarrito($event)"
-    (eliminarFavorito)="eliminarFavorito($event)"
-  ></app-card>
+    (eliminarFavorito)="eliminarFavorito($event)"></app-card>
 </div>

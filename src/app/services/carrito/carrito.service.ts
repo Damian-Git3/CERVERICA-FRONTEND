@@ -6,6 +6,7 @@ import { ProductoCarrito } from '../../interfaces/carrito/producto-carrito';
 import { AgregarProductoCarritoDTO } from '../../interfaces/carrito/agregar-producto-carrito-dto';
 import { ActualizarProductoCarritoDTO } from '../../interfaces/carrito/actualizar-producto-carrito-dto';
 import { EliminarProductoCarritoDTO } from '../../interfaces/carrito/eliminar-producto-carrito-dto';
+import { CantidadCervezasReceta } from '../../interfaces/carrito/cantidad-cervezas-receta';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +20,50 @@ export class CarritoService {
   private _ProductosCarrito: BehaviorSubject<ProductoCarrito[]> =
     new BehaviorSubject<ProductoCarrito[]>([]);
 
+  private cantidadTotalCervezasEnCarritoPorReceta: CantidadCervezasReceta[] =
+    [];
+  private _CantidadTotalCervezasEnCarritoPorReceta: BehaviorSubject<
+    CantidadCervezasReceta[]
+  > = new BehaviorSubject<CantidadCervezasReceta[]>([]);
+
   get ProductosCarrito() {
     return this._ProductosCarrito.asObservable();
+  }
+
+  get CantidadTotalCervezasEnCarritoPorReceta() {
+    return this._CantidadTotalCervezasEnCarritoPorReceta.asObservable();
+  }
+
+  asignarListaCantidadTotalCervezasCarrito(
+    nuevaLista: CantidadCervezasReceta[]
+  ) {
+    this.cantidadTotalCervezasEnCarritoPorReceta = nuevaLista;
+    this._CantidadTotalCervezasEnCarritoPorReceta.next(
+      this.cantidadTotalCervezasEnCarritoPorReceta
+    );
+  }
+
+  actualizarCantidadTotalCervezasCarrito(
+    cantidadCervezasReceta: CantidadCervezasReceta
+  ) {
+    const index = this.cantidadTotalCervezasEnCarritoPorReceta.findIndex(
+      (c) => c.idReceta === cantidadCervezasReceta.idReceta
+    );
+
+    if (index !== -1) {
+      this.cantidadTotalCervezasEnCarritoPorReceta[index] =
+        cantidadCervezasReceta;
+    }
+
+    this._CantidadTotalCervezasEnCarritoPorReceta.next(
+      this.cantidadTotalCervezasEnCarritoPorReceta
+    );
+  }
+
+  obtenerCantidadCervezasCarrito(idReceta: number) {
+    return this.cantidadTotalCervezasEnCarritoPorReceta.find(
+      (c) => c.idReceta === idReceta
+    );
   }
 
   agregarProductoCarrito(

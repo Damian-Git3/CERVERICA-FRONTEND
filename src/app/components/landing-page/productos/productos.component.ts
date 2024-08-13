@@ -45,10 +45,6 @@ export class ProductosComponent {
       this.favoritosUsuario.map((favorito) => favorito.idReceta)
     );
 
-    const productosCarritoSet = new Set(
-      this.productosCarrito.map((productoCarrito) => productoCarrito.idReceta)
-    );
-
     this.productosOriginales.forEach((producto) => {
       producto.favorito = favoritosSet.has(producto.id);
 
@@ -116,9 +112,7 @@ export class ProductosComponent {
   }
 
   actualizarProductoCarrito(productoCarrito: ProductoCarrito): void {
-    console.log(productoCarrito);
-
-    //this._CarritoService.actualizarListaProductosCarrito(productoCarrito);
+    this._CarritoService.actualizarListaProductosCarrito(productoCarrito);
   }
 
   eliminarFavorito(idRecetaEliminar: number): void {

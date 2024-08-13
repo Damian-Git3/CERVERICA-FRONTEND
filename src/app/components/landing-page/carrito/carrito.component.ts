@@ -11,6 +11,8 @@ import { DetalleVentaDTO } from '../../../interfaces/ventas/detalle-venta-dto';
 import { VentaDTO } from '../../../interfaces/ventas/venta-dto';
 import { inicializarFuncionesTarjeta } from './funciones-tarjeta';
 import { EliminarProductoCarritoDTO } from '../../../interfaces/carrito/eliminar-producto-carrito-dto';
+import { ProductosService } from '../../../services/productos/productos.service';
+import { Producto } from '../../../interfaces/productos/producto';
 
 @Component({
   selector: 'app-carrito',
@@ -22,12 +24,14 @@ export class CarritoComponent {
   _CarritoService = inject(CarritoService);
   _VentasService = inject(VentasService);
   _MessageService = inject(MessageService);
+  _ProductoService = inject(ProductosService);
   _Router = inject(Router);
   formBuilder = inject(FormBuilder);
 
   @ViewChild('mensajesErrorMetodoEnvio') mensajesErrorMetodoEnvio!: ElementRef;
   @ViewChild('mensajesErrorMetodoPago') mensajesErrorMetodoPago!: ElementRef;
 
+  productos: Producto[] = [];
   productosCarrito: ProductoCarrito[] = [];
   contadorProductosCarrito: number = 0;
   totalPrecioCervezas: number = 0;
@@ -176,37 +180,9 @@ export class CarritoComponent {
     }
   }
 
-  eliminarProductoCarrito(productoCarrito: ProductoCarrito) {
-    let productoCarritoEliminar: EliminarProductoCarritoDTO = {
-      idReceta: productoCarrito.idReceta,
-      cantidadLote: productoCarrito.cantidadLote,
-    };
-
-    this._CarritoService
-      .eliminarProductoCarrito(
-        productoCarritoEliminar,
-        this._CompartidoService.obtenerSesion().token
-      )
-      .subscribe({
-        next: () => {
-          this._MessageService.add({
-            severity: 'success',
-            summary: 'Producto eliminado correctamente!',
-            detail: 'Haz eliminado correctamente el producto de tu carrito',
-          });
-          this._CarritoService.eliminarListaProductosCarrito(productoCarrito);
-        },
-        error: (error) => {
-          if (error.status == 401) {
-            this._CompartidoService.tokenExpirado();
-          } else {
-            console.error('Error al eliminar producto carrito:', error);
-          }
-        },
-      });
-  }
-
   ngOnInit(): void {
+    this.obtenerProductos();
+    
     this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
       this.productosCarrito = productosCarrito;
       this.contadorProductosCarrito = productosCarrito.length;
@@ -238,6 +214,22 @@ export class CarritoComponent {
         this.totalPrecioCervezas +=
           productoCarrito.cantidad * productoCarrito.precioPaquete;
       });
+    });
+  }
+
+  obtenerProductoCorrespondiente(productoCarrito: ProductoCarrito): any {
+    return this.productos.find(producto => producto.id === productoCarrito.receta.id);
+  }
+
+  obtenerProductos() {
+    this._ProductoService.obtenerProductos().subscribe({
+      next: (productosResponse) => {
+        this.productos = productosResponse;
+        
+      },
+      error: (e) => {
+        console.log(e);
+      },
     });
   }
 }

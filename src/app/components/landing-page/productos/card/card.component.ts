@@ -18,6 +18,7 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ActualizarProductoCarritoDTO } from '../../../../interfaces/carrito/actualizar-producto-carrito-dto';
 import { AgregarProductoCarritoDTO } from '../../../../interfaces/carrito/agregar-producto-carrito-dto';
+import { CantidadCervezasReceta } from '../../../../interfaces/carrito/cantidad-cervezas-receta';
 
 @Component({
   selector: 'app-card',
@@ -29,30 +30,57 @@ export class CardComponent {
   @ViewChild('CantidadElement') CantidadElement!: ElementRef;
   @Input() producto!: Producto;
   @Input() favoritosUsuario!: FavoritoUsuario[];
-  @Input() productosCarrito!: ProductoCarrito[];
   @Output() agregarFavorito = new EventEmitter<FavoritoUsuario>();
   @Output() agregarProductoCarrito = new EventEmitter<ProductoCarrito>();
   @Output() actualizarProductoCarrito = new EventEmitter<ProductoCarrito>();
   @Output() eliminarFavorito = new EventEmitter<number>();
   @Output() actualizarProductos = new EventEmitter<void>();
-  paqueteSeleccionado: number = 1;
-  cantidadPaquetes: number = 1;
-  cantidadTotalCervezas: number = 1;
-  precioMostrar: number = 1;
-  enviandoProductoACarrito: boolean = false;
 
   _CompartidoService = inject(CompartidoService);
   _CarritoService = inject(CarritoService);
   _MessageService: MessageService = inject(MessageService);
   _favoritosService: FavoritosService = inject(FavoritosService);
   _Router: Router = inject(Router);
+  paqueteSeleccionado: number = 1;
+  cantidadPaquetes: number = 1;
+  precioMostrar: number = 1;
+  enviandoProductoACarrito: boolean = false;
+  private cantidadTotalCervezasEnCarritoPorReceta: CantidadCervezasReceta[] =
+    [];
+  private cantidadCervezasReceta: any = {
+    idReceta: 0,
+    cantidadTotalCervezas: this.paqueteSeleccionado,
+  };
+  private productoEnCarrito: boolean = true;
+  productosCarrito: ProductoCarrito[] = [];
 
   ngOnInit(): void {
     this.paqueteSeleccionado = this.obtenerPaqueteSeleccionado();
     this.cantidadPaquetes = this.obtenerCantidadEnCarrito();
-    this.cantidadTotalCervezas =
-      this.paqueteSeleccionado * this.cantidadPaquetes;
     this.precioMostrar = this.obtenerPrecioPaquete();
+
+    this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
+      this.productosCarrito = productosCarrito;
+    });
+
+    this._CarritoService.CantidadTotalCervezasEnCarritoPorReceta.subscribe(
+      (cantidadTotalCervezasEnCarritoPorReceta) => {
+        this.cantidadCervezasReceta.cantidadTotalCervezasEnCarritoPorReceta =
+          cantidadTotalCervezasEnCarritoPorReceta;
+
+        this.cantidadCervezasReceta =
+          this._CarritoService.obtenerCantidadCervezasCarrito(this.producto.id);
+
+        if (this.cantidadCervezasReceta == undefined) {
+          this.productoEnCarrito = false;
+
+          this.cantidadCervezasReceta = {
+            idReceta: this.producto.id,
+            cantidadTotalCervezas: this.paqueteSeleccionado,
+          };
+        }
+      }
+    );
   }
 
   obtenerPaqueteSeleccionado(): number {
@@ -78,7 +106,7 @@ export class CardComponent {
       case 24:
         return this.producto.precioPaquete24;
       default:
-        return this.producto.precioPaquete1; // Precio por defecto si el paquete no es válido
+        return this.producto.precioPaquete1;
     }
   }
 
@@ -249,7 +277,8 @@ export class CardComponent {
 
   aumentarPaquetes() {
     if (this.esCantidadAumentable()) {
-      this.cantidadTotalCervezas += this.paqueteSeleccionado;
+      this.cantidadCervezasReceta.cantidadTotalCervezas +=
+        this.paqueteSeleccionado;
       this.cantidadPaquetes++;
       this.CantidadElement.nativeElement.innerHTML = this.cantidadPaquetes;
     }
@@ -257,35 +286,40 @@ export class CardComponent {
 
   disminuirPaquetes() {
     if (this.esCantidadDisminuible()) {
-      this.cantidadTotalCervezas -= this.paqueteSeleccionado;
+      this.cantidadCervezasReceta.cantidadTotalCervezas -=
+        this.paqueteSeleccionado;
       this.cantidadPaquetes--;
       this.CantidadElement.nativeElement.innerHTML = this.cantidadPaquetes;
     }
   }
 
-  esCantidadAumentable(): boolean {
+  esCantidadDisminuible(): boolean {
     return (
-      this.cantidadTotalCervezas + this.paqueteSeleccionado <=
-      this.producto.cantidadEnStock
+      this.cantidadPaquetes != 1 &&
+      this.cantidadCervezasReceta.cantidadTotalCervezas -
+        this.paqueteSeleccionado <=
+        this.producto.cantidadEnStock
     );
   }
 
-  esCantidadDisminuible(): boolean {
+  esCantidadAumentable(): boolean {
     return (
-      this.cantidadTotalCervezas - this.paqueteSeleccionado >= 1 &&
-      this.cantidadTotalCervezas - this.paqueteSeleccionado <=
-        this.producto.cantidadEnStock
+      this.cantidadCervezasReceta.cantidadTotalCervezas +
+        this.paqueteSeleccionado <=
+      this.producto.cantidadEnStock
     );
   }
 
   actualizarPaqueteSeleccionado(nuevaCantidadSeleccionada: number) {
     this.paqueteSeleccionado = nuevaCantidadSeleccionada;
     this.cantidadPaquetes = this.obtenerCantidadEnCarrito();
-    this.cantidadTotalCervezas =
-      this.cantidadPaquetes * this.paqueteSeleccionado;
     this.precioMostrar = this.obtenerPrecioPaquete();
 
-    // Actualiza el HTML si es necesario
+    if (!this.productoEnCarrito) {
+      this.cantidadCervezasReceta.cantidadTotalCervezas =
+        this.paqueteSeleccionado;
+    }
+
     this.CantidadElement.nativeElement.innerHTML = this.cantidadPaquetes;
   }
 

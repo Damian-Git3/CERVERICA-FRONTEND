@@ -10,8 +10,6 @@ export class AuthService {
   constructor() {}
 
   login() {
-    // Aquí iría la lógica para hacer login y obtener el token
-    // Suponiendo que el login es exitoso:
     localStorage.setItem('isLoggedIn', 'true');
     this.loggedIn.next(true);
   }

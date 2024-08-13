@@ -2,27 +2,14 @@
   <div class="cart-items">
     <h2>Carrito de compras 🛒</h2>
     <p>{{ contadorProductosCarrito }} productos</p>
-    <div class="item" *ngFor="let productoCarrito of productosCarrito">
-      <img src="./img/botellas/{{ productoCarrito.receta.imagen }}" alt="Shirt Image" />
-      <div class="item-details">
-        <span>{{ productoCarrito.receta.nombre }}</span>
-        <span>{{ productoCarrito.receta.especificaciones }}</span>
-        <span>Paquete de {{ productoCarrito.cantidadLote }}</span>
-      </div>
-      <span class="price">{{ productoCarrito.precioPaquete | currency : "MXN" }} c/u</span>
-      <div class="quantity">
-        <button>-</button>
-        <input type="text" value="{{ productoCarrito.cantidad }}" />
-        <button>+</button>
-      </div>
-      <span class="price">
-        {{
-        productoCarrito.cantidadLote * productoCarrito.cantidad
-        | currency : "MXN"
-        }}
-      </span>
-      <button class="remove" (click)="eliminarProductoCarrito(productoCarrito)">×</button>
-    </div>
+    <ng-container *ngIf="productos.length > 0">
+      <app-receta *ngFor="let productoCarrito of productosCarrito"
+                  [producto]="obtenerProductoCorrespondiente(productoCarrito)"
+                  [productoCarrito]="productoCarrito">
+      </app-receta>
+    </ng-container>
+    
+
     <a [routerLink]="['/cerverica/productos']" class="back-to-shop">← Regresar a comprar</a>
   </div>
 

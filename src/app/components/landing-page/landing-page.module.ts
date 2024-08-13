@@ -15,6 +15,7 @@ import { ProductosService } from '../../services/productos/productos.service';
 import { CarritoComponent } from './carrito/carrito.component';
 import { MessageService } from 'primeng/api';
 import { CuentaComponent } from './cuenta/cuenta.component';
+import { RecetaComponent } from './carrito/receta/receta.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CuentaComponent } from './cuenta/cuenta.component';
     NavbarLandingComponent,
     CarritoComponent,
     CuentaComponent,
+    RecetaComponent,
   ],
   imports: [CommonModule, RouterOutlet, LandingPageRouting, PrimeModule],
   exports: [],
