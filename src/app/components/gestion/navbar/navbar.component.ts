@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { CompartidoService } from '../../../services/compartido/compartido.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +10,10 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavbarComponent implements OnInit {
   opciones: MenuItem[] = [];
-  constructor(
-    
-  ) {
+  _CompartidoService = inject(CompartidoService);
+  _Router = inject(Router);
+
+  constructor() {
     this.opciones = [
       {
         label: 'Usuarios',
@@ -26,11 +29,17 @@ export class NavbarComponent implements OnInit {
         label: 'Producciones',
         icon: 'pi pi-list',
         routerLink: '/producciones',
-      }
+      },
+      {
+        label: 'Salir',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this._CompartidoService.cerrarSesion();
+        },
+      },
     ];
   }
 
   ngOnInit() {
-    console.log('NavbarComponent inicializado');
   }
 }

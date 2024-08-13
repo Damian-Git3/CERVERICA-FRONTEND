@@ -42,28 +42,6 @@ export class NavbarLandingComponent {
   }
 
   logout() {
-    this._AccountService
-      .cerrarSesion(this._CompartidoService.obtenerSesion().token)
-      .subscribe({
-        next: (response) => {
-          if (response.isSuccess == true) {
-            this._MessageService.add({
-              severity: 'info',
-              summary: 'Ya te vas?',
-              detail: 'Esperamos verte de nuevo :)',
-            });
-
-            this._CompartidoService.eliminarSesion();
-
-            this._AuthService.logout();
-
-            this.Router.navigateByUrl('/cerverica/inicio');
-          }
-        },
-        complete: () => {},
-        error: (error) => {
-          console.log(error);
-        },
-      });
+    this._CompartidoService.cerrarSesion();
   }
 }

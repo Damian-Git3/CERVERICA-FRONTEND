@@ -90,7 +90,13 @@ export class LoginComponent implements AfterViewInit {
 
           this._AuthService.login();
 
-          this.router.navigateByUrl('/perfil');
+          console.log(response);
+
+          if(response.rol == 'Cliente'){
+            this.router.navigateByUrl('/perfil');
+          } else{
+            this.router.navigateByUrl('/gestion');
+          }
         }
       },
       complete: () => {
@@ -140,7 +146,6 @@ export class LoginComponent implements AfterViewInit {
         });
 
         this.formCrearCuenta.reset();
-
         this.creandoCuenta = false;
       },
       error: (error) => {
@@ -165,6 +170,7 @@ export class LoginComponent implements AfterViewInit {
               .join('');
           }
         }
+        this.creandoCuenta = false;
       },
     });
   }
