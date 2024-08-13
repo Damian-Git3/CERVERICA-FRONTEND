@@ -20,7 +20,7 @@
     <a class="nav-link" [routerLink]="['/cerverica/cuenta']" routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }">
       <i class="pi pi-user"></i>
-      <p *ngIf="isLoggedIn" class="nombre">Jesús</p>
+      <p *ngIf="isLoggedIn" class="nombre">{{primerNombre}}</p>
     </a>
     <ng-container *ngIf="productosEnCarrito > 0; else noBadge">
       <a class="nav-link" [routerLink]="['/cerverica/carrito']" pBadge [value]="productosEnCarrito"
