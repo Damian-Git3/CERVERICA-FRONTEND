@@ -1,0 +1,78 @@
+<p-toolbar>
+  <div class="p-toolbar-group-start">
+    <p-button  icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerInsumos()" />
+    <p-button
+      icon="pi pi-plus"
+      class="mr-2"
+      (click)="modal.show()"
+    />
+
+    <p-button icon="pi pi-upload" />
+  </div>
+  <div class="p-toolbar-group-center">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText placeholder="Search" />
+    </span>
+  </div>
+  <div class="p-toolbar-group-end">
+    <p-splitButton label="Save" icon="pi pi-check" [model]="items" />
+  </div>
+</p-toolbar>
+<p-table #dt [value]="insumos" [customSort]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn=" id">
+                ID <p-sortIcon field="id" />
+            </th>
+            <th pSortableColumn="nombre">
+                NOMBRE <p-sortIcon field="nombre" />
+            </th>
+            <th pSortableColumn="descripcion">
+                DESCRIPCION <p-sortIcon field="descripcion" />
+            </th>
+            <th pSortableColumn="unidadMedida">
+                UNIDAD <p-sortIcon field="unidadMedida"/>
+            </th>
+            <th pSortableColumn="cantidadMinima">
+                MINIMO <p-sortIcon field="cantidadMinima" />
+            </th>
+            <th pSortableColumn="cantidadMaxima">
+                MAXIMO <p-sortIcon field="cantidadMaxima" />
+            </th>
+            <th pSortableColumn="costoUnitario">
+                COSTO UNITARIO <p-sortIcon field="costoUnitario" />
+            </th>
+            <th pSortableColumn="merma">
+                MERMA <p-sortIcon field="merma" />
+            </th>
+            <th pSortableColumn="activo">
+                ESTATUS <p-sortIcon field="activo" />
+            </th>
+            <th>ACCIONES</th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr (dblclick)="modal.show(product)">
+            <td>{{ product.id }}</td>
+            <td>{{ product.nombre }}</td>
+            <td>{{ product.descripcion }}</td>
+            <td>{{ product.unidadMedida }}</td>
+            <td>{{ product.cantidadMinima }}</td>
+            <td>{{ product.cantidadMaxima }}</td>
+            <td>{{ product.costoUnitario }}</td>
+            <td>{{ product.merma }}</td>
+            <td>{{ product.activo }}</td>
+            <td>
+                <p-button
+                    icon="pi pi-pencil"
+                    class="mr-2"
+                    (click)="modal.show(product)"
+                ></p-button>
+                <p-button icon="pi pi-trash" class="mr-2"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+<app-insumos-modal #modal (reload)="obtenerInsumos()"></app-insumos-modal>

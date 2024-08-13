@@ -1,0 +1,29 @@
+<p-sidebar [(visible)]="display">
+  <h3>MENU</h3>
+  <!-- PRODUCCIONES -->
+  <div class="flex flex-column">
+    <p-button
+      label="Producciones"
+      styleClass="nav-link"
+      icon="fa-solid fa-box"
+      link="true"
+      [routerLink]="['producciones']"
+    ></p-button>
+    <!-- INSUMOS -->
+    <p-button
+      label="Insumos"
+      styleClass="nav-link"
+      icon="fa-solid fa-box"
+      link="true"
+      [routerLink]="['insumos']"
+    ></p-button>
+    <!-- RECETAS -->
+    <p-button
+      label="Recetas"
+      styleClass="nav-link"
+      icon="fa-solid fa-box"
+      link="true"
+      [routerLink]="['recetas']"
+    ></p-button>
+  </div>
+</p-sidebar>

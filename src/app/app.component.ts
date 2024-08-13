@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { SharedModule } from './components/shared/shared.module';
 import { PrimeModule } from './components/prime/prime.module';
 import { RouterOutlet } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, SharedModule, PrimeModule],
+  imports: [RouterOutlet, PrimeModule, FontAwesomeModule],
 })
 export class AppComponent {
   title = 'CervericaLanding';
