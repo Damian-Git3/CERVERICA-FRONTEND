@@ -1,6 +1,6 @@
 <p-toolbar>
     <div class="p-toolbar-group-start">
-        <p-button icon="pi pi-plus" class="mr-2"/>
+        <p-button icon="pi pi-plus" class="mr-2" (click)="modal.display = !modal.display"/>
         <p-button icon="pi pi-print" class="mr-2"/>
         <p-button icon="pi pi-upload" />
     </div>
@@ -14,4 +14,4 @@
         <p-splitButton label="Save" icon="pi pi-check" [model]="items" />
     </div>
 </p-toolbar>
-<app-producciones-modal></app-producciones-modal>
+<app-producciones-modal #modal></app-producciones-modal>
