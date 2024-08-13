@@ -1,0 +1,118 @@
+<p-dialog
+  [(visible)]="display"
+  [draggable]="false"
+  [maximizable]="false"
+  [header]="titulo"
+  [modal]="true"
+  (onHide)="ocultar()"
+>
+  <form [formGroup]="recetaForm">
+    <div class="field">
+      <label for="id"> ID </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="id"
+        id="id"
+        class="w-full"
+      />
+    </div>
+
+    <div class="field">
+      <label for="id"> LITROS ESTIMADOS </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="id"
+        id="id"
+        class="w-full"
+      />
+    </div>
+
+    <!-- DESCRIPCION -->
+
+    <div class="field">
+      <label for="descripcion"> DESCRIPCION </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="descripcion"
+        id="descripcion"
+        class="w-full"
+      />
+    </div>
+
+    <!-- ESPECIFICACIONES -->
+
+    <div class="field">
+      <label for="especificaciones"> ESPECIFICACIONES </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="especificaciones"
+        id="especificaciones"
+        class="w-full"
+      />
+    </div>
+
+    <!-- NOMBRE -->
+
+    <div class="field">
+      <label for="nombre"> NOMBRE </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="nombre"
+        id="nombre"
+        class="w-full"
+      />
+    </div>
+
+    <!-- IMAGEN -->
+
+    <div class="field">
+      <label for="imagen"> IMAGEN </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="imagen"
+        id="imagen"
+        class="w-full"
+      />
+    </div>
+
+    <!-- RUTA FONDO -->
+
+    <div class="field">
+      <label for="rutaFondo"> RUTA FONDO </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="rutaFondo"
+        id="rutaFondo"
+        class="w-full"
+      />
+    </div>
+
+    <!-- INGREDIENTES -->
+
+    <div class="field">
+      <label for=""> INGREDIENTES </label>
+    </div>
+
+    <div class="field flex justify-content-center gap-1">
+      <p-button
+        [label]="labelBoton"
+        styleClass="w-full"
+        icon="fa-solid fa-save"
+        (click)="modificar ? actualizar() : guardar()"
+      ></p-button>
+      <p-button
+        label="Cancelar"
+        styleClass="w-full"
+        icon="fa-solid fa-times"
+        (click)="display = false"
+      ></p-button>
+    </div>
+  </form>
+</p-dialog>

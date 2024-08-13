@@ -37,8 +37,14 @@ export class InsumosTablaComponent implements OnInit {
     this.insumosService
       .obtener()
       .pipe(finalize(() => {}))
-      .subscribe((data: IInsumo[]) => {
-        this.insumos = data;
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.insumos = data;
+        },
+        error: (error: any) => {
+          console.error(error);
+        },
       });
   }
 }

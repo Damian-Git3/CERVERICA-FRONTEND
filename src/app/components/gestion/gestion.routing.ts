@@ -1,8 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
 import { GestionComponent } from './gestion.component';
-import { MenuComponent } from './menu/menu.component';
 import { ProduccionesModule } from './producciones/producciones.module';
 import { InsumosModule } from './insumos/insumos.module';
+import { RecetasModule } from './recetas/recetas.module';
 
 const routes: Routes = [
   {
@@ -16,6 +16,10 @@ const routes: Routes = [
       {
         path: 'insumos',
         loadChildren: () => InsumosModule
+      },
+      {
+        path: 'recetas',
+        loadChildren: () => RecetasModule
       },
       {
         path: '**',

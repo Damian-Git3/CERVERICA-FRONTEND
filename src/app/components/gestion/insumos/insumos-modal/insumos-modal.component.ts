@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { InsumosService } from '../../../../services/insumos/insumos.service';
 import { IInsumo } from '../../../../interfaces/insumo.interface';
+import { catchError, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-insumos-modal',
@@ -31,7 +32,9 @@ export class InsumosModalComponent implements OnInit {
 
   constructor(private insumosService: InsumosService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('InsumosModalComponent inicializado');
+  }
 
   get f() {
     return this.insumoForm.controls;
@@ -43,7 +46,7 @@ export class InsumosModalComponent implements OnInit {
     if (insumo) {
       console.log(insumo);
       this.modificar = true;
-      this.titulo = 'Editar insumo';
+      this.titulo = 'Editar Receta';
       this.labelBoton = 'Actualizar';
       this.insumo = insumo;
       this.insumoForm.setValue(insumo);
@@ -51,7 +54,7 @@ export class InsumosModalComponent implements OnInit {
       console.log(insumo);
       this.modificar = false;
       this.labelBoton = 'Guardar';
-      this.titulo = 'Crear insumo';
+      this.titulo = 'Crear Receta';
     }
 
     console.log(this.insumoForm.value);
@@ -67,16 +70,29 @@ export class InsumosModalComponent implements OnInit {
   guardar() {
     this.insumosService
       .crear(this.insumoForm.value)
-      .subscribe((data: IInsumo) => {
-        this.ocultar();
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.ocultar();
+        },
+        error: (error: any) => {
+          console.error(error);
+        },
       });
   }
 
   actualizar() {
     this.insumosService
       .modificar(this.f['id'].value, this.insumoForm.value)
-      .subscribe((data: IInsumo) => {
-        this.ocultar();
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          this.ocultar();
+        },
+        error: (error: any) => {
+          console.error(error);
+        },
       });
   }
 }
