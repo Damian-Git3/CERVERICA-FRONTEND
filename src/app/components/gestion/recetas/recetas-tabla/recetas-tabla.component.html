@@ -48,10 +48,10 @@
   <ng-template pTemplate="body" let-receta>
     <tr (dblclick)="modal.show(receta)">
       <td>{{ receta.id }}</td>
+      <td>{{ receta.nombre }}</td>
       <td>{{ receta.litrosEstimados }}</td>
       <td>{{ receta.precioLitro }}</td>
       <td>{{ receta.descripcion }}</td>
-      <td>{{ receta.nombre }}</td>
       <td>{{ receta.costoProduccion }}</td>
       <td>{{ receta.imagen }}</td>
       <td>{{ receta.fechaRegistrado }}</td>

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RecetaService } from '../../../../services/receta/receta.service';
 import { finalize } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
+import { Producto } from '../../../../interfaces/productos/producto';
 
 @Component({
   selector: 'app-recetas-tabla',
@@ -9,6 +11,8 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './recetas-tabla.component.css',
 })
 export class RecetasTablaComponent implements OnInit {
+  public _CompartidoService = inject(CompartidoService);
+
   public recetas: any[] = [];
   public items: MenuItem[];
   constructor(private recetaService: RecetaService) {
@@ -30,11 +34,11 @@ export class RecetasTablaComponent implements OnInit {
 
   obtenerRecetas() {
     this.recetaService
-      .obtener()
+      .obtener(this._CompartidoService.obtenerSesion().token)
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          console.log(data);
+          this.recetas = data;
         },
         error: (error: any) => {
           console.error(error);

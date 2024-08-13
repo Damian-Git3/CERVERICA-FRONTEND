@@ -11,8 +11,9 @@ export class RecetaService {
 
   constructor(private http: HttpClient) {}
 
-  obtener(): Observable<any> {
-    return this.http.get(`${this._baseURL}`);
+  obtener(token: string): Observable<any> {
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get(`${this._baseURL}`, { headers });
   }
 
   crear(data: any): Observable<any> {
