@@ -24,10 +24,6 @@ export class AccountService {
     return this.http.post<SesionDTO>(`${this._baseURL}/login`, request);
   }
 
-  cerrarSesion(): Observable<any> {
-    return this.http.post<any>(`${this._baseURL}/logout`, null);
-  }
-
   activar(id: number): Observable<any> {
     return this.http.get<any>(`${this._baseURL}/activar/${id}`);
   }
@@ -58,44 +54,6 @@ export class AccountService {
 
   obtenerUsuarios(): Observable<any> {
     return this.http.get<any>(`${this._baseURL}`);
-  }
-
-  cerrarSesion(token: string): Observable<SesionDTO> {
-    this._CarritoService.vaciarProductosCarrito();
-
-    const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post<SesionDTO>(
-      `${this._baseURL}/logout`,
-      {},
-      { headers }
-    );
-  }
-
-  obtenerDetallesCuenta(token: string): Observable<SesionDTO> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.get<SesionDTO>(`${this._baseURL}/detail`, { headers });
-  }
-
-  cerrarSesion(token: string): Observable<SesionDTO> {
-    this._CarritoService.vaciarProductosCarrito();
-
-    const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post<SesionDTO>(
-      `${this._baseURL}/logout`,
-      {},
-      { headers }
-    );
-  }
-
-  obtenerDetallesCuenta(token: string): Observable<SesionDTO> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-
-    return this.http.get<SesionDTO>(`${this._baseURL}/detail`, { headers });
   }
 
   cerrarSesion(token: string): Observable<SesionDTO> {
