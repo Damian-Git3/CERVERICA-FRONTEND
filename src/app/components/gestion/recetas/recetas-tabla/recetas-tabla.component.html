@@ -1,0 +1,73 @@
+<p-toolbar>
+  <div class="p-toolbar-group-start">
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerRecetas()"
+    />
+    <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+
+    <p-button icon="pi pi-upload" />
+  </div>
+  <div class="p-toolbar-group-center">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText placeholder="Search" />
+    </span>
+  </div>
+  <div class="p-toolbar-group-end">
+    <p-splitButton label="Save" icon="pi pi-check" [model]="items" />
+  </div>
+</p-toolbar>
+<p-table #dt [value]="recetas" [customSort]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn=" id">ID <p-sortIcon field="id" /></th>
+      <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
+      <th pSortableColumn="litrosEstimados">
+        LITROS ESTIMADOS <p-sortIcon field="litrosEstimados" />
+      </th>
+      <th pSortableColumn="precioLitro">
+        PRECIO LITRO <p-sortIcon field="precioLitro" />
+      </th>
+      <th pSortableColumn="descripcion">
+        DESCRIPCION <p-sortIcon field="descripcion" />
+      </th>
+      <th pSortableColumn="costoProduccion">
+        COSTO PRODUCCION <p-sortIcon field="costoProduccion" />
+      </th>
+      <th pSortableColumn="imagen">IMAGEN <p-sortIcon field="imagen" /></th>
+      <th pSortableColumn="fechaRegistrado">
+        FECHA REGISTRADO <p-sortIcon field="fechaRegistrado" />
+      </th>
+      <th pSortableColumn="activo">ACTIVO <p-sortIcon field="activo" /></th>
+
+      <th>ACCIONES</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-receta>
+    <tr (dblclick)="modal.show(receta)">
+      <td>{{ receta.id }}</td>
+      <td>{{ receta.nombre }}</td>
+      <td>{{ receta.litrosEstimados }}</td>
+      <td>{{ receta.precioLitro }}</td>
+      <td>{{ receta.descripcion }}</td>
+      <td>{{ receta.costoProduccion }}</td>
+      <td><img src="./img/botellas/{{ receta.imagen }}"></td>
+      <td>{{ receta.fechaRegistrado }}</td>
+      <td>
+        <p *ngIf="receta.activo">Si</p>
+        <p *ngIf="!receta.activo">No</p>
+      </td>
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          class="mr-2"
+          (click)="modal.show(receta)"
+        ></p-button>
+        <p-button icon="pi pi-trash" class="mr-2"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<app-recetas-modal #modal (reload)="obtenerRecetas()"></app-recetas-modal>

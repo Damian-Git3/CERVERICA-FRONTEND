@@ -1,0 +1,33 @@
+import { Routes, RouterModule } from '@angular/router';
+import { GestionComponent } from './gestion.component';
+import { ProduccionesModule } from './producciones/producciones.module';
+import { InsumosModule } from './insumos/insumos.module';
+import { RecetasModule } from './recetas/recetas.module';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: GestionComponent,
+    children: [
+      {
+        path: 'producciones',
+        loadChildren: () => ProduccionesModule
+      },
+      {
+        path: 'insumos',
+        loadChildren: () => InsumosModule
+      },
+      {
+        path: 'recetas',
+        loadChildren: () => RecetasModule
+      },
+      {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full',
+      },
+    ],
+  },
+];
+
+export const GestionRoutes = RouterModule.forChild(routes);
