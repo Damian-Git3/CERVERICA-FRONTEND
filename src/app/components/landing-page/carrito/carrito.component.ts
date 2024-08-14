@@ -13,6 +13,7 @@ import { inicializarFuncionesTarjeta } from './funciones-tarjeta';
 import { EliminarProductoCarritoDTO } from '../../../interfaces/carrito/eliminar-producto-carrito-dto';
 import { ProductosService } from '../../../services/productos/productos.service';
 import { Producto } from '../../../interfaces/productos/producto';
+import { AlertasService } from '../../../services/shared/alertas/alertas.service';
 
 @Component({
   selector: 'app-carrito',
@@ -25,6 +26,7 @@ export class CarritoComponent {
   _VentasService = inject(VentasService);
   _MessageService = inject(MessageService);
   _ProductoService = inject(ProductosService);
+  _AlertasService = inject(AlertasService);
   _Router = inject(Router);
   formBuilder = inject(FormBuilder);
 
@@ -156,7 +158,8 @@ export class CarritoComponent {
         .crearVenta(crearVenta, this._CompartidoService.obtenerSesion().token)
         .subscribe({
           next: (nuevaVenta: VentaDTO) => {
-            console.log(nuevaVenta);
+            this._AlertasService.alertaSuccess("¡Compra realizada con éxito!", "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'");
+            this._CarritoService.vaciarProductosCarrito();
           },
           error: (error) => {
             if (error.status == 409) {
@@ -182,7 +185,7 @@ export class CarritoComponent {
 
   ngOnInit(): void {
     this.obtenerProductos();
-    
+
     this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
       this.productosCarrito = productosCarrito;
       this.contadorProductosCarrito = productosCarrito.length;
@@ -218,14 +221,15 @@ export class CarritoComponent {
   }
 
   obtenerProductoCorrespondiente(productoCarrito: ProductoCarrito): any {
-    return this.productos.find(producto => producto.id === productoCarrito.receta.id);
+    return this.productos.find(
+      (producto) => producto.id === productoCarrito.receta.id
+    );
   }
 
   obtenerProductos() {
     this._ProductoService.obtenerProductos().subscribe({
       next: (productosResponse) => {
         this.productos = productosResponse;
-        
       },
       error: (e) => {
         console.log(e);
