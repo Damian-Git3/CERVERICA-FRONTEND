@@ -19,7 +19,17 @@
     <p-splitButton label="Save" icon="pi pi-check" [model]="items" />
   </div>
 </p-toolbar>
-<p-table #dt [value]="recetas">
+
+<p-table
+  #dt
+  [value]="recetas"
+  [styleClass]="'p-datatable-sm'"
+  [rows]="5"
+  [paginator]="true"
+  [showCurrentPageReport]="true"
+  [selectionMode]="'single'"
+  currentPageReportTemplate="{first} de {last}"
+>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn=" id">ID <p-sortIcon field="id" /></th>
@@ -29,9 +39,6 @@
       </th>
       <th pSortableColumn="precioLitro">
         PRECIO LITRO <p-sortIcon field="precioLitro" />
-      </th>
-      <th pSortableColumn="descripcion">
-        DESCRIPCION <p-sortIcon field="descripcion" />
       </th>
       <th pSortableColumn="costoProduccion">
         COSTO PRODUCCION <p-sortIcon field="costoProduccion" />
@@ -51,18 +58,21 @@
       <td>{{ receta.nombre }}</td>
       <td>{{ receta.litrosEstimados }}</td>
       <td>{{ receta.precioLitro }}</td>
-      <td>{{ receta.descripcion }}</td>
       <td>{{ receta.costoProduccion }}</td>
       <td>{{ receta.imagen }}</td>
-      <td>{{ receta.fechaRegistrado }}</td>
-      <td>{{ receta.activo }}</td>
+      <td>{{ receta.fechaRegistrado | date }}</td>
+      <td>
+        <p-tag *ngIf="receta.activo" severity="success" value="ACTIVO" [rounded]="true" />
+        <p-tag *ngIf="!receta.activo" severity="danger" value="INACTIVO" [rounded]="true" />
+      </td>
       <td>
         <p-button
+        size="small"
           icon="pi pi-pencil"
           class="mr-2"
           (click)="modal.show(receta)"
         ></p-button>
-        <p-button icon="pi pi-trash" class="mr-2"></p-button>
+        <p-button size="small" icon="pi pi-trash" class="mr-2"></p-button>
       </td>
     </tr>
   </ng-template>

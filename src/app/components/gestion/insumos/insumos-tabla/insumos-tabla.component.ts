@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IInsumo } from '../../../../interfaces/insumo.interface';
 import { InsumosService } from '../../../../services/insumos/insumos.service';
 import { finalize } from 'rxjs';
+import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 
 @Component({
   selector: 'app-insumos-tabla',
@@ -14,7 +15,8 @@ export class InsumosTablaComponent implements OnInit {
   public items: any[] = [];
 
   constructor(
-    private insumosService: InsumosService
+    private insumosService: InsumosService,
+    private alertasService: AlertasService
   ) {
     console.log('ProduccionesTablaComponent inicializado');
     this.items = [
@@ -39,10 +41,12 @@ export class InsumosTablaComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
+          this.alertasService.showSuccess('Insumos obtenidos correctamente');
           console.log(data);
           this.insumos = data;
         },
         error: (error: any) => {
+          this.alertasService.showError('Error al obtener los insumos');
           console.error(error);
         },
       });
