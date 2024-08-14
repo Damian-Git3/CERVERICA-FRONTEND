@@ -1,8 +1,8 @@
 <p-dialog
+  #modal
   [(visible)]="display"
   [draggable]="false"
   [maximizable]="false"
-  [header]="titulo"
   [modal]="true"
   (onHide)="ocultar()"
 >
@@ -102,12 +102,13 @@
 
     <div class="field flex justify-content-center gap-1">
       <p-button
-        [label]="labelBoton"
+        #btnGuardar
         styleClass="w-full"
         icon="fa-solid fa-save"
         (click)="modificar ? actualizar() : guardar()"
       ></p-button>
       <p-button
+        #btnCancelar
         label="Cancelar"
         styleClass="w-full"
         icon="fa-solid fa-times"

@@ -1,0 +1,53 @@
+<p-toolbar>
+  <div class="p-toolbar-group-start">
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerRoles()"
+    />
+    <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+
+    <p-button icon="pi pi-upload" />
+  </div>
+  <div class="p-toolbar-group-center">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText placeholder="Search" />
+    </span>
+  </div>
+  <div class="p-toolbar-group-end">
+    <p-splitButton label="Save" icon="pi pi-check" [model]="items" />
+  </div>
+</p-toolbar>
+<p-table #dt [value]="roles">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="id">ID <p-sortIcon field="id" /></th>
+      <th pSortableColumn="precioLitro">NOMBRE <p-sortIcon field="name" /></th>
+      <th pSortableColumn="descripcion">
+        USUARIOS TOTALES <p-sortIcon field="totalUsers" />
+      </th>
+      <th>ACCIONES</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rol>
+    <tr (dblclick)="modal.show(rol)">
+      <td>{{ rol.id }}</td>
+      <td>{{ rol.name }}</td>
+      <td>{{ rol.totalUsers }}</td>
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          class="mr-2"
+          (click)="modal.show(rol)"
+        ></p-button>
+        <p-button
+          icon="pi pi-trash"
+          class="mr-2"
+          (click)="eliminar(rol.id)"
+        ></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<app-roles-modal #modal (reload)="obtenerRoles()"></app-roles-modal>

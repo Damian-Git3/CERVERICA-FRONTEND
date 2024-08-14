@@ -46,7 +46,7 @@ export class InsumosModalComponent implements OnInit {
     if (insumo) {
       console.log(insumo);
       this.modificar = true;
-      this.titulo = 'Editar Receta';
+      this.titulo = 'Editar Insumo';
       this.labelBoton = 'Actualizar';
       this.insumo = insumo;
       this.insumoForm.setValue(insumo);
@@ -54,7 +54,7 @@ export class InsumosModalComponent implements OnInit {
       console.log(insumo);
       this.modificar = false;
       this.labelBoton = 'Guardar';
-      this.titulo = 'Crear Receta';
+      this.titulo = 'Crear Insumo';
     }
 
     console.log(this.insumoForm.value);
