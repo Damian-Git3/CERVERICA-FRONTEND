@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
-import { RecetasRoutes } from './recetas.routing';
-import { RecetasTablaComponent } from './recetas-tabla/recetas-tabla.component';
-import { RecetasModalComponent } from './recetas-modal/recetas-modal.component';
+import { CommonModule } from '@angular/common';
+import { RolesModalComponent } from './roles-modal/roles-modal.component';
+import { RolesTablaComponent } from './roles-tabla/roles-tabla.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -10,13 +9,15 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
-import { TagModule } from 'primeng/tag';
+import { RolesRoutes } from './roles.routing';
+
+
 
 @NgModule({
-  declarations: [RecetasTablaComponent, RecetasModalComponent],
+  declarations: [RolesModalComponent, RolesTablaComponent],
   imports: [
     CommonModule,
-    RecetasRoutes,
+    RolesRoutes,
     DialogModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -24,10 +25,6 @@ import { TagModule } from 'primeng/tag';
     SplitButtonModule,
     ButtonModule,
     TableModule,
-    TagModule,
-  ],
-  providers: [
-    DatePipe
   ],
 })
-export class RecetasModule {}
+export class RolesModule {}

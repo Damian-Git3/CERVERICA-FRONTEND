@@ -4,7 +4,7 @@ import { CompartidoService } from '../../services/compartido/compartido.service'
 import { MessageService } from 'primeng/api';
 
 export const gestionGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
+  /* const router = inject(Router);
   const _CompartidosService = inject(CompartidoService);
   const _MessageService = inject(MessageService);
 
@@ -23,7 +23,7 @@ export const gestionGuard: CanActivateFn = (route, state) => {
     } else {
       return true;
     }
-  }
+  } */
 
   return true;
 };

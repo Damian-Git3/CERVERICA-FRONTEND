@@ -3,6 +3,7 @@ import { GestionComponent } from './gestion.component';
 import { ProduccionesModule } from './producciones/producciones.module';
 import { InsumosModule } from './insumos/insumos.module';
 import { RecetasModule } from './recetas/recetas.module';
+import { RolesModule } from './roles/roles.module';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'recetas',
         loadChildren: () => RecetasModule
+      },
+      {
+        path: 'roles',
+        loadChildren: () => RolesModule
       },
       {
         path: '**',

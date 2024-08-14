@@ -1,8 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { IReceta } from '../../../../interfaces/receta.interface';
 import { RecetaService } from '../../../../services/receta/receta.service';
+import { Dialog } from 'primeng/dialog';
+import { Button } from 'primeng/button';
+import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 
 @Component({
   selector: 'app-recetas-modal',
@@ -11,6 +14,8 @@ import { RecetaService } from '../../../../services/receta/receta.service';
 })
 export class RecetasModalComponent implements OnInit {
   @Output() reload: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('modal') modal!: Dialog;
+  @ViewChild('btnGuardar') btnGuardar!: Button;
   public display: boolean = false;
   public receta: IReceta | undefined;
   public titulo: string = '';
@@ -21,7 +26,7 @@ export class RecetasModalComponent implements OnInit {
     id: new FormControl({ value: '', disabled: true }),
     litrosEstimados: new FormControl(''),
     descripcion: new FormControl(''),
-    especificaciones: new FormControl(''),
+    especificaciones: new FormControl({value: null, disabled: false}),
     nombre: new FormControl(''),
     imagen: new FormControl(''),
     rutaFondo: new FormControl(''),
@@ -34,7 +39,7 @@ export class RecetasModalComponent implements OnInit {
     ]),
   });
 
-  constructor(private recetasService: RecetaService) {}
+  constructor(private recetasService: RecetaService, private alertasService: AlertasService) {}
 
   ngOnInit() {
     console.log('RecetasModalComponent inicializado');
@@ -48,42 +53,38 @@ export class RecetasModalComponent implements OnInit {
     this.display = true;
 
     if (receta) {
-      console.log(receta);
       this.modificar = true;
-      this.titulo = 'Editar Receta';
-      this.labelBoton = 'Actualizar';
+      this.modal.header = 'Editar Receta';
+      this.btnGuardar.label = 'Actualizar';
       this.receta = receta;
       this.recetaForm.setValue(receta);
     } else {
-      console.log(receta);
       this.modificar = false;
-      this.labelBoton = 'Guardar';
-      this.titulo = 'Crear Receta';
+      this.btnGuardar.label = 'Guardar';
+      this.modal.header = 'Crear Receta';
+
     }
 
-    console.log(this.recetaForm.value);
   }
 
   public ocultar() {
-    this.display = false;
+    this.modal.visible = false;
     this.recetaForm.reset();
     this.receta = undefined;
     this.reload.emit();
   }
 
   public guardar() {
-    // if (this.recetaForm.invalid) {
-    //   return;
-    // }
-
     this.recetasService
       .crear(this.recetaForm.value)
       .pipe(finalize(() => this.ocultar()))
       .subscribe({
         next: (data: any) => {
+          this.alertasService.showSuccess('Receta creada correctamente');
           console.log(data);
         },
         error: (error: any) => {
+          this.alertasService.showError('Error al crear la receta');
           console.error(error);
         },
       });
@@ -95,10 +96,12 @@ export class RecetasModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
+          this.alertasService.showSuccess('Receta actualizada correctamente');
           console.log(data);
           this.ocultar();
         },
         error: (error: any) => {
+          this.alertasService.showError('Error al actualizar la receta');
           console.error(error);
         },
       });
