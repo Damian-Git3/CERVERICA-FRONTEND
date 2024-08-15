@@ -56,7 +56,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-receta>
-    <tr (dblclick)="receta.activo ? modal.show(receta.id) : null">
+    <tr (dblclick)="receta.activo ?? modal.show(receta.id)">
       <td>{{ receta.id }}</td>
       <td>{{ receta.imagen }}</td>
       <td>{{ receta.nombre }}</td>
