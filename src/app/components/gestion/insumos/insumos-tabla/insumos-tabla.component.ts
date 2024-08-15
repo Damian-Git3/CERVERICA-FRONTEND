@@ -38,7 +38,7 @@ export class InsumosTablaComponent implements OnInit {
   public obtenerInsumos() {
     this.insumosService
       .obtener()
-      .pipe(finalize(() => {}))
+      .pipe(finalize(() => { }))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Insumos obtenidos correctamente');
@@ -47,6 +47,51 @@ export class InsumosTablaComponent implements OnInit {
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener los insumos');
+          console.error(error);
+        },
+      });
+  }
+
+  activar(id: number) {
+    this.insumosService.activar(id)
+      .pipe(finalize(() => { }))
+      .subscribe({
+        next: (data: any) => {
+          this.alertasService.showSuccess('Insumo activado correctamente');
+          this.obtenerInsumos();
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al activar el insumo');
+          console.error(error);
+        },
+      });
+  }
+
+  desactivar(id: number) {
+    this.insumosService.desactivar(id)
+      .pipe(finalize(() => { }))
+      .subscribe({
+        next: (data: any) => {
+          this.alertasService.showSuccess('Insumo desactivado correctamente');
+          this.obtenerInsumos();
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al desactivar el insumo');
+          console.error(error);
+        },
+      });
+  }
+
+  eliminar(id: number) {
+    this.insumosService.eliminar(id)
+      .pipe(finalize(() => { }))
+      .subscribe({
+        next: (data: any) => {
+          this.alertasService.showSuccess('Insumo eliminado correctamente');
+          this.obtenerInsumos();
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al eliminar el insumo');
           console.error(error);
         },
       });

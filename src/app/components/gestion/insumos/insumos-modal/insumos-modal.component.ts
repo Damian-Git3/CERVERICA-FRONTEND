@@ -30,7 +30,8 @@ export class InsumosModalComponent implements OnInit {
     activo: new FormControl(''),
   });
 
-  constructor(private insumosService: InsumosService,
+  constructor(
+    private insumosService: InsumosService,
     private alertasService: AlertasService
   ) {}
 

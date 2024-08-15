@@ -16,7 +16,11 @@ export class RecetasTablaComponent implements OnInit {
 
   public recetas: any[] = [];
   public items: MenuItem[];
-  constructor(private recetaService: RecetaService, private alertasService: AlertasService) {
+  public valorBuscado: string = '';
+  constructor(
+    private recetaService: RecetaService,
+    private alertasService: AlertasService
+  ) {
     this.items = [
       {
         label: 'Update',
@@ -47,5 +51,50 @@ export class RecetasTablaComponent implements OnInit {
           console.error(error);
         },
       });
+  }
+
+  activar(id: number) {
+    this.recetaService
+      .activar(id)
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          this.alertasService.showSuccess('Desbloqueado');
+          this.obtenerRecetas();
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al activar la receta');
+        },
+      });
+  }
+
+  desactivar(id: number) {
+    this.recetaService
+      .desactivar(id)
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          this.alertasService.showSuccess('Bloqueado');
+          this.obtenerRecetas();
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al desactivar la receta');
+        },
+      });
+  }
+
+  eliminar(id: number) {
+    this.recetaService
+      .eliminar(id)
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          this.alertasService.showSuccess('Eliminado');
+          this.obtenerRecetas();
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al eliminar');
+        },
+      });;
   }
 }
