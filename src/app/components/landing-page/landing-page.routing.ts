@@ -10,6 +10,8 @@ import { authGuard } from '../../guards/auth/auth.guard';
 import { CarritoComponent } from './carrito/carrito.component';
 import { carritoGuard } from '../../guards/carrito/carrito.guard';
 import { CuentaComponent } from './cuenta/cuenta.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
 
 const routes: Routes = [
   {
@@ -50,6 +52,18 @@ const routes: Routes = [
         path: 'carrito',
         pathMatch: 'full',
         component: CarritoComponent,
+        canActivate: [authGuard, carritoGuard],
+      },
+      {
+        path: 'pedidos',
+        pathMatch: 'full',
+        component: PedidosComponent,
+        canActivate: [authGuard, carritoGuard],
+      },
+      {
+        path: 'detalles-pedido/:id',
+        pathMatch: 'full',
+        component: DetallesPedidoComponent,
         canActivate: [authGuard, carritoGuard],
       },
       {

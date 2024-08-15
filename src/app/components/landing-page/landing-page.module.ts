@@ -16,6 +16,8 @@ import { CarritoComponent } from './carrito/carrito.component';
 import { MessageService } from 'primeng/api';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { RecetaComponent } from './carrito/receta/receta.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
+import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { RecetaComponent } from './carrito/receta/receta.component';
     CarritoComponent,
     CuentaComponent,
     RecetaComponent,
+    PedidosComponent,
+    DetallesPedidoComponent,
   ],
   imports: [CommonModule, RouterOutlet, LandingPageRouting, PrimeModule],
   exports: [],

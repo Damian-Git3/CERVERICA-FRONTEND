@@ -288,7 +288,7 @@
 }
 
 [data-badge="OutStock"]:before {
-  content: "Acabado";
+  content: "¡Agotado!";
   background: #e72929;
   color: white;
 }

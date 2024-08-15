@@ -13,6 +13,8 @@
   </p-dropdown>
 </div>
 
+<p-progressBar mode="indeterminate" *ngIf="obteniendoProductos"/>
+
 <div class="contenedor-productos">
   <app-card *ngFor="let producto of productos" [producto]="producto" [favoritosUsuario]="favoritosUsuario"
     (actualizarProductos)="actualizarProductos()" (agregarFavorito)="agregarFavorito($event)"

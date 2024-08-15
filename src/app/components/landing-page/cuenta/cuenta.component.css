@@ -47,6 +47,8 @@
   transition: 0.5s;
   cursor: pointer;
   flex-direction: column;
+  text-decoration: none;
+  color: black;
 }
 
 .modulo:hover {

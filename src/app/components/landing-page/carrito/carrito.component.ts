@@ -52,6 +52,7 @@ export class CarritoComponent {
   formPedido: FormGroup;
   formDireccionEnvio: FormGroup;
   formTarjeta: FormGroup;
+  creandoVenta: boolean = false;
 
   constructor() {
     this.formPedido = this.formBuilder.group({
@@ -154,12 +155,21 @@ export class CarritoComponent {
 
       crearVenta.detalles = detallesVenta;
 
+      this.creandoVenta = true;
+
       this._VentasService
         .crearVenta(crearVenta, this._CompartidoService.obtenerSesion().token)
         .subscribe({
           next: (nuevaVenta: VentaDTO) => {
-            this._AlertasService.alertaSuccess("¡Compra realizada con éxito!", "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'");
+            this._AlertasService.alertaSuccess(
+              '¡Compra realizada con éxito!',
+              "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'"
+            );
             this._CarritoService.vaciarProductosCarrito();
+
+            this.creandoVenta = false;
+
+            this._Router.navigateByUrl('cerverica/pedidos');
           },
           error: (error) => {
             if (error.status == 409) {
@@ -178,6 +188,8 @@ export class CarritoComponent {
             } else {
               console.log(error);
             }
+
+            this.creandoVenta = false;
           },
         });
     }

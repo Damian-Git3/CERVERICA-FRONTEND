@@ -4,11 +4,10 @@
     <p>{{ contadorProductosCarrito }} productos</p>
     <ng-container *ngIf="productos.length > 0">
       <app-receta *ngFor="let productoCarrito of productosCarrito"
-                  [producto]="obtenerProductoCorrespondiente(productoCarrito)"
-                  [productoCarrito]="productoCarrito">
+        [producto]="obtenerProductoCorrespondiente(productoCarrito)" [productoCarrito]="productoCarrito">
       </app-receta>
     </ng-container>
-    
+
 
     <a [routerLink]="['/cerverica/productos']" class="back-to-shop">← Regresar a comprar</a>
   </div>
@@ -263,6 +262,8 @@
       <span>PRECIO TOTAL</span>
       <span>{{ totalPrecioCervezas | currency : "MXN" }}</span>
     </div>
+
+    <p-progressBar mode="indeterminate" *ngIf="creandoVenta" />
 
     <button class="checkout" (click)="realizarPedido()" [disabled]="this.contadorProductosCarrito == 0">PAGAR</button>
   </div>
