@@ -4,6 +4,7 @@ import { ProduccionesModule } from './producciones/producciones.module';
 import { InsumosModule } from './insumos/insumos.module';
 import { RecetasModule } from './recetas/recetas.module';
 import { RolesModule } from './roles/roles.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
 
 const routes: Routes = [
   {
@@ -12,19 +13,23 @@ const routes: Routes = [
     children: [
       {
         path: 'producciones',
-        loadChildren: () => ProduccionesModule
+        loadChildren: () => ProduccionesModule,
       },
       {
         path: 'insumos',
-        loadChildren: () => InsumosModule
+        loadChildren: () => InsumosModule,
       },
       {
         path: 'recetas',
-        loadChildren: () => RecetasModule
+        loadChildren: () => RecetasModule,
       },
       {
         path: 'roles',
-        loadChildren: () => RolesModule
+        loadChildren: () => RolesModule,
+      },
+      {
+        path: 'proveedores',
+        loadChildren: () => ProveedoresModule,
       },
       {
         path: '**',

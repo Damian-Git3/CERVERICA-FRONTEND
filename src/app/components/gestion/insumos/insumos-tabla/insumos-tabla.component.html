@@ -51,7 +51,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-producto>
-    <tr (dblclick)="producto?? modal.show(producto.id)">
+    <tr (dblclick)="producto.activo? modal.show(producto.id) : null">
       <td>{{ producto.id }}</td>
       <td>{{ producto.nombre }}</td>
       <td>{{ producto.unidadMedida }}</td>
