@@ -12,7 +12,7 @@
   <div class="p-toolbar-group-center">
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
-      <input pInputText placeholder="BUSCAR" (input)="tablaRecetas.filterGlobal(getEventValue($event), 'contains')"  />
+      <input pInputText placeholder="BUSCAR" (input)="tablaRecetas.filterGlobal($any($event).target.value, 'contains')"  />
       oninput="this.value = this.value.toUpperCase()"
     </span>
   </div>
