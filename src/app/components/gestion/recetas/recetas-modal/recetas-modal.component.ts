@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { IReceta } from '../../../../interfaces/receta.interface';
@@ -24,22 +30,28 @@ export class RecetasModalComponent implements OnInit {
 
   public recetaForm: FormGroup = new FormGroup({
     id: new FormControl({ value: '', disabled: true }),
-    litrosEstimados: new FormControl(''),
+    litrosEstimados: new FormControl(0),
     descripcion: new FormControl(''),
-    especificaciones: new FormControl({value: null, disabled: false}),
+    especificaciones: new FormControl({ value: null, disabled: false }),
     nombre: new FormControl(''),
     imagen: new FormControl(''),
     rutaFondo: new FormControl(''),
-    /* ARREGLO DE INGREDIENTES */
-    ingredientes: new FormArray([
+    precioPaquete1: new FormControl(0),
+    precioPaquete6: new FormControl(0),
+    precioPaquete12: new FormControl(0),
+    precioPaquete24: new FormControl(0),
+    ingredientesReceta: new FormArray([
       new FormGroup({
-        idInsumo: new FormControl(''),
-        cantidad: new FormControl(''),
+        idInsumo: new FormControl(1),
+        cantidad: new FormControl(0),
       }),
     ]),
   });
 
-  constructor(private recetasService: RecetaService, private alertasService: AlertasService) {}
+  constructor(
+    private recetasService: RecetaService,
+    private alertasService: AlertasService
+  ) {}
 
   ngOnInit() {
     console.log('RecetasModalComponent inicializado');
@@ -49,26 +61,22 @@ export class RecetasModalComponent implements OnInit {
     return this.recetaForm.controls;
   }
 
-  public show(receta?: IReceta | undefined) {
+  public show(id?: number) {
     this.display = true;
 
-    if (receta) {
-      this.modificar = true;
+    if (id) {
       this.modal.header = 'Editar Receta';
-      this.btnGuardar.label = 'Actualizar';
-      this.receta = receta;
-      this.recetaForm.setValue(receta);
+      this.modificar = true;
+      this.obtenerReceta(id);
     } else {
       this.modificar = false;
       this.btnGuardar.label = 'Guardar';
       this.modal.header = 'Crear Receta';
-
     }
-
   }
 
   public ocultar() {
-    this.modal.visible = false;
+    this.display = false;
     this.recetaForm.reset();
     this.receta = undefined;
     this.reload.emit();
@@ -106,4 +114,32 @@ export class RecetasModalComponent implements OnInit {
         },
       });
   }
+
+  obtenerReceta(id: number) {
+    this.recetasService
+      .obtenerPorId(id)
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          this.f['id'].setValue(data.id);
+          this.f['litrosEstimados'].setValue(data.litrosEstimados);
+          this.f['descripcion'].setValue(data.descripcion);
+          this.f['especificaciones'].setValue(data.especificaciones);
+          this.f['nombre'].setValue(data.nombre);
+          this.f['imagen'].setValue(data.imagen);
+          this.f['rutaFondo'].setValue(data.rutaFondo);
+          this.f['precioPaquete1'].setValue(data.precioPaquete1);
+          this.f['precioPaquete6'].setValue(data.precioPaquete6);
+          this.f['precioPaquete12'].setValue(data.precioPaquete12);
+          this.f['precioPaquete24'].setValue(data.precioPaquete24);
+
+          console.log(this.recetaForm.value);
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al obtener la receta');
+        },
+      });
+  }
+
+  
 }
