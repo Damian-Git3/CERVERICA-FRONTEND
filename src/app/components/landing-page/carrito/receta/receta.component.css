@@ -45,10 +45,10 @@
 }
 
 .quantity button:disabled {
-  background-color: #e0e0e0; /* Color de fondo para botones desactivados */
-  color: #a0a0a0; /* Color del texto para botones desactivados */
-  border: 1px solid #c0c0c0; /* Color del borde para botones desactivados */
-  cursor: not-allowed; /* Cambia el cursor cuando el botón está desactivado */
+  background-color: #e0e0e0;
+  color: #a0a0a0;
+  border: 1px solid #c0c0c0;
+  cursor: not-allowed;
 }
 
 .quantity input {

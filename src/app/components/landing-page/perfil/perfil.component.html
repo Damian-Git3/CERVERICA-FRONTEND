@@ -1,1 +1,67 @@
-<p>perfil works!</p>
+<div class="contenedor-perfil">
+    <div class="card-login">
+        <div class="contenedor-imagen">
+            <p-avatar label="{{inicialesNombre}}" class="avatar" />
+            <p class="nombre-perfil">{{sesionActual.nombre}}</p>
+            <p class="rol">CerveFan! ⭐</p>
+        </div>
+
+        <div class="informacion">
+            <h1>Mi perfil</h1>
+
+            <hr>
+
+            <form [formGroup]="formPerfil" (ngSubmit)="actualizarPerfil()">
+                <div class="contenedor-inputs">
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-user"></i>
+                        </p-inputGroupAddon>
+                        <input pInputText placeholder="Nombre completo" [disabled]="true"
+                            value="{{sesionActual.nombre}}" />
+                    </p-inputGroup>
+
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-envelope"></i>
+                        </p-inputGroupAddon>
+                        <input pInputText placeholder="Correo electronico" [disabled]="true"
+                            value="{{sesionActual.email}}" />
+                    </p-inputGroup>
+
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-key"></i>
+                        </p-inputGroupAddon>
+                        <input pInputText placeholder="Contraseña actual" type="password" formControlName="currentPassword" />
+                    </p-inputGroup>
+
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-key"></i>
+                        </p-inputGroupAddon>
+                        <input pInputText placeholder="Nueva contraseña" type="password" formControlName="newPassword" />
+                    </p-inputGroup>
+
+                    <p-inputGroup>
+                        <p-inputGroupAddon>
+                            <i class="pi pi-key"></i>
+                        </p-inputGroupAddon>
+                        <input pInputText placeholder="Confirmar contraseña" type="password" formControlName="passwordConfirm" />
+                    </p-inputGroup>
+                </div>
+
+                <div class="mensajes-error">
+                    {{ mensajesError }}
+                </div>
+
+                <p-progressBar mode="indeterminate" *ngIf="cargando" />
+
+                <div class="contenedor-submit">
+                    <p-button type="submit" label="Guardar" icon="pi pi-save" iconPos="right" [loading]="cargando"
+                        [disabled]="formPerfil.invalid" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

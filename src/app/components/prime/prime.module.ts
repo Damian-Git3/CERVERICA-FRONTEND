@@ -15,6 +15,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { PasswordModule } from 'primeng/password';
+
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 
 @NgModule({
   declarations: [],
@@ -37,6 +41,9 @@ import { ProgressBarModule } from 'primeng/progressbar';
     BadgeModule,
     NgOptimizedImage,
     ProgressBarModule,
+    AvatarModule,
+    AvatarGroupModule,
+    PasswordModule
   ],
 })
 export class PrimeModule {}

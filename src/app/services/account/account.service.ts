@@ -6,6 +6,7 @@ import { LoginDTO } from '../../interfaces/usuario/login-dto';
 import { RegistrarDTO } from '../../interfaces/usuario/registrar-dto';
 import { SesionDTO } from '../../interfaces/usuario/sesion-dto';
 import { CarritoService } from '../carrito/carrito.service';
+import { ChangePasswordDTO } from '../../interfaces/usuario/change-password-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -44,8 +45,11 @@ export class AccountService {
     return this.http.post<any>(`${this._baseURL}/reset-password`, data);
   }
 
-  cambiarContrasena(data: any): Observable<any> {
-    return this.http.post<any>(`${this._baseURL}/change-password`, data);
+  cambiarContrasena(changePasswordDTO: ChangePasswordDTO): Observable<any> {
+    return this.http.post<any>(
+      `${this._baseURL}/change-password`,
+      changePasswordDTO
+    );
   }
 
   obtenerPerfil(): Observable<any> {

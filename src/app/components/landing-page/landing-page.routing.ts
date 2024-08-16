@@ -67,6 +67,12 @@ const routes: Routes = [
         canActivate: [authGuard, carritoGuard],
       },
       {
+        path: 'perfil',
+        pathMatch: 'full',
+        component: PerfilComponent,
+        canActivate: [authGuard, carritoGuard],
+      },
+      {
         path: '**',
         redirectTo: 'inicio',
         pathMatch: 'full',

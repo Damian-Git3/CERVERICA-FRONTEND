@@ -2,7 +2,7 @@
   <div class="cart-items">
     <h2>Detalles pedido 📃</h2>
 
-    <p-progressBar mode="indeterminate" *ngIf="cargandoPedido"/>
+    <p-progressBar mode="indeterminate" *ngIf="cargandoPedido" />
 
     <p>{{ cantidadTotalProductos }} productos</p>
 
@@ -13,7 +13,7 @@
         <span>{{ productoPedido.stock?.receta?.especificaciones }}</span>
         <span>Paquete de {{ productoPedido.pack }}</span>
       </div>
-      <span class="price">{{ (productoPedido.montoVenta ?? 0 / (productoPedido.cantidad ?? 1)) | currency: 'MXN' }}
+      <span class="price">{{ productoPedido.cantidad | currency: 'MXN' }}
         c/u</span>
       <div class="quantity">
         <input type="text" class="disabled" value="{{ productoPedido.cantidad }}" disabled />
