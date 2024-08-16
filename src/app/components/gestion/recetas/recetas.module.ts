@@ -15,6 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TooltipModule } from 'primeng/tooltip';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [RecetasTablaComponent, RecetasModalComponent],
@@ -33,7 +34,8 @@ import { TooltipModule } from 'primeng/tooltip';
     CardModule,
     InputNumberModule,
     TooltipModule,
-    FormsModule
+    FormsModule,
+    MultiSelectModule,
   ],
   providers: [
     DatePipe

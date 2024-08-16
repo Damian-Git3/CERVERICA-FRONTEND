@@ -5,13 +5,20 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  Form,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 import { finalize } from 'rxjs';
 import { IReceta } from '../../../../interfaces/receta.interface';
 import { RecetaService } from '../../../../services/receta/receta.service';
 import { Dialog } from 'primeng/dialog';
 import { Button } from 'primeng/button';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
+import { InsumosService } from '../../../../services/insumos/insumos.service';
 
 @Component({
   selector: 'app-recetas-modal',
@@ -27,8 +34,11 @@ export class RecetasModalComponent implements OnInit {
   public titulo: string = '';
   public labelBoton: string = '';
   public modificar: boolean = false;
+  public insumos: any[] = [];
 
-  public recetaForm: FormGroup = new FormGroup({
+  public insumosSeleccionados: any[] = [];
+
+  public recetaForm: FormGroup = this.fb.group({
     id: new FormControl({ value: '', disabled: true }),
     litrosEstimados: new FormControl(0),
     descripcion: new FormControl(''),
@@ -40,37 +50,41 @@ export class RecetasModalComponent implements OnInit {
     precioPaquete6: new FormControl(0),
     precioPaquete12: new FormControl(0),
     precioPaquete24: new FormControl(0),
-    ingredientesReceta: new FormArray([
-      new FormGroup({
-        idInsumo: new FormControl(1),
-        cantidad: new FormControl(0),
-      }),
-    ]),
+    ingredientesReceta: this.fb.array([]),
   });
 
   constructor(
     private recetasService: RecetaService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
+    private insumosService: InsumosService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    console.log('RecetasModalComponent inicializado');
+
+    this.obtenerInsumos();
   }
 
   get f() {
     return this.recetaForm.controls;
   }
 
-  public show(id?: number) {
-    this.display = true;
+  get ingredientesReceta(): FormArray {
+    return this.recetaForm.get('ingredientesReceta') as FormArray;
+  }
 
+  public show(id?: number) {
+    this.recetaForm.reset();
+    this.display = true;
+    this.obtenerInsumos();
     if (id) {
       this.modal.header = 'Editar Receta';
       this.modificar = true;
       this.obtenerReceta(id);
     } else {
       this.modificar = false;
-      this.btnGuardar.label = 'Guardar';
+      this.insumosSeleccionados = [];
+      this.insumos = [];
       this.modal.header = 'Crear Receta';
     }
   }
@@ -89,11 +103,11 @@ export class RecetasModalComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Receta creada correctamente');
-          console.log(data);
+
         },
         error: (error: any) => {
           this.alertasService.showError('Error al crear la receta');
-          console.error(error);
+
         },
       });
   }
@@ -116,6 +130,7 @@ export class RecetasModalComponent implements OnInit {
   }
 
   obtenerReceta(id: number) {
+
     this.recetasService
       .obtenerPorId(id)
       .pipe(finalize(() => {}))
@@ -133,7 +148,32 @@ export class RecetasModalComponent implements OnInit {
           this.f['precioPaquete12'].setValue(data.precioPaquete12);
           this.f['precioPaquete24'].setValue(data.precioPaquete24);
 
-          console.log(this.recetaForm.value);
+          this.insumosSeleccionados = [];
+          data.ingredientesReceta.forEach((ingrediente: any) => {
+            let insumo = {
+              id: ingrediente.id,
+              nombre: ingrediente.nombre,
+              cantidad: ingrediente.cantidad,
+              unidadMedida: ingrediente.unidadMedida,
+            };
+            this.insumosSeleccionados.push(insumo);
+           });
+
+
+          /* CARGAMOS LOS INGREDIENTES DE LA RECETA */
+          this.ingredientesReceta.clear();
+          data.ingredientesReceta.forEach((ingrediente: any) => {
+            this.ingredientesReceta.push(
+              this.fb.group({
+                id: [ingrediente.id],
+                nombre: [ingrediente.nombre],
+                cantidad: [ingrediente.cantidad],
+                unidadMedida: [ingrediente.unidadMedida],
+              })
+            );
+          });
+
+
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener la receta');
@@ -141,5 +181,77 @@ export class RecetasModalComponent implements OnInit {
       });
   }
 
+
+  // Método para agregar elementos al FormArray
+  agregarIngrediente(insumo: any) {
+    this.ingredientesReceta.push(
+      this.fb.group({
+        id: [insumo.id],
+        nombre: [insumo.nombre],
+        unidadMedida: [insumo.unidadMedida],
+        cantidad: ['']
+
+      })
+    );
+  }
+
+  eliminarIngrediente(index: number) {
+    this.ingredientesReceta.removeAt(index);
+  }
+
+  public obtenerInsumos() {
+    this.insumosService
+      .obtener()
+      .pipe(finalize(() => {}))
+      .subscribe({
+        next: (data: any) => {
+          /* FILTRAMOS SOLO LOS INSUMOS ACTIVOS */
+
+          this.insumos = data
+            .filter((insumo: any) => insumo.activo)
+            .map((insumo: any) => ({
+              id: insumo.id,
+              nombre: insumo.nombre,
+              unidadMedida: insumo.unidadMedida,
+            }));
+
+        },
+        error: (error: any) => {
+          this.alertasService.showError('Error al obtener los insumos');
+          console.error(error);
+        },
+      });
+  }
+
+  onInsumosChange(event: any) {
+
+    const selected = event.value;
+    const current = this.recetaForm.get('ingredientesReceta') as FormArray;
+
+    // Agregar nuevos insumos seleccionados
+    selected.forEach((insumo: any) => {
+
+      if (
+        !current.controls.find(
+          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre
+        )
+      ) {
+        this.agregarIngrediente(insumo);
+      }
+    });
+
+    // Eliminar insumos deseleccionados
+    for (let i = current.length - 1; i >= 0; i--) {
+      const ingrediente = current.at(i);
+      if (
+        !selected.find(
+          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value
+        )
+      ) {
+        current.removeAt(i);
+      }
+    }
+
+  }
 
 }
