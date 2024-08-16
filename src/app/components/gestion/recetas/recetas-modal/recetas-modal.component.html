@@ -1,12 +1,14 @@
 <p-dialog
+  #modal
+  [style]="{ width: '50rem' }"
   [(visible)]="display"
   [draggable]="false"
   [maximizable]="false"
-  [header]="titulo"
   [modal]="true"
   (onHide)="ocultar()"
 >
   <form [formGroup]="recetaForm">
+    <!-- ID -->
     <div class="field">
       <label for="id"> ID </label>
       <input
@@ -18,41 +20,14 @@
       />
     </div>
 
-    <div class="field">
-      <label for="id"> LITROS ESTIMADOS </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="id"
-        id="id"
-        class="w-full"
-      />
-    </div>
+    <div class="field" *ngIf="modificar">
+      <!-- PASOS -->
 
-    <!-- DESCRIPCION -->
-
-    <div class="field">
-      <label for="descripcion"> DESCRIPCION </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="descripcion"
-        id="descripcion"
-        class="w-full"
-      />
-    </div>
-
-    <!-- ESPECIFICACIONES -->
-
-    <div class="field">
-      <label for="especificaciones"> ESPECIFICACIONES </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="especificaciones"
-        id="especificaciones"
-        class="w-full"
-      />
+      <p-button
+        label="PASOS"
+        icon="fa-solid fa-plus"
+        (click)="pasosDialog.show(recetaForm.get('id')!.value)"
+      ></p-button>
     </div>
 
     <!-- NOMBRE -->
@@ -66,6 +41,107 @@
         id="nombre"
         class="w-full"
       />
+    </div>
+
+    <div class="field">
+      <label for="litrosEstimados"> LITROS ESTIMADOS </label>
+      <p-inputNumber
+        formControlName="litrosEstimados"
+        inputId="litrosEstimados"
+        mode="decimal"
+        [suffix]="'L'"
+        [min]="1"
+        styleClass="w-full"
+        class="w-full"
+      />
+    </div>
+
+    <div class="field">
+      <p-card header="PRECIOS">
+        <!-- PRECIO PAQUETE 1 -->
+
+        <div class="field">
+          <label for="precioPaquete1"> 1 BOTELLA </label>
+          <p-inputNumber
+            formControlName="precioPaquete1"
+            inputId="precioPaquete1"
+            mode="currency"
+            currency="MXN"
+            styleClass="w-full"
+            class="w-full"
+          />
+        </div>
+
+        <!-- PRECIO PAQUETE 6 -->
+
+        <div class="field">
+          <label for="precioPaquete6"> 6 PACK </label>
+          <p-inputNumber
+            formControlName="precioPaquete6"
+            inputId="precioPaquete6"
+            mode="currency"
+            currency="MXN"
+            styleClass="w-full"
+            class="w-full"
+          />
+        </div>
+
+        <!-- PRECIO PAQUETE 12 -->
+
+        <div class="field">
+          <label for="precioPaquete12"> 12 PACK </label>
+          <p-inputNumber
+            formControlName="precioPaquete12"
+            inputId="precioPaquete12"
+            mode="currency"
+            currency="MXN"
+            styleClass="w-full"
+            class="w-full"
+          />
+        </div>
+
+        <!-- PRECIO PAQUETE 12 -->
+
+        <div class="field">
+          <label for="precioPaquete24"> 24 PACK </label>
+          <p-inputNumber
+            formControlName="precioPaquete24"
+            inputId="precioPaquete24"
+            mode="currency"
+            currency="MXN"
+            styleClass="w-full"
+            class="w-full"
+          />
+        </div>
+      </p-card>
+    </div>
+
+    <!-- DESCRIPCION -->
+
+    <div class="field">
+      <label for="descripcion"> DESCRIPCION </label>
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [autoResize]="true"
+        formControlName="descripcion"
+        class="w-full"
+      ></textarea>
+    </div>
+
+    <!-- ESPECIFICACIONES -->
+
+    <div class="field">
+      <label for="especificaciones"> ESPECIFICACIONES </label>
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [autoResize]="true"
+        formControlName="especificaciones"
+        class="w-full"
+      ></textarea>
     </div>
 
     <!-- IMAGEN -->
@@ -98,16 +174,54 @@
 
     <div class="field">
       <label for=""> INGREDIENTES </label>
+      <p-multiSelect
+        [options]="insumos"
+        optionLabel="nombre"
+        placeholder="Ingredientes"
+        class="w-full"
+        styleClass="w-full"
+        [showClear]="true"
+        [filter]="true"
+        display="chip"
+        [appendTo]="'body'"
+        [(ngModel)]="insumosSeleccionados"
+        (onChange)="onInsumosChange($event)"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+
+    <!-- INGREDIENTES SELECCIONADOS -->
+    <div formArrayName="ingredientesReceta">
+      <div
+        class="field"
+        *ngFor="let ingrediente of ingredientesReceta.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <label for="cantidad-{{ i }}">{{
+          ingrediente.get("nombre")!.value
+        }}</label>
+        <p-inputNumber
+          formControlName="cantidad"
+          id="cantidad-{{ i }}"
+          mode="decimal"
+          [suffix]="ingrediente.get('unidadMedida')!.value"
+          [min]="1"
+          styleClass="w-full"
+          class="w-full"
+        />
+      </div>
     </div>
 
     <div class="field flex justify-content-center gap-1">
       <p-button
-        [label]="labelBoton"
+        #btnGuardar
+        [label]="modificar ? 'Actualizar' : 'Guardar'"
         styleClass="w-full"
         icon="fa-solid fa-save"
         (click)="modificar ? actualizar() : guardar()"
       ></p-button>
       <p-button
+        #btnCancelar
         label="Cancelar"
         styleClass="w-full"
         icon="fa-solid fa-times"
@@ -116,3 +230,5 @@
     </div>
   </form>
 </p-dialog>
+
+<app-recetas-modal-pasos #pasosDialog></app-recetas-modal-pasos>

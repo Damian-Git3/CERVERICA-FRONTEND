@@ -11,9 +11,6 @@ export class InsumosService {
 
   constructor(private http: HttpClient) { }
 
-  // Add the following methods
-  // This method will get all the insumos from the database
-
   obtener(): Observable<any> {
     return this.http.get(`${this._baseURL}`);
   }
@@ -35,10 +32,10 @@ export class InsumosService {
   }
 
   activar(id: number): Observable<any> {
-    return this.http.post(`${this._baseURL}/activar?${id}`, {});
+    return this.http.post(`${this._baseURL}/activar/${id}`, {});
   }
 
   desactivar(id: number): Observable<any> {
-    return this.http.post(`${this._baseURL}/desactivar?${id}`, {});
+    return this.http.post(`${this._baseURL}/desactivar/${id}`, {});
   }
 }

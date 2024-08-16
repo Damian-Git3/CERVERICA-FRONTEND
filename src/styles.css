@@ -193,3 +193,38 @@ main {
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
+td, th {
+  text-align: center;
+}
+
+.p-avatar {
+  width: 150px;
+  height: 150px;
+  font-size: 2rem;
+}
+
+.p-inputtext:enabled:hover {
+  border-color: var(--color-principal);
+}
+
+.p-inputtext:enabled:focus {
+  box-shadow: 0 0 0 0.2rem var(--color-secundario);
+  border-color: var(--color-principal);
+}
+
+.p-button {
+  background: var(--color-principal);
+  border: 1px solid var(--color-principal);
+}
+
+.p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--color-principal),
+    0 1px 2px 0 black;
+}
+
+
+.mensajes-error {
+  color: red;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}

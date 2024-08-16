@@ -5,6 +5,7 @@
   [header]="titulo"
   [modal]="true"
   (onHide)="ocultar()"
+
 >
   <form [formGroup]="insumoForm">
     <div class="field">
@@ -31,24 +32,25 @@
 
     <div class="field">
       <label for="descripcion"> DESCRIPCION </label>
-      <input
-        type="text"
-        pInputText
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [autoResize]="true"
         formControlName="descripcion"
-        id="descripcion"
         class="w-full"
-      />
+      ></textarea>
     </div>
 
     <div class="field">
       <label for="unidadMedida"> UNIDAD DE MEDIDA </label>
-      <input
-        type="text"
-        pInputText
+      <p-dropdown
         formControlName="unidadMedida"
-        id="unidadMedida"
-        class="w-full"
-      />
+        [options]="unidadesMedida"
+
+        placeholder="Unidad De Medida"
+        styleClass="w-full"
+        />
     </div>
 
     <div class="field">
@@ -74,34 +76,12 @@
     </div>
 
     <div class="field">
-      <label for="costoUnitario"> COSTO UNITARIO </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="costoUnitario"
-        id="costoUnitario"
-        class="w-full"
-      />
-    </div>
-
-    <div class="field">
       <label for="merma"> MERMA </label>
       <input
         type="text"
         pInputText
         formControlName="merma"
         id="merma"
-        class="w-full"
-      />
-    </div>
-
-    <div class="field">
-      <label for="cantidadTotalLotes"> CANTIDAD TOTAL DE LOTES</label>
-      <input
-        type="text"
-        pInputText
-        formControlName="cantidadTotalLotes"
-        id="cantidadTotalLotes"
         class="w-full"
       />
     </div>

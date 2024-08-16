@@ -7,19 +7,11 @@ import { MessageService } from 'primeng/api';
 export class AlertasService {
   constructor(private messageService: MessageService) {}
 
-  showSuccess(message: string) {
+  showSuccess(message: string, summary?: string) {
     this.messageService.add({
       severity: 'success',
-      summary: 'Correcto',
+      summary: summary ?? 'Éxito',
       detail: message,
-    });
-  }
-
-  alertaSuccess(resumen: string, mensaje: string) {
-    this.messageService.add({
-      severity: 'success',
-      summary: resumen,
-      detail: mensaje,
     });
   }
 
