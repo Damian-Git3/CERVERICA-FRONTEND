@@ -154,6 +154,7 @@ main {
 
 .p-progressbar {
   height: 5px;
+  margin-bottom: 1rem;
 }
 
 .p-progressbar-value {

@@ -13,6 +13,7 @@ import { inicializarFuncionesTarjeta } from './funciones-tarjeta';
 import { EliminarProductoCarritoDTO } from '../../../interfaces/carrito/eliminar-producto-carrito-dto';
 import { ProductosService } from '../../../services/productos/productos.service';
 import { Producto } from '../../../interfaces/productos/producto';
+import { AlertasService } from '../../../services/shared/alertas/alertas.service';
 
 @Component({
   selector: 'app-carrito',
@@ -25,6 +26,7 @@ export class CarritoComponent {
   _VentasService = inject(VentasService);
   _MessageService = inject(MessageService);
   _ProductoService = inject(ProductosService);
+  _AlertasService = inject(AlertasService);
   _Router = inject(Router);
   formBuilder = inject(FormBuilder);
 
@@ -50,6 +52,7 @@ export class CarritoComponent {
   formPedido: FormGroup;
   formDireccionEnvio: FormGroup;
   formTarjeta: FormGroup;
+  creandoVenta: boolean = false;
 
   constructor() {
     this.formPedido = this.formBuilder.group({
@@ -152,11 +155,21 @@ export class CarritoComponent {
 
       crearVenta.detalles = detallesVenta;
 
+      this.creandoVenta = true;
+
       this._VentasService
         .crearVenta(crearVenta, this._CompartidoService.obtenerSesion().token)
         .subscribe({
           next: (nuevaVenta: VentaDTO) => {
-            console.log(nuevaVenta);
+            this._AlertasService.showSuccess(
+              "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'",
+              '¡Compra realizada con éxito!'
+            );
+            this._CarritoService.vaciarProductosCarrito();
+
+            this.creandoVenta = false;
+
+            this._Router.navigateByUrl('cerverica/pedidos');
           },
           error: (error) => {
             if (error.status == 409) {
@@ -175,6 +188,8 @@ export class CarritoComponent {
             } else {
               console.log(error);
             }
+
+            this.creandoVenta = false;
           },
         });
     }
@@ -182,7 +197,7 @@ export class CarritoComponent {
 
   ngOnInit(): void {
     this.obtenerProductos();
-    
+
     this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
       this.productosCarrito = productosCarrito;
       this.contadorProductosCarrito = productosCarrito.length;
@@ -218,14 +233,15 @@ export class CarritoComponent {
   }
 
   obtenerProductoCorrespondiente(productoCarrito: ProductoCarrito): any {
-    return this.productos.find(producto => producto.id === productoCarrito.receta.id);
+    return this.productos.find(
+      (producto) => producto.id === productoCarrito.receta.id
+    );
   }
 
   obtenerProductos() {
     this._ProductoService.obtenerProductos().subscribe({
       next: (productosResponse) => {
         this.productos = productosResponse;
-        
       },
       error: (e) => {
         console.log(e);

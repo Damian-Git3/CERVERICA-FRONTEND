@@ -70,6 +70,10 @@ export class CompartidoService {
     this._Router.navigateByUrl('/cerverica/login');
   }
 
+  usuarioEnMemoria(): boolean {
+    return this.obtenerSesion() != null;
+  }
+
   cerrarSesion() {
     this._AccountService.cerrarSesion(this.obtenerSesion().token).subscribe({
       next: (response) => {

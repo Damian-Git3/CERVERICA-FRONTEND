@@ -15,6 +15,7 @@ import { initializeLoginAnimations } from './animations';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../../services/auth/auth.service';
 import { CarritoService } from '../../../services/carrito/carrito.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -75,7 +76,11 @@ export class LoginComponent implements AfterViewInit {
       password: this.formLogin.value.password,
     };
 
-    this._AccountService.iniciarSesion(usuarioIngresar).subscribe({
+    this._AccountService.iniciarSesion(usuarioIngresar).pipe(
+      finalize(() => {
+        this.iniciandoSesion = false;
+      })
+    ).subscribe({
       next: (response) => {
         if (response.isSuccess == false) {
           this.mensajesLogin.nativeElement.innerHTML = `<p>${response.message}</p>`;
@@ -90,17 +95,12 @@ export class LoginComponent implements AfterViewInit {
 
           this._AuthService.login();
 
-          console.log(response);
-
-          if(response.rol == 'Cliente'){
+          if (response.rol == 'Cliente') {
             this.router.navigateByUrl('/perfil');
-          } else{
+          } else {
             this.router.navigateByUrl('/gestion');
           }
         }
-      },
-      complete: () => {
-        this.iniciandoSesion = false;
       },
       error: (error) => {
         if (error.error.isSuccess == false) {
@@ -130,48 +130,53 @@ export class LoginComponent implements AfterViewInit {
       role: 'cliente',
     };
 
-    this._AccountService.registrarCuenta(usuarioRegistrar).subscribe({
-      next: (response) => {
-        if (response.isSuccess == false) {
-          this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${response.message}</p>`;
-        }
-      },
-      complete: () => {
-        this.contenedorLogin.nativeElement.classList.remove('sign-up-mode');
+    this._AccountService
+      .registrarCuenta(usuarioRegistrar)
+      .pipe(
+        finalize(() => {
+          this.creandoCuenta = false;
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess == false) {
+            this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${response.message}</p>`;
+          }
+        },
+        complete: () => {
+          this.contenedorLogin.nativeElement.classList.remove('sign-up-mode');
 
-        this._MessageService.add({
-          severity: 'success',
-          summary: 'Cuenta creada correctamente',
-          detail: 'Inicia sesión con tu información',
-        });
+          this._MessageService.add({
+            severity: 'success',
+            summary: 'Cuenta creada correctamente',
+            detail: 'Inicia sesión con tu información',
+          });
 
-        this.formCrearCuenta.reset();
-        this.creandoCuenta = false;
-      },
-      error: (error) => {
-        if (error.error.isSuccess == false) {
-          this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
+          this.formCrearCuenta.reset();
+        },
+        error: (error) => {
+          if (error.error.isSuccess == false) {
+            this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
 
-          let errors = this._CompartidosService.extractErrors(
-            error.error.errors
-          );
-
-          this.mensajesCrearCuenta.nativeElement.innerHTML += errors
-            .map((error) => `<p>${error}</p>`)
-            .join('');
-        } else {
-          if (error.error) {
-            let errors = this._CompartidosService.extractErrorPassword(
-              error.error
+            let errors = this._CompartidosService.extractErrors(
+              error.error.errors
             );
 
-            this.mensajesCrearCuenta.nativeElement.innerHTML = errors
+            this.mensajesCrearCuenta.nativeElement.innerHTML += errors
               .map((error) => `<p>${error}</p>`)
               .join('');
+          } else {
+            if (error.error) {
+              let errors = this._CompartidosService.extractErrorPassword(
+                error.error
+              );
+
+              this.mensajesCrearCuenta.nativeElement.innerHTML = errors
+                .map((error) => `<p>${error}</p>`)
+                .join('');
+            }
           }
-        }
-        this.creandoCuenta = false;
-      },
-    });
+        },
+      });
   }
 }

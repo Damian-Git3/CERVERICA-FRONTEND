@@ -181,6 +181,7 @@ export class RecetasModalComponent implements OnInit {
       });
   }
 
+
   // Método para agregar elementos al FormArray
   agregarIngrediente(insumo: any) {
     this.ingredientesReceta.push(
@@ -252,4 +253,5 @@ export class RecetasModalComponent implements OnInit {
     }
 
   }
+
 }
