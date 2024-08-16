@@ -1,14 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CompartidoService } from '../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit {
-  public display: boolean = false;
-  constructor(private route: ActivatedRoute) {}
+export class MenuComponent {
+  _CompartidoService = inject(CompartidoService);
 
-  ngOnInit() {}
+  public display: boolean = false;
+  nombre: string = '';
+  inicialesNombre: string = '';
+
+  cerrarSesion() {
+    this._CompartidoService.cerrarSesion();
+  }
+
+  ngOnInit(): void {
+    this.nombre = this._CompartidoService.obtenerSesion().nombre;
+    this.inicialesNombre = this.obtenerIniciales(this.nombre);
+  }
+
+  obtenerIniciales(nombre: string): string {
+    const partes = nombre.split(' ');
+    const iniciales = partes.map((parte) => parte.charAt(0)).join('');
+    return iniciales.toUpperCase();
+  }
 }

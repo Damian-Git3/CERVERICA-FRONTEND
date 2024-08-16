@@ -12,6 +12,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
+import { PrimeModule } from '../prime/prime.module';
+import { InicioComponent } from './inicio/inicio.component';
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import { ToolbarModule } from 'primeng/toolbar';
     CardModule,
     DialogModule,
     ToolbarModule,
+    PrimeModule,
   ],
-  declarations: [GestionComponent, MenuComponent, NavbarComponent],
+  declarations: [GestionComponent, MenuComponent, NavbarComponent, InicioComponent],
 })
 export class GestionModule {}
