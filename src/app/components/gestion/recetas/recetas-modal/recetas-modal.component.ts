@@ -61,7 +61,7 @@ export class RecetasModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('RecetasModalComponent inicializado');
+
     this.obtenerInsumos();
   }
 
@@ -74,6 +74,7 @@ export class RecetasModalComponent implements OnInit {
   }
 
   public show(id?: number) {
+    this.recetaForm.reset();
     this.display = true;
     this.obtenerInsumos();
     if (id) {
@@ -82,7 +83,8 @@ export class RecetasModalComponent implements OnInit {
       this.obtenerReceta(id);
     } else {
       this.modificar = false;
-      this.btnGuardar.label = 'Guardar';
+      this.insumosSeleccionados = [];
+      this.insumos = [];
       this.modal.header = 'Crear Receta';
     }
   }
@@ -101,11 +103,11 @@ export class RecetasModalComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Receta creada correctamente');
-          console.log(data);
+
         },
         error: (error: any) => {
           this.alertasService.showError('Error al crear la receta');
-          console.error(error);
+
         },
       });
   }
@@ -156,7 +158,7 @@ export class RecetasModalComponent implements OnInit {
             };
             this.insumosSeleccionados.push(insumo);
            });
-          console.log(this.insumosSeleccionados);
+
 
           /* CARGAMOS LOS INGREDIENTES DE LA RECETA */
           this.ingredientesReceta.clear();
@@ -171,7 +173,7 @@ export class RecetasModalComponent implements OnInit {
             );
           });
 
-          console.log(this.recetaForm.value);
+
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener la receta');
@@ -185,6 +187,7 @@ export class RecetasModalComponent implements OnInit {
       this.fb.group({
         id: [insumo.id],
         nombre: [insumo.nombre],
+        unidadMedida: [insumo.unidadMedida],
         cantidad: ['']
 
       })
@@ -203,7 +206,13 @@ export class RecetasModalComponent implements OnInit {
         next: (data: any) => {
           /* FILTRAMOS SOLO LOS INSUMOS ACTIVOS */
 
-          this.insumos = data.filter((insumo: any) => insumo.activo);
+          this.insumos = data
+            .filter((insumo: any) => insumo.activo)
+            .map((insumo: any) => ({
+              id: insumo.id,
+              nombre: insumo.nombre,
+              unidadMedida: insumo.unidadMedida,
+            }));
 
         },
         error: (error: any) => {
@@ -214,13 +223,13 @@ export class RecetasModalComponent implements OnInit {
   }
 
   onInsumosChange(event: any) {
-    console.log('INSUMO SELECCIONADO', this.insumosSeleccionados);
+
     const selected = event.value;
     const current = this.recetaForm.get('ingredientesReceta') as FormArray;
 
     // Agregar nuevos insumos seleccionados
     selected.forEach((insumo: any) => {
-      console.log('INSUMO', insumo);
+
       if (
         !current.controls.find(
           (ctrl) => ctrl.get('nombre')!.value === insumo.nombre
@@ -232,7 +241,6 @@ export class RecetasModalComponent implements OnInit {
 
     // Eliminar insumos deseleccionados
     for (let i = current.length - 1; i >= 0; i--) {
-      console.log('INGREDIENTE', current.at(i));
       const ingrediente = current.at(i);
       if (
         !selected.find(
