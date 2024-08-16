@@ -35,6 +35,8 @@ export class ProductosComponent {
   _AuthService = inject(AuthService);
   _CarritoService = inject(CarritoService);
 
+  obteniendoProductos: boolean = false;
+
   constructor(
     private _productosService: ProductosService,
     private _favoritosService: FavoritosService
@@ -136,6 +138,8 @@ export class ProductosComponent {
   }
 
   obtenerProductos() {
+    this.obteniendoProductos = true;
+
     this._productosService.obtenerProductos().subscribe({
       next: (productosResponse) => {
         this.productos = productosResponse;
@@ -144,9 +148,13 @@ export class ProductosComponent {
         if (this._CompartidoService.obtenerSesion() != null) {
           this.obtenerFavoritosUsuario();
         }
+
+        this.obteniendoProductos = false;
       },
       error: (e) => {
         console.log(e);
+
+        this.obteniendoProductos = false;
       },
     });
   }

@@ -288,6 +288,8 @@ export class CardComponent {
     if (this.esCantidadDisminuible()) {
       this.cantidadCervezasReceta.cantidadTotalCervezas -=
         this.paqueteSeleccionado;
+        console.log("nomas");
+        
       this.cantidadPaquetes--;
       this.CantidadElement.nativeElement.innerHTML = this.cantidadPaquetes;
     }

@@ -10,6 +10,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 4rem;
+  width: 100%;
 }
 
 .contenedor-informacion-productos .informacion h2 {
@@ -90,6 +91,10 @@
 
 .contenedor-informacion-productos {
   overflow: hidden;
+}
+
+.contenedor-informacion-productos .productos{
+  max-width: 100%;
 }
 
 .contenedor-imagen-producto {

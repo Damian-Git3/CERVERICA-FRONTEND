@@ -3,7 +3,6 @@ import { RecetaService } from '../../../../services/receta/receta.service';
 import { finalize } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
-import { Producto } from '../../../../interfaces/productos/producto';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 
 @Component({
