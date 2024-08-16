@@ -41,8 +41,6 @@ export class InsumosTablaComponent implements OnInit {
       .pipe(finalize(() => { }))
       .subscribe({
         next: (data: any) => {
-          this.alertasService.showSuccess('Insumos obtenidos correctamente');
-          console.log(data);
           this.insumos = data;
         },
         error: (error: any) => {
