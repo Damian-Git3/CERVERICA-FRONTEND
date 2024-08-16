@@ -16,9 +16,10 @@ import { CardModule } from 'primeng/card';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { RecetasModalPasosComponent } from './recetas-modal-pasos/recetas-modal-pasos.component';
 
 @NgModule({
-  declarations: [RecetasTablaComponent, RecetasModalComponent],
+  declarations: [RecetasTablaComponent, RecetasModalComponent, RecetasModalPasosComponent],
   imports: [
     CommonModule,
     RecetasRoutes,
@@ -36,6 +37,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     TooltipModule,
     FormsModule,
     MultiSelectModule,
+    ToolbarModule,
   ],
   providers: [
     DatePipe

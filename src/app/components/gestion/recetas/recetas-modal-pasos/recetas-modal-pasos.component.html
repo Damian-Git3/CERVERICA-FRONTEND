@@ -1,0 +1,44 @@
+<p-dialog [(visible)]="display" (onHide)="hide()" [style]="{ width: '50rem' }">
+  <p-toolbar styleClass="mb-1">
+    <ng-template pTemplate="start">
+      <p-button
+        lablel="Nuevo paso"
+        icon="pi pi-plus"
+        (click)="agregarNuevoPaso()"
+      ></p-button>
+    </ng-template>
+  </p-toolbar>
+  <form [formGroup]="form">
+    <div formArrayName="pasos">
+      <p-card class="mx-1" *ngFor="let paso of pasos.controls; let i = index">
+        <div [formGroupName]="i" class="grid gap-1 justify-content-center">
+          <input
+            pInputText
+            formControlName="orden"
+            placeholder="orden"
+            class="w-1"
+          />
+          <input
+            type="text"
+            pInputText
+            formControlName="descripcion"
+            placeholder="Descripción"
+          />
+          <input pInputText formControlName="tiempo" placeholder="tiempo" />
+          <p-button
+            icon="pi pi-times"
+            class="p-button-danger"
+            (click)="eliminarPaso(i)"
+          ></p-button>
+        </div>
+      </p-card>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Guardar"
+      icon="pi pi-save"
+      (click)="modificar ? modicarPasos() : crearPasos()"
+    ></p-button>
+  </ng-template>
+</p-dialog>
