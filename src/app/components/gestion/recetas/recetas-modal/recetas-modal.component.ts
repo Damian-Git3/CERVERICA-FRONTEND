@@ -61,7 +61,6 @@ export class RecetasModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
     this.obtenerInsumos();
   }
 
@@ -103,11 +102,9 @@ export class RecetasModalComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Receta creada correctamente');
-
         },
         error: (error: any) => {
           this.alertasService.showError('Error al crear la receta');
-
         },
       });
   }
@@ -130,7 +127,6 @@ export class RecetasModalComponent implements OnInit {
   }
 
   obtenerReceta(id: number) {
-
     this.recetasService
       .obtenerPorId(id)
       .pipe(finalize(() => {}))
@@ -157,8 +153,7 @@ export class RecetasModalComponent implements OnInit {
               unidadMedida: ingrediente.unidadMedida,
             };
             this.insumosSeleccionados.push(insumo);
-           });
-
+          });
 
           /* CARGAMOS LOS INGREDIENTES DE LA RECETA */
           this.ingredientesReceta.clear();
@@ -172,15 +167,12 @@ export class RecetasModalComponent implements OnInit {
               })
             );
           });
-
-
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener la receta');
         },
       });
   }
-
 
   // Método para agregar elementos al FormArray
   agregarIngrediente(insumo: any) {
@@ -189,8 +181,7 @@ export class RecetasModalComponent implements OnInit {
         id: [insumo.id],
         nombre: [insumo.nombre],
         unidadMedida: [insumo.unidadMedida],
-        cantidad: ['']
-
+        cantidad: [''],
       })
     );
   }
@@ -214,7 +205,6 @@ export class RecetasModalComponent implements OnInit {
               nombre: insumo.nombre,
               unidadMedida: insumo.unidadMedida,
             }));
-
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener los insumos');
@@ -224,13 +214,11 @@ export class RecetasModalComponent implements OnInit {
   }
 
   onInsumosChange(event: any) {
-
     const selected = event.value;
     const current = this.recetaForm.get('ingredientesReceta') as FormArray;
 
     // Agregar nuevos insumos seleccionados
     selected.forEach((insumo: any) => {
-
       if (
         !current.controls.find(
           (ctrl) => ctrl.get('nombre')!.value === insumo.nombre
@@ -251,7 +239,5 @@ export class RecetasModalComponent implements OnInit {
         current.removeAt(i);
       }
     }
-
   }
-
 }

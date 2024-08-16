@@ -27,27 +27,39 @@ export class RecetaService {
   }
 
   obtenerPorId(id: number): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
     return this.http.get(`${this._baseURL}/${id}`, { headers });
   }
 
   modificar(id: number, data: any): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
     return this.http.put(`${this._baseURL}/${id}`, data, { headers });
   }
 
   eliminar(id: number): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
     return this.http.delete(`${this._baseURL}/${id}`, { headers });
   }
 
   crearPasos(id: number, data: any): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
     return this.http.post(`${this._baseURL}/${id}/pasos`, data, { headers });
+  }
+
+  obtenerPasos(id: number): Observable<any> {
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get(`${this._baseURL}/${id}/pasos`, { headers });
+  }
+
+  modificarPasos(id: number, data: any): Observable<any> {
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put(`${this._baseURL}/${id}/pasos`, data, { headers });
   }
 
   activar(id: number): Observable<any> {
@@ -57,20 +69,22 @@ export class RecetaService {
   }
 
   desactivar(id: number): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post(`${this._baseURL}/desactivar/${id}`, {}, { headers});
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}/desactivar/${id}`, {}, { headers });
   }
 
   actualizarPrecios(id: number, data: any): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post(`${this._baseURL}/${id}/ActualizarPrecios`, data, { headers });
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}/${id}/ActualizarPrecios`, data, {
+      headers,
+    });
   }
 
   obtenerRecetasConStock(id: number): Observable<any> {
-      const token = this._CompartidoService.obtenerSesion().token;
-      const headers = { Authorization: `Bearer ${token}` };
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
     return this.http.get(`${this._baseURL}/${id}/ConStock`, { headers });
   }
 }

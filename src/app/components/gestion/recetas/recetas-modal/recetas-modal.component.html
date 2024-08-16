@@ -8,6 +8,7 @@
   (onHide)="ocultar()"
 >
   <form [formGroup]="recetaForm">
+    <!-- ID -->
     <div class="field">
       <label for="id"> ID </label>
       <input
@@ -17,6 +18,16 @@
         id="id"
         class="w-full"
       />
+    </div>
+
+    <div class="field" *ngIf="modificar">
+      <!-- PASOS -->
+
+      <p-button
+        label="PASOS"
+        icon="fa-solid fa-plus"
+        (click)="pasosDialog.show(recetaForm.get('id')!.value)"
+      ></p-button>
     </div>
 
     <!-- NOMBRE -->
@@ -219,3 +230,5 @@
     </div>
   </form>
 </p-dialog>
+
+<app-recetas-modal-pasos #pasosDialog></app-recetas-modal-pasos>
