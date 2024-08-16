@@ -10,6 +10,9 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ButtonModule } from 'primeng/button';
 import { InsumosRoutes } from './insumos.routing';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import { TableModule } from 'primeng/table';
     ToolbarModule,
     SplitButtonModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    TagModule,
+    InputTextareaModule,
+    DropdownModule
 
   ]
 })

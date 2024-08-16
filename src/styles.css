@@ -160,3 +160,7 @@ main {
 .p-progressbar-value {
   background-color: var(--color-principal);
 }
+
+td, th {
+  text-align: center;
+}

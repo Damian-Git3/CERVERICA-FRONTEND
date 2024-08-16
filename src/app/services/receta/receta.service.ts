@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CompartidoService } from '../compartido/compartido.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,10 @@ import { Observable } from 'rxjs';
 export class RecetaService {
   private _baseURL: string = `${environment.APIURL}/Receta`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private _CompartidoService: CompartidoService
+  ) {}
 
   obtener(token: string): Observable<any> {
     const headers = { Authorization: `Bearer ${token}` };
@@ -17,38 +21,56 @@ export class RecetaService {
   }
 
   crear(data: any): Observable<any> {
-    return this.http.post(`${this._baseURL}`, data);
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}`, data, { headers });
   }
 
   obtenerPorId(id: number): Observable<any> {
-    return this.http.get(`${this._baseURL}/${id}`);
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get(`${this._baseURL}/${id}`, { headers });
   }
 
   modificar(id: number, data: any): Observable<any> {
-    return this.http.put(`${this._baseURL}/${id}`, data);
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put(`${this._baseURL}/${id}`, data, { headers });
   }
 
   eliminar(id: number): Observable<any> {
-    return this.http.delete(`${this._baseURL}/${id}`);
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.delete(`${this._baseURL}/${id}`, { headers });
   }
 
   crearPasos(id: number, data: any): Observable<any> {
-    return this.http.post(`${this._baseURL}/${id}/pasos`, data);
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}/${id}/pasos`, data, { headers });
   }
 
   activar(id: number): Observable<any> {
-    return this.http.post(`${this._baseURL}/activar/${id}`, {});
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}/activar/${id}`, {}, { headers });
   }
 
   desactivar(id: number): Observable<any> {
-    return this.http.post(`${this._baseURL}/desactivar/${id}`, {});
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}/desactivar/${id}`, {}, { headers});
   }
 
   actualizarPrecios(id: number, data: any): Observable<any> {
-    return this.http.post(`${this._baseURL}/${id}/ActualizarPrecios`, data);
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.post(`${this._baseURL}/${id}/ActualizarPrecios`, data, { headers });
   }
 
   obtenerRecetasConStock(id: number): Observable<any> {
-    return this.http.get(`${this._baseURL}/${id}/ConStock`);
+      const token = this._CompartidoService.obtenerSesion().token;
+      const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get(`${this._baseURL}/${id}/ConStock`, { headers });
   }
 }

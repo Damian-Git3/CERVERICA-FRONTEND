@@ -1,0 +1,49 @@
+<p-dialog
+  #modal
+[(visible)]="display"
+  [draggable]="false"
+  [maximizable]="false"
+  [modal]="true"
+  (onHide)="hide()"
+
+>
+  <form [formGroup]="form">
+    <div class="field">
+      <label for="id"> ID </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="id"
+        id="id"
+        class="w-full"
+      />
+    </div>
+    <div class="field">
+      <label for="roleName"> Nombre </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="roleName"
+        id="id"
+        class="w-full"
+      />
+    </div>
+
+    <div class="field flex justify-content-center gap-1" *ngIf="ver">
+      <p-button
+        #btnGuardar
+        label="Guardar"
+        styleClass="w-full"
+        icon="fa-solid fa-save"
+        (click)="guardar()"
+      ></p-button>
+      <p-button
+        #btnCancelar
+        label="Cancelar"
+        styleClass="w-full"
+        icon="fa-solid fa-times"
+        (click)="display = false"
+      ></p-button>
+    </div>
+  </form>
+</p-dialog>

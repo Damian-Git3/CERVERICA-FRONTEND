@@ -15,14 +15,6 @@ export class AlertasService {
     });
   }
 
-  alertaSuccess(resumen: string, mensaje: string) {
-    this.messageService.add({
-      severity: 'success',
-      summary: resumen,
-      detail: mensaje,
-    });
-  }
-
   showError(message: string) {
     this.messageService.add({
       severity: 'error',
