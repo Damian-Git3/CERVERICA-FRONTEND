@@ -1,5 +1,6 @@
 <p-dialog
   #modal
+  [style]="{ width: '50rem' }"
   [(visible)]="display"
   [draggable]="false"
   [maximizable]="false"
@@ -160,9 +161,45 @@
 
     <!-- INGREDIENTES -->
 
-    <!-- <div class="field">
+    <div class="field">
       <label for=""> INGREDIENTES </label>
-    </div> -->
+      <p-multiSelect
+        [options]="insumos"
+        optionLabel="nombre"
+        placeholder="Ingredientes"
+        class="w-full"
+        styleClass="w-full"
+        [showClear]="true"
+        [filter]="true"
+        display="chip"
+        [appendTo]="'body'"
+        [(ngModel)]="insumosSeleccionados"
+        (onChange)="onInsumosChange($event)"
+        [ngModelOptions]="{ standalone: true }"
+      />
+    </div>
+
+    <!-- INGREDIENTES SELECCIONADOS -->
+    <div formArrayName="ingredientesReceta">
+      <div
+        class="field"
+        *ngFor="let ingrediente of ingredientesReceta.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <label for="cantidad-{{ i }}">{{
+          ingrediente.get("nombre")!.value
+        }}</label>
+        <p-inputNumber
+          formControlName="cantidad"
+          id="cantidad-{{ i }}"
+          mode="decimal"
+          [suffix]="ingrediente.get('unidadMedida')!.value"
+          [min]="1"
+          styleClass="w-full"
+          class="w-full"
+        />
+      </div>
+    </div>
 
     <div class="field flex justify-content-center gap-1">
       <p-button
