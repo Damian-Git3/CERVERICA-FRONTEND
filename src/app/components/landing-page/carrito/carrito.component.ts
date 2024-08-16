@@ -161,9 +161,9 @@ export class CarritoComponent {
         .crearVenta(crearVenta, this._CompartidoService.obtenerSesion().token)
         .subscribe({
           next: (nuevaVenta: VentaDTO) => {
-            this._AlertasService.alertaSuccess(
-              '¡Compra realizada con éxito!',
-              "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'"
+            this._AlertasService.showSuccess(
+              "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'",
+              '¡Compra realizada con éxito!'
             );
             this._CarritoService.vaciarProductosCarrito();
 
