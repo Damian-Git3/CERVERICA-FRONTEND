@@ -63,9 +63,9 @@ export class PerfilComponent {
         .subscribe({
           next: (sesionDTO: SesionDTO) => {
             if (sesionDTO.isSuccess) {
-              this._AlertasService.alertaSuccess(
-                'Cambio de contraseña exitoso',
-                'Por favor, vuelve a iniciar sesión para aplicar los cambios.'
+              this._AlertasService.showSuccess(
+                'Por favor, vuelve a iniciar sesión para aplicar los cambios',
+                'Cambio de contraseña exitoso'
               );
               this._CompartidoService.cerrarSesion();
             }
