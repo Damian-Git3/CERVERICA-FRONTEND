@@ -5,12 +5,22 @@ import { InsumosModule } from './insumos/insumos.module';
 import { RecetasModule } from './recetas/recetas.module';
 import { RolesModule } from './roles/roles.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { InicioComponent } from './inicio/inicio.component';
 
 const routes: Routes = [
   {
     path: '',
     component: GestionComponent,
     children: [
+      {
+        path: 'inicio',
+        component: InicioComponent,
+      },
+      {
+        path: 'usuarios',
+        loadChildren: () => UsuariosModule,
+      },
       {
         path: 'producciones',
         loadChildren: () => ProduccionesModule,
@@ -33,7 +43,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: '',
+        redirectTo: 'inicio',
         pathMatch: 'full',
       },
     ],

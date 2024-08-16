@@ -74,6 +74,13 @@ export class CompartidoService {
     return this.obtenerSesion() != null;
   }
 
+  extraerMensajesCodigo400(
+    errorArray: { code: string; description: string }[]
+  ): string {
+    const errorMessages = errorArray.map((error) => error.description);
+    return errorMessages.join('<br>');
+  }
+
   cerrarSesion() {
     this._AccountService.cerrarSesion(this.obtenerSesion().token).subscribe({
       next: (response) => {

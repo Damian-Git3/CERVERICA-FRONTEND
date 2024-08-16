@@ -103,6 +103,9 @@ export class LoginComponent implements AfterViewInit {
         }
       },
       error: (error) => {
+        console.log(error);
+        
+
         if (error.error.isSuccess == false) {
           this.mensajesLogin.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
         } else {

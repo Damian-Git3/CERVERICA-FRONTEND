@@ -15,26 +15,26 @@ export class AlertasService {
     });
   }
 
-  showError(message: string) {
+  showError(message: string, summary?: string) {
     this.messageService.add({
       severity: 'error',
-      summary: 'Error',
+      summary: summary ?? 'Error',
       detail: message,
     });
   }
 
-  showInfo(message: string) {
+  showInfo(message: string, summary?: string) {
     this.messageService.add({
       severity: 'info',
-      summary: 'Información',
+      summary: summary ?? 'Información',
       detail: message,
     });
   }
 
-  showWarn(message: string) {
+  showWarn(message: string, summary?: string) {
     this.messageService.add({
       severity: 'warn',
-      summary: 'Advertencia',
+      summary: summary ?? 'Advertencia',
       detail: message,
     });
   }

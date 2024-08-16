@@ -19,6 +19,11 @@ import { PasswordModule } from 'primeng/password';
 
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
+import { ToolbarModule } from 'primeng/toolbar';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [],
@@ -43,7 +48,14 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
     ProgressBarModule,
     AvatarModule,
     AvatarGroupModule,
-    PasswordModule
+    PasswordModule,
+    ToolbarModule,
+    SplitButtonModule,
+    TableModule,
+    TagModule,
+    DialogModule,
+    AvatarModule,
+    AvatarGroupModule,
   ],
 })
 export class PrimeModule {}
