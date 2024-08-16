@@ -141,5 +141,5 @@ export class RecetasModalComponent implements OnInit {
       });
   }
 
-  
+
 }
