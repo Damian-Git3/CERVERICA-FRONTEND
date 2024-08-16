@@ -80,6 +80,7 @@ export class RecetasModalPasosComponent implements OnInit {
 
   hide() {
     this.display = false;
+    this.modificar = false
     this.form.reset();
     this.idReceta = 0;
   }
