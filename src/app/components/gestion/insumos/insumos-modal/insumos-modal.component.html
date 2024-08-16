@@ -1,104 +1,51 @@
-<p-dialog
-  [(visible)]="display"
-  [draggable]="false"
-  [maximizable]="false"
-  [header]="titulo"
-  [modal]="true"
-  (onHide)="ocultar()"
-
->
+<p-dialog [(visible)]="display" [draggable]="false" [maximizable]="false" [header]="titulo" [modal]="true"
+  (onHide)="ocultar()">
   <form [formGroup]="insumoForm">
     <div class="field">
       <label for="id"> ID </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="id"
-        id="id"
-        class="w-full"
-      />
+      <input type="text" pInputText formControlName="id" id="id" class="w-full" />
     </div>
 
     <div class="field">
       <label for="nombre"> NOMBRE </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="nombre"
-        id="nombre"
-        class="w-full"
-      />
+      <input type="text" pInputText formControlName="nombre" id="nombre" class="w-full" />
     </div>
 
     <div class="field">
       <label for="descripcion"> DESCRIPCION </label>
-      <textarea
-        rows="5"
-        cols="30"
-        pInputTextarea
-        [autoResize]="true"
-        formControlName="descripcion"
-        class="w-full"
-      ></textarea>
+      <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" formControlName="descripcion"
+        class="w-full"></textarea>
     </div>
 
     <div class="field">
       <label for="unidadMedida"> UNIDAD DE MEDIDA </label>
-      <p-dropdown
-        formControlName="unidadMedida"
-        [options]="unidadesMedida"
-
-        placeholder="Unidad De Medida"
-        styleClass="w-full"
-        />
+      <p-dropdown formControlName="unidadMedida" [options]="unidadesMedida" placeholder="Unidad De Medida"
+        styleClass="w-full" />
     </div>
 
     <div class="field">
       <label for="cantidadMaxima">CANTIDAD MAXIMA</label>
-      <input
-        type="text"
-        pInputText
-        formControlName="cantidadMaxima"
-        id="cantidadMaxima"
-        class="w-full"
-      />
+      <input type="text" pInputText formControlName="cantidadMaxima" id="cantidadMaxima" class="w-full" />
     </div>
 
     <div class="field">
       <label for="cantidadMinima"> CANTIDAD MINIMA </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="cantidadMinima"
-        id="cantidadMinima"
-        class="w-full"
-      />
+      <input type="text" pInputText formControlName="cantidadMinima" id="cantidadMinima" class="w-full" />
     </div>
 
     <div class="field">
       <label for="merma"> MERMA </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="merma"
-        id="merma"
-        class="w-full"
-      />
+      <input type="text" pInputText formControlName="merma" id="merma" class="w-full" />
+    </div>
+
+    <div class="mensajes-error" *ngIf="mensajesError != ''">
+      <div [innerHTML]="mensajesError"></div>
     </div>
 
     <div class="field flex justify-content-center gap-1">
-      <p-button
-        [label]="labelBoton"
-        styleClass="w-full"
-        icon="fa-solid fa-save"
-        (click)="modificar ? actualizar() : guardar()"
-      ></p-button>
-      <p-button
-        label="Cancelar"
-        styleClass="w-full"
-        icon="fa-solid fa-times"
-        (click)="display = false"
-      ></p-button>
+      <p-button [label]="labelBoton" styleClass="w-full" icon="fa-solid fa-save"
+        (click)="modificar ? actualizar() : guardar()"></p-button>
+      <p-button label="Cancelar" styleClass="w-full" icon="fa-solid fa-times" (click)="display = false"></p-button>
     </div>
   </form>
 </p-dialog>

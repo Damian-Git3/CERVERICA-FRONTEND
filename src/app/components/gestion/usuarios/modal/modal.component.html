@@ -25,14 +25,14 @@
             <div [innerHTML]="mensajesError"></div>
         </div>
 
-        <div class="field flex justify-content-center gap-1" *ngIf="nuevoUsuario">
+        <div class="field flex justify-content-center gap-1" *ngIf="nuevo">
             <p-button #btnGuardar label="Guardar" styleClass="w-full" icon="fa-solid fa-save" [loading]="cargando"
                 (click)="registrar()"></p-button>
             <p-button #btnCancelar label="Cancelar" styleClass="w-full" icon="fa-solid fa-times"
                 (click)="mostrarModal = false"></p-button>
         </div>
 
-        <div class="field flex justify-content-center gap-1" *ngIf="!nuevoUsuario">
+        <div class="field flex justify-content-center gap-1" *ngIf="!nuevo">
             <p-button #btnGuardar label="Editar" styleClass="w-full" icon="fa-solid fa-pencil" [loading]="cargando"
                 (click)="editar()"></p-button>
             <p-button #btnCancelar label="Cancelar" styleClass="w-full" icon="fa-solid fa-times"

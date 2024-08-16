@@ -35,7 +35,7 @@ export class ModalComponent {
   _CompartidoService = inject(CompartidoService);
 
   public mostrarModal: boolean = false;
-  public nuevoUsuario: boolean = false;
+  public nuevo: boolean = false;
   public cargando: boolean = false;
   public mensajesError: string = '';
   public idUsuario: string = '';
@@ -56,14 +56,14 @@ export class ModalComponent {
     this.mostrarModal = true;
     if (usuario) {
       this.modal.header = 'Editar Usuario';
-      this.nuevoUsuario = false;
+      this.nuevo = false;
       this.campo['nombre'].setValue(usuario.nombre);
       this.campo['correo'].setValue(usuario.correo);
       this.campo['rol'].setValue(usuario.rol);
       this.idUsuario = usuario.id;
     } else {
       this.modal.header = 'Crear Usuario';
-      this.nuevoUsuario = true;
+      this.nuevo = true;
       this.campo['nombre'].setValue('');
       this.campo['correo'].setValue('');
       this.campo['rol'].setValue('');
@@ -74,7 +74,7 @@ export class ModalComponent {
   registrar() {
     this.cargando = true;
 
-    let nuevoUsuario: CrearUsuarioDTO = {
+    let nuevo: CrearUsuarioDTO = {
       nombre: this.form.value.nombre,
       correo: this.form.value.correo,
       rol: this.form.value.rol,
@@ -82,7 +82,7 @@ export class ModalComponent {
     };
 
     this._UsuariosService
-      .agregarUsuario(nuevoUsuario)
+      .agregarUsuario(nuevo)
       .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: () => {
