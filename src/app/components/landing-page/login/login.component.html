@@ -63,6 +63,9 @@
               <input type="password" minlength="4" class="input-field" autocomplete="off" formControlName="password"
                 required />
               <label>Contraseña</label>
+
+              <p-password formControlName="password" class="input-field" promptLabel="Choose a password"
+                weakLabel="Too simple" mediumLabel="Average complexity" strongLabel="Complex password" />
             </div>
 
             <div class="mensajes-error" #mensajesCrearCuenta></div>
