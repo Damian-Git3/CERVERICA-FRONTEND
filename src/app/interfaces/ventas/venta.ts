@@ -6,8 +6,8 @@ export interface Venta {
   totalCervezas: number,
   metodoPago: number,
   metodoEnvio: number,
-  estatusVenta: number,
   montoVenta: number,
   numeroTarjeta: string,
-  productosPedido: DetalleVentaDTO[]
+  productosPedido: DetalleVentaDTO[],
+  estatusVenta: number,
 }
