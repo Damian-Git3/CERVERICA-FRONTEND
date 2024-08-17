@@ -12,7 +12,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
-
+import { TagModule } from 'primeng/tag';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 @NgModule({
   declarations: [ProduccionesTablaComponent, ProduccionesModalComponent],
   imports: [
@@ -27,7 +29,10 @@ import { ImageModule } from 'primeng/image';
     DropdownModule,
     InputTextModule,
     CardModule,
-    ImageModule
+    ImageModule,
+    TagModule,
+    ConfirmDialogModule,
+    InputTextareaModule
   ],
 })
 export class ProduccionesModule {}

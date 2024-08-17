@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UsuariosService } from '../../../../services/usuarios/usuarios.service';
 import { RecetaService } from '../../../../services/receta/receta.service';
@@ -11,6 +11,7 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
   styleUrls: ['./producciones-modal.component.css'],
 })
 export class ProduccionesModalComponent implements OnInit {
+  @Output() reload: EventEmitter<any> = new EventEmitter();
   public display: boolean = false;
   public usuariosOperador: any[] = [];
   public recetas: any[] = [];

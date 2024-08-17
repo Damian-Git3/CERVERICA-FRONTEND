@@ -35,30 +35,34 @@ export class ProduccionesService {
     return this.http.post(`${this._baseURL}/almacenar/${id}`, data);
   }
 
-  asignarOperador(id: number, idUsuario: number): Observable<any> {
-    return this.http.put(`${this._baseURL}/${id}/asignar-usuario`, {
+  asignarOperador(id: number, idUsuario: string): Observable<any> {
+    return this.http.put(`${this._baseURL}/asignar-usuario/${id}`, {
       idUsuario,
     });
   }
 
   aceptarSolicutud(idSolicitud: number): Observable<any> {
-    return this.http.post(
+    return this.http.get(
       `${this._baseURL}/aceptar-solicitud/${idSolicitud}`,
       {}
     );
   }
 
-  rechazarSolicitud(idSolicitud: number): Observable<any> {
+  rechazarSolicitud(idSolicitud: number, mensaje: string): Observable<any> {
+    let formData = new FormData();
+    formData.append('mensaje', mensaje);
     return this.http.post(
       `${this._baseURL}/rechazar-solicitud/${idSolicitud}`,
-      {}
+      formData
     );
   }
 
-  posponerSolicitud(idSolicitud: number): Observable<any> {
+  posponerSolicitud(idSolicitud: number, mensaje: string): Observable<any> {
+    let formData = new FormData();
+    formData.append('mensaje', mensaje);
     return this.http.post(
       `${this._baseURL}/posponer-solicitud/${idSolicitud}`,
-      {}
+      formData
     );
   }
 
