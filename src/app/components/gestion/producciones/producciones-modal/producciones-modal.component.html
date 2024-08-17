@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="display">
+<p-dialog [(visible)]="display" [modal]="true">
   <form [formGroup]="form">
     <div class="field">
       <label for="idUsuario"> OPERADOR </label>
@@ -40,6 +40,7 @@
     <div class="field text-center">
       <p-button
         label="Guardar"
+        icon="pi pi-save"
         (click)="guardar()"
         class="w-full"
         [disabled]="!form.valid"
