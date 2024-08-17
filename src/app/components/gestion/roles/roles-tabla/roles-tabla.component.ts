@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RolesService } from '../../../../services/roles/roles.service';
 import { MenuItem } from 'primeng/api';
 import { Toast } from 'primeng/toast';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-roles-tabla',
@@ -12,6 +13,8 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
 export class RolesTablaComponent {
   public roles: any[] = [];
   public items: MenuItem[];
+
+  _CompartidoService = inject(CompartidoService);
   constructor(
     private rolesService: RolesService,
     private alertasService: AlertasService
@@ -29,8 +32,9 @@ export class RolesTablaComponent {
   }
 
   ngOnInit() {
-    console.log('RolesTablaComponent inicializado');
     this.obtenerRoles();
+
+    this._CompartidoService.actualizarTitulo('Inicio');
   }
 
   obtenerRoles() {

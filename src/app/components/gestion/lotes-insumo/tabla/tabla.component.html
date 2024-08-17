@@ -1,0 +1,72 @@
+<p-progressBar mode="indeterminate" *ngIf="cargando" />
+
+<p-toolbar>
+    <div class="p-toolbar-group-start">
+        <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerLotesInsumo()" />
+        <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+    </div>
+    <div class="p-toolbar-group-center">
+        <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText placeholder="Buscar" (input)="filtrarLotesInsumo($event)" />
+        </span>
+    </div>
+</p-toolbar>
+
+<p-table #dt [value]="lotesInsumoFiltrados" [styleClass]="'p-datatable-sm'" [rows]="10" [paginator]="true"
+    [showCurrentPageReport]="true" [selectionMode]="'single'" currentPageReportTemplate="{first} de {last}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="proveedor">
+                PROVEEDOR <p-sortIcon field="proveedor" />
+            </th>
+            <th pSortableColumn="insumo">
+                INSUMO <p-sortIcon field="insumo" />
+            </th>
+            <th pSortableColumn="usuarioRegistro">
+                USUARIO REGISTRO <p-sortIcon field="usuarioRegistro" />
+            </th>
+            <th pSortableColumn="fechaCompra">
+                FECHA COMPRA <p-sortIcon field="fechaCompra" />
+            </th>
+            <th pSortableColumn="fechaCaducidad">
+                FECHA CADUCIDAD <p-sortIcon field="fechaCaducidad" />
+            </th>
+            <th pSortableColumn="cantidad">
+                CANTIDAD <p-sortIcon field="cantidad" />
+            </th>
+            <th pSortableColumn="precioUnidad">
+                PRECIO UNIDAD <p-sortIcon field="precioUnidad" />
+            </th>
+            <th pSortableColumn="montoCompra">
+                MONTO COMPRA <p-sortIcon field="montoCompra" />
+            </th>
+            <th pSortableColumn="caducado">
+                CADUCADO <p-sortIcon field="caducado" />
+            </th>
+            <th>ACCIONES</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-lote>
+        <tr (dblclick)="modal.show(lote)">
+            <td>{{ lote.proveedor.nombreContacto }}</td>
+            <td>{{ lote.insumo.nombre }}</td>
+            <td>{{ lote.usuario.fullName }}</td>
+            <td>{{ lote.fechaCompra | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ lote.fechaCaducidad | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ lote.cantidad }} {{lote.insumo.unidadMedida}}</td>
+            <td>{{ lote.precioUnidad | currency:'MXN' }}</td>
+            <td>{{ lote.montoCompra | currency:'MXN' }}</td>
+            <td>{{ lote.caducado }}</td>
+
+            <td>
+                <p-button size="small" icon="pi pi-pencil" class="mr-2" (click)="modal.show(lote)"
+                    [disabled]="lote.numeroProducciones > 0" [pTooltip]="'Editar'"></p-button>
+                <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="warning"
+                    [disabled]="lote.numeroProducciones > 0" (onClick)="eliminar(lote.id)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<app-modal #modal (reload)="obtenerLotesInsumo()"></app-modal>

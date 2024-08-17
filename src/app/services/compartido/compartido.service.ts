@@ -6,11 +6,17 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ProductoCarrito } from '../../interfaces/carrito/producto-carrito';
 import { AccountService } from '../account/account.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompartidoService {
+  private tituloModulo: string = '';
+  private _TituloModulo: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
+
   constructor(
     private _CarritoService: CarritoService,
     private _AuthService: AuthService,
@@ -18,6 +24,15 @@ export class CompartidoService {
     private _AccountService: AccountService,
     private _Router: Router
   ) {}
+
+  get TituloModulo() {
+    return this._TituloModulo.asObservable();
+  }
+
+  actualizarTitulo(nuevoTitulo: string) {
+    this.tituloModulo = nuevoTitulo;
+    this._TituloModulo.next(this.tituloModulo);
+  }
 
   guardarSesion(sesion: SesionDTO) {
     localStorage.setItem('usuarioSesion', JSON.stringify(sesion));
