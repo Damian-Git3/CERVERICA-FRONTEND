@@ -39,7 +39,7 @@ export class ModalComponent {
   public cargando: boolean = false;
   public mensajesError: string = '';
   public idUsuario: string = '';
-  roles: string[] = ['Cliente', 'Operador', 'Administrador'];
+  roles: string[] = ['Cliente', 'Operador', 'Admin'];
 
   public form: FormGroup = new FormGroup({
     nombre: new FormControl(''),
@@ -54,26 +54,20 @@ export class ModalComponent {
 
   show(usuario?: UsuarioDTO) {
     this.mostrarModal = true;
+    this.form.reset();
     if (usuario) {
       this.modal.header = 'Editar Usuario';
       this.nuevo = false;
-      this.campo['nombre'].setValue(usuario.nombre);
-      this.campo['correo'].setValue(usuario.correo);
-      this.campo['rol'].setValue(usuario.rol);
+      this.form.patchValue(usuario);
       this.idUsuario = usuario.id;
     } else {
       this.modal.header = 'Crear Usuario';
       this.nuevo = true;
-      this.campo['nombre'].setValue('');
-      this.campo['correo'].setValue('');
-      this.campo['rol'].setValue('');
-      this.campo['contrasenia'].setValue('');
     }
   }
 
   registrar() {
     this.cargando = true;
-
     let nuevo: CrearUsuarioDTO = {
       nombre: this.form.value.nombre,
       correo: this.form.value.correo,

@@ -7,6 +7,11 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ProduccionesRoutes } from './producciones.routing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   declarations: [ProduccionesTablaComponent, ProduccionesModalComponent],
@@ -17,6 +22,12 @@ import { ProduccionesRoutes } from './producciones.routing';
     ToolbarModule,
     ButtonModule,
     SplitButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    InputTextModule,
+    CardModule,
+    ImageModule
   ],
 })
 export class ProduccionesModule {}
