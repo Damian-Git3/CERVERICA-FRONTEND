@@ -31,7 +31,8 @@
     subheader="Solicitud {{ produccion.fechaSolicitud | date : 'dd/MM/yyyy' }}"
     [style]="{ 'min-width': '400px', 'min-height': '400px' }"
     styleClass="border-round"
-  >
+
+    >
     <ng-template pTemplate="header"> </ng-template>
     <p><strong>Operador:</strong>{{ produccion.nombreUsuario }}</p>
     <p><strong>Tandas:</strong>{{ produccion.numeroTandas }}</p>
@@ -91,14 +92,17 @@
         />
 
         <p-button
-          *ngIf="produccion.estatus == 1 || produccion.estatus == 5 || produccion.estatus == 6"
+          *ngIf="
+            produccion.estatus == 1 ||
+            produccion.estatus == 5 ||
+            produccion.estatus == 6
+          "
           label="Reasignar"
           icon="pi pi-user"
           severity="secondary"
           size="small"
           (onClick)="
-            displayAsignarUsuario = true;
-            idSeleccionado = produccion.id
+            displayAsignarUsuario = true; idSeleccionado = produccion.id
           "
         />
       </div>
@@ -137,6 +141,24 @@
             posponerBtn = true;
             idSeleccionado = produccion.id
           "
+
+        />
+        <p-button
+          *ngIf="produccion.estatus == 2"
+          label="Ver Pasos"
+          severity="secondary"
+          icon="pi pi-eye"
+          size="small"
+          (onClick)="modalPasos.show(produccion.id)"
+        ></p-button>
+        <!-- AVANZAR PASO -->
+        <p-button
+          *ngIf="produccion.estatus == 2"
+          label="Avanzar Paso"
+          severity="secondary"
+          icon="pi pi-arrow-right"
+          size="small"
+          (onClick)="modalAvanzar.show(produccion.id)"
         />
       </div>
     </ng-template>
@@ -146,6 +168,9 @@
   #modal
   (reload)="obtenerProducciones()"
 ></app-producciones-modal>
+
+<app-pasos-modal #modalPasos></app-pasos-modal>
+<app-avanzar-paso-modal #modalAvanzar></app-avanzar-paso-modal>
 
 <p-dialog [(visible)]="displayMensaje" header="Motivo" [modal]="true">
   <textarea
@@ -192,35 +217,27 @@
   [modal]="true"
   header="Reasignar Operador"
 >
-<div class="field">
-      <label for="idUsuario"> OPERADOR </label>
-      <p-dropdown
-        [(ngModel)]="idUsuarioSeleccionado"
-        [options]="usuariosOperador"
-        optionLabel="nombre"
-        placeholder="Receta"
-        optionValue="idUsuario"
-        placeholder="Asignar Operador"
-        styleClass="w-full"
-        appendTo="body"
-      />
-    </div>
+  <div class="field">
+    <label for="idUsuario"> OPERADOR </label>
+    <p-dropdown
+      [(ngModel)]="idUsuarioSeleccionado"
+      [options]="usuariosOperador"
+      optionLabel="nombre"
+      placeholder="Receta"
+      optionValue="idUsuario"
+      placeholder="Asignar Operador"
+      styleClass="w-full"
+      appendTo="body"
+    />
+  </div>
   <ng-template pTemplate="footer">
     <div class="flex gap-1 justify-content-center">
-      <p-button
-        label="Aceptar"
-        icon="pi pi-check"
-        (click)="asignarUsuario()"
-      />
+      <p-button label="Aceptar" icon="pi pi-check" (click)="asignarUsuario()" />
       <p-button
         label="Cancelar"
         icon="pi pi-times"
-        (click)="
-          displayAsignarUsuario = false;
-          idSeleccionado = 0
-        "
+        (click)="displayAsignarUsuario = false; idSeleccionado = 0"
       />
     </div>
   </ng-template>
-
 </p-dialog>

@@ -15,8 +15,10 @@ import { ImageModule } from 'primeng/image';
 import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { PasosModalComponent } from './pasos-modal/pasos-modal.component';
+import { AvanzarPasoModalComponent } from './avanzar-paso-modal/avanzar-paso-modal.component';
 @NgModule({
-  declarations: [ProduccionesTablaComponent, ProduccionesModalComponent],
+  declarations: [ProduccionesTablaComponent, ProduccionesModalComponent, PasosModalComponent, AvanzarPasoModalComponent],
   imports: [
     CommonModule,
     ProduccionesRoutes,

@@ -67,6 +67,6 @@ export class ProduccionesService {
   }
 
   avanzarPaso(data: any): Observable<any> {
-    return this.http.post(`${this._baseURL}/avanzar-paso`, data);
+    return this.http.post(`${this._baseURL}/AvanzarPaso`, data);
   }
 }
