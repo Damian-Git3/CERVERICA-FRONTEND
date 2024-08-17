@@ -1,17 +1,52 @@
 <p-toolbar>
-    <div class="p-toolbar-group-start">
-        <p-button icon="pi pi-plus" class="mr-2" (click)="modal.display = !modal.display"/>
-        <p-button icon="pi pi-print" class="mr-2"/>
-        <p-button icon="pi pi-upload" />
-    </div>
-    <div class="p-toolbar-group-center">
-        <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input pInputText placeholder="Search" />
-        </span>
-    </div>
-    <div class="p-toolbar-group-end">
-        <p-splitButton label="Save" icon="pi pi-check" [model]="items" />
-    </div>
+  <div class="p-toolbar-group-start">
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerProducciones()"
+    />
+    <p-button
+      icon="pi pi-plus"
+      class="mr-2"
+      label="Nueva Solicitud"
+      (click)="modal.display = !modal.display"
+    />
+    <!-- <p-button icon="pi pi-print" class="mr-2" />
+    <p-button icon="pi pi-upload" /> -->
+  </div>
+  <div class="p-toolbar-group-center"></div>
+  <div class="p-toolbar-group-end">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText placeholder="Buscar" />
+    </span>
+    <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" /> -->
+  </div>
 </p-toolbar>
+<div class="border grid gap-2 m-1">
+  <p-card
+    *ngFor="let produccion of producciones"
+    [header]="produccion.nombreReceta"
+    subheader="Solicitud {{ produccion.fechaSolicitud | date: 'dd/MM/yyyy' }}"
+    [style]="{ width: '360px' }"
+    styleClass="border-round"
+  >
+    <ng-template pTemplate="header">
+
+    </ng-template>
+    <p><strong>Operador:</strong>{{produccion.nombreUsuario}}</p>
+    <p><strong>Operador:</strong>{{produccion.nombreUsuario}}</p>
+    <ng-template pTemplate="footer">
+      <div class="flex gap-3 mt-1">
+        <p-button
+          label="Cancel"
+          severity="secondary"
+          class="w-full"
+          styleClass="w-full"
+        />
+        <p-button label="Save" class="w-full" styleClass="w-full" />
+      </div>
+    </ng-template>
+  </p-card>
+</div>
 <app-producciones-modal #modal></app-producciones-modal>

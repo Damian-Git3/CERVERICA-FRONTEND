@@ -15,7 +15,8 @@ export class RecetaService {
     private _CompartidoService: CompartidoService
   ) {}
 
-  obtener(token: string): Observable<any> {
+  obtener(): Observable<any> {
+    const token = this._CompartidoService.obtenerSesion().token;
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get(`${this._baseURL}`, { headers });
   }

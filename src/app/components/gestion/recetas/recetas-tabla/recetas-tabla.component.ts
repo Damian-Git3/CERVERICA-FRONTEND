@@ -38,7 +38,7 @@ export class RecetasTablaComponent implements OnInit {
 
   obtenerRecetas() {
     this.recetaService
-      .obtener(this._CompartidoService.obtenerSesion().token)
+      .obtener()
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
