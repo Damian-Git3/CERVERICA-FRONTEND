@@ -2,14 +2,16 @@
 
 <p-toolbar>
   <div class="p-toolbar-group-start">
-    <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerInsumos()" />
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerInsumos()"
+    />
     <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
 
     <!-- <p-button icon="pi pi-upload" [disabled]="true"/> -->
   </div>
-  <div class="p-toolbar-group-center">
-
-  </div>
+  <div class="p-toolbar-group-center"></div>
   <div class="p-toolbar-group-end">
     <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" [disabled]="true" /> -->
     <span class="p-input-icon-left">
@@ -18,13 +20,24 @@
     </span>
   </div>
 </p-toolbar>
-<p-table #dt [value]="insumos" [styleClass]="'p-datatable-sm'" [rows]="10" [paginator]="true"
-  [showCurrentPageReport]="true" [selectionMode]="'single'" currentPageReportTemplate="{first} de {last}">
+<p-table
+  #dt
+  [value]="insumos"
+  [styleClass]="'p-datatable-sm'"
+  [rows]="10"
+  [paginator]="true"
+  [showCurrentPageReport]="true"
+  [selectionMode]="'single'"
+  currentPageReportTemplate="{first} de {last}"
+>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
       <th pSortableColumn="unidadMedida">
         UNIDAD <p-sortIcon field="unidadMedida" />
+      </th>
+      <th pSortableColumn="inventario">
+        INVENTARIO <p-sortIcon field="inventario" />
       </th>
       <th pSortableColumn="cantidadMaxima">
         MAXIMO <p-sortIcon field="cantidadMaxima" />
@@ -41,26 +54,57 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-producto>
-    <tr (dblclick)="producto.activo? modal.show(producto.id) : null">
+    <tr (dblclick)="producto.activo ? modal.show(producto.id) : null">
       <td>{{ producto.nombre }}</td>
+      <td>{{ producto.cantidadTotalLotes}}</td>
       <td>{{ producto.unidadMedida }}</td>
-      <td>{{ producto.cantidadMaxima }} {{producto.unidadMedida }}</td>
-      <td>{{ producto.cantidadMinima }} {{producto.unidadMedida }}</td>
-      <td>{{ producto.costoUnitario | currency:'MXN' }}</td>
-      <td>{{ producto.merma }} {{producto.unidadMedida }}</td>
+      <td>{{ producto.cantidadMaxima }} {{ producto.unidadMedida }}</td>
+      <td>{{ producto.cantidadMinima }} {{ producto.unidadMedida }}</td>
+      <td>{{ producto.costoUnitario | currency : "MXN" }}</td>
+      <td>{{ producto.merma }} {{ producto.unidadMedida }}</td>
       <td>
-        <p-tag *ngIf="producto.activo" severity="success" value="ACTIVO" [rounded]="true" />
-        <p-tag *ngIf="!producto.activo" severity="danger" value="INACTIVO" [rounded]="true" />
+        <p-tag
+          *ngIf="producto.activo"
+          severity="success"
+          value="ACTIVO"
+          [rounded]="true"
+        />
+        <p-tag
+          *ngIf="!producto.activo"
+          severity="danger"
+          value="INACTIVO"
+          [rounded]="true"
+        />
       </td>
       <td>
-        <p-button [disabled]="!producto.activo" size="small" icon="pi pi-pencil" class="mr-2"
-          (click)="modal.show(producto.id)" [pTooltip]="'Editar'"></p-button>
-        <p-button size="small" [icon]="producto.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'" class="mr-2"
+        <p-button
+          [disabled]="!producto.activo"
+          size="small"
+          icon="pi pi-pencil"
+          class="mr-2"
+          (click)="modal.show(producto.id)"
+          [pTooltip]="'Editar'"
+        ></p-button>
+        <p-button
+          size="small"
+          [icon]="
+            producto.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
+          "
+          class="mr-2"
           [pTooltip]="producto.activo ? 'Bloquear' : 'Desbloquear'"
-          (onClick)="producto.activo ? desactivar(producto.id) : activar(producto.id)"
-          [severity]="producto.activo ? 'success' : 'danger'"></p-button>
-        <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="warning"
-          (onClick)="confirmarEliminar($event, producto.id)"></p-button>
+          (onClick)="
+            producto.activo ? desactivar(producto.id) : activar(producto.id)
+          "
+          [severity]="producto.activo ? 'success' : 'danger'"
+        ></p-button>
+        <p-button
+          size="small"
+          icon="pi pi-trash"
+          class="mr-2"
+          pTooltip="Eliminar"
+          severity="warning"
+          (onClick)="confirmarEliminar($event, producto.id)"
+        ></p-button>
       </td>
     </tr>
   </ng-template>
