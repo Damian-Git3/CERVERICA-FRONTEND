@@ -197,4 +197,18 @@ export class ProduccionesTablaComponent implements OnInit {
 
   }
 
+  avanzarPaso(id: number) {
+    this.produccionesService.avanzarPaso({ idProduccion: id }).subscribe({
+      next: (data: any) => {
+        console.log('Paso avanzado');
+        this.alertasService.showSuccess('Paso avanzado');
+        this.obtenerProducciones();
+      },
+      error: (error: any) => {
+        console.error('Error al avanzar el paso');
+        this.alertasService.showError('Error al avanzar el paso');
+      },
+    });
+  }
+
 }
