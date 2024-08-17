@@ -112,6 +112,13 @@ export class TablaComponent {
       });
   }
 
+  async confirmarEliminar(event: Event, id: string) {
+    const confirmed = await this._AlertasService.confirmarEliminacion(event);
+    if (confirmed) {
+      this.eliminar(id);
+    }
+  }
+
   eliminar(id: string) {
     this.cargando = true;
 

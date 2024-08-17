@@ -45,6 +45,9 @@
             <th pSortableColumn="precioUnidad">
                 PRECIO UNIDAD <p-sortIcon field="precioUnidad" />
             </th>
+            <th pSortableColumn="merma">
+                MERMA <p-sortIcon field="merma" />
+            </th>
             <th pSortableColumn="caducado">
                 CADUCADO <p-sortIcon field="caducado" />
             </th>
@@ -62,15 +65,20 @@
             <td>{{ lote.montoCompra | currency:'MXN' }}</td>
             <td>{{ lote.precioUnidad | currency:'MXN' }}</td>
             <td>
+                <p-tag value="{{lote.merma }} {{lote.insumo.unidadMedida}}"
+                    [severity]="lote.merma > 0 ? 'danger' : 'success'"></p-tag>
+            </td>
+            <td>
                 <p-tag value="{{lote.caducado }} {{lote.insumo.unidadMedida}}"
                     [severity]="lote.caducado > 0 ? 'danger' : 'success'"></p-tag>
             </td>
-
             <td>
                 <p-button size="small" icon="pi pi-pencil" class="mr-2" (click)="modal.show(lote)" severity="warning"
                     [disabled]="lote.numeroProducciones > 0" [pTooltip]="'Editar'"></p-button>
                 <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="danger"
                     [disabled]="lote.numeroProducciones > 0" (onClick)="confirmarEliminar($event, lote.id)"></p-button>
+                <p-button size="small" icon="fa-solid fa-down-long" class="mr-2" pTooltip="Merma" severity="danger"
+                    [disabled]="lote.numeroProducciones > 0" (onClick)="modal.show(lote, true)"></p-button>
             </td>
         </tr>
     </ng-template>

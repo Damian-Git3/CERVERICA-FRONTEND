@@ -14,6 +14,7 @@ export class TablaComponent {
   _LotesInsumoService = inject(LotesInsumoService);
   _AlertasService = inject(AlertasService);
   _CompartidoService = inject(CompartidoService);
+  
 
   lotesInsumo: LoteInsumoDTO[] = [];
   lotesInsumoFiltrados: LoteInsumoDTO[] = [];
@@ -116,9 +117,6 @@ export class TablaComponent {
   }
 
   async confirmarEliminar(event: Event, id: number) {
-    console.log("Confirmando eliminacion");
-    
-
     const confirmed = await this._AlertasService.confirmarEliminacion(event);
     if (confirmed) {
       this.eliminar(id);

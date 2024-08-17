@@ -52,7 +52,7 @@
           [severity]="usuario.activo ? 'success' : 'danger'"></p-button>
         <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="warning"
           [disabled]="unicoAdministrador && usuario.rol === 'Administrador'"
-          (onClick)="eliminar(usuario.id)"></p-button>
+          (onClick)="confirmarEliminar($event, usuario.id)"></p-button>
       </td>
     </tr>
   </ng-template>

@@ -43,6 +43,7 @@ export class ModalComponent {
   _FormBuilder = inject(FormBuilder);
 
   public mostrarModal: boolean = false;
+  public mostrarModalMerma: boolean = false;
   public nuevo: boolean = false;
   public cargando: boolean = false;
   public mensajesError: string = '';
@@ -73,35 +74,48 @@ export class ModalComponent {
     montoCompra: [, Validators.required],
   });
 
-  show(loteInsumo?: LoteInsumoDTO) {
+  mermaForm: FormGroup = this._FormBuilder.group({
+    cantidad: [, Validators.required],
+  });
+
+  show(loteInsumo?: LoteInsumoDTO, mostrarModalMerma?: boolean) {
     this.mostrarModal = true;
     this.mensajesError = '';
 
-    if (loteInsumo) {
-      this.nuevo = false;
-      this.modal.header = 'Editar lote insumo';
-      this.loteInsumoSeleccionado = loteInsumo;
+    if (!mostrarModalMerma) {
+      if (loteInsumo) {
+        this.nuevo = false;
+        this.modal.header = 'Editar lote insumo';
+        this.loteInsumoSeleccionado = loteInsumo;
 
-      const proveedorSeleccionado = this.loteInsumoSeleccionado.proveedor;
-      const proveedorEnLista = this.proveedores.find(
-        (p) => p.nombreContacto === proveedorSeleccionado.nombreContacto
-      );
+        const proveedorSeleccionado = this.loteInsumoSeleccionado.proveedor;
+        const proveedorEnLista = this.proveedores.find(
+          (p) => p.nombreContacto === proveedorSeleccionado.nombreContacto
+        );
 
-      const insumoSeleccionado = this.loteInsumoSeleccionado.insumo;
-      const insumoEnLista = this.insumos.find(
-        (i) => i.nombre === insumoSeleccionado.nombre
-      );
+        const insumoSeleccionado = this.loteInsumoSeleccionado.insumo;
+        const insumoEnLista = this.insumos.find(
+          (i) => i.nombre === insumoSeleccionado.nombre
+        );
 
-      this.editarForm.patchValue({
-        proveedor: proveedorEnLista,
-        insumo: insumoEnLista,
-        fechaCaducidad: new Date(this.loteInsumoSeleccionado.fechaCaducidad),
-        cantidad: this.loteInsumoSeleccionado.cantidad,
-        montoCompra: this.loteInsumoSeleccionado.montoCompra,
-      });
+        this.editarForm.patchValue({
+          proveedor: proveedorEnLista,
+          insumo: insumoEnLista,
+          fechaCaducidad: new Date(this.loteInsumoSeleccionado.fechaCaducidad),
+          cantidad: this.loteInsumoSeleccionado.cantidad,
+          montoCompra: this.loteInsumoSeleccionado.montoCompra,
+        });
+      } else {
+        this.modal.header = 'Crear lote insumo';
+        this.nuevo = true;
+      }
     } else {
-      this.modal.header = 'Crear lote insumo';
-      this.nuevo = true;
+      if (loteInsumo) {
+        this.nuevo = false;
+        this.loteInsumoSeleccionado = loteInsumo;
+        this.modal.header = 'Merma para lote insumo';
+        this.mostrarModalMerma = mostrarModalMerma;
+      }
     }
   }
 
@@ -187,6 +201,44 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el lote insumo vuelve a intentarlo',
+              'Ocurrió un problema'
+            );
+          }
+          console.error(error);
+        },
+      });
+  }
+
+  guardarMerma() {
+    this.cargando = true;
+
+    this._LotesInsumoService
+      .editarMermaLoteInsumo(
+        this.loteInsumoSeleccionado.id,
+        this.mermaForm.value.cantidad
+      )
+      .pipe(finalize(() => (this.cargando = false)))
+      .subscribe({
+        next: () => {
+          this._AlertasService.showSuccess(
+            'La merma fue agregada exitosamente',
+            'Merma agregada'
+          );
+          this.reload.emit();
+          this.mostrarModal = false;
+        },
+        error: (error: any) => {
+          if (error.status == 400) {
+            this._AlertasService.showInfo(
+              'Verifica los mensajes e intenta de nuevo',
+              'Ocurrió un problema'
+            );
+
+            this.mensajesError =
+              this._CompartidoService.extraerMensajesCodigo400(error.error);
+          } else {
+            this._AlertasService.showError(
+              'No se pudo guardar la merma vuelve a intentarlo',
               'Ocurrió un problema'
             );
           }
