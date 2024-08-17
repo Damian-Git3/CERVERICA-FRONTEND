@@ -8,31 +8,20 @@ import { CompartidoService } from '../../../../services/compartido/compartido.se
 @Component({
   selector: 'app-insumos-tabla',
   templateUrl: './insumos-tabla.component.html',
-  styleUrl: './insumos-tabla.component.css'
+  styleUrl: './insumos-tabla.component.css',
 })
 export class InsumosTablaComponent implements OnInit {
-
   public insumos: IInsumo[] = [];
   public items: any[] = [];
 
-  _CompartidoService = inject(CompartidoService)
+  _CompartidoService = inject(CompartidoService);
+
+  cargando: boolean = false;
 
   constructor(
     private insumosService: InsumosService,
     private alertasService: AlertasService
-  ) {
-    console.log('ProduccionesTablaComponent inicializado');
-    this.items = [
-      {
-        label: 'Update',
-        icon: 'pi pi-refresh',
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times',
-      },
-    ];
-  }
+  ) {}
 
   ngOnInit() {
     this.obtenerInsumos();
@@ -41,9 +30,11 @@ export class InsumosTablaComponent implements OnInit {
   }
 
   public obtenerInsumos() {
+    this.cargando = true;
+
     this.insumosService
       .obtener()
-      .pipe(finalize(() => { }))
+      .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
           this.insumos = data;
@@ -56,8 +47,9 @@ export class InsumosTablaComponent implements OnInit {
   }
 
   activar(id: number) {
-    this.insumosService.activar(id)
-      .pipe(finalize(() => { }))
+    this.insumosService
+      .activar(id)
+      .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Insumo activado correctamente');
@@ -71,8 +63,9 @@ export class InsumosTablaComponent implements OnInit {
   }
 
   desactivar(id: number) {
-    this.insumosService.desactivar(id)
-      .pipe(finalize(() => { }))
+    this.insumosService
+      .desactivar(id)
+      .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Insumo desactivado correctamente');
@@ -86,8 +79,9 @@ export class InsumosTablaComponent implements OnInit {
   }
 
   eliminar(id: number) {
-    this.insumosService.eliminar(id)
-      .pipe(finalize(() => { }))
+    this.insumosService
+      .eliminar(id)
+      .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Insumo eliminado correctamente');
@@ -98,5 +92,12 @@ export class InsumosTablaComponent implements OnInit {
           console.error(error);
         },
       });
+  }
+
+  async confirmarEliminar(event: Event, id: number) {
+    const confirmed = await this.alertasService.confirmarEliminacion(event);
+    if (confirmed) {
+      this.eliminar(id);
+    }
   }
 }

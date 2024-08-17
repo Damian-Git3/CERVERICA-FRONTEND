@@ -48,7 +48,6 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn=" id">ID <p-sortIcon field="id" /></th>
       <th pSortableColumn="direccion">
         EMPRESA <p-sortIcon field="direccion" />
       </th>
@@ -69,7 +68,6 @@
   </ng-template>
   <ng-template pTemplate="body" let-proveedor>
     <tr (dblclick)="proveedor.activo ? modal.show(proveedor.id) : null">
-      <td>{{ proveedor.id }}</td>
       <td>{{ proveedor.empresa }}</td>
       <td>{{ proveedor.telefono }}</td>
       <td>{{ proveedor.direccion }}</td>

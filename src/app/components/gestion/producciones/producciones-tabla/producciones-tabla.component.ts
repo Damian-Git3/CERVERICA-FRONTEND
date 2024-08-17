@@ -15,28 +15,15 @@ export class ProduccionesTablaComponent implements OnInit {
   public usuariosOperador: any[] = [];
   public producciones: any[] = [];
 
+  _CompartidoService = inject(CompartidoService);
+
   constructor(
     private usuariosService: UsuariosService,
     private alertasService: AlertasService,
     private produccionesService: ProduccionesService
-  ) {
-  _CompartidoService = inject(CompartidoService);
+  ) {}
 
   ngOnInit() {
-    this.items = [
-      {
-        label: 'Update',
-        icon: 'pi pi-refresh',
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times',
-      },
-    ];
-  }
-
-  ngOnInit() {
-    console.log('ProduccionesTablaComponent inicializado');
     this.obtenerProducciones();
   }
 
@@ -51,6 +38,4 @@ export class ProduccionesTablaComponent implements OnInit {
       },
     });
   }
-
-
 }

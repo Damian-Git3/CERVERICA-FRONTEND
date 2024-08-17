@@ -49,9 +49,7 @@ export class TablaComponent {
 
   private verificarUnicoAdministrador() {
     const administradores = this.usuarios.filter(
-      (
-      (user)) => user.rol === 'Admin'
-    
+      (user) => user.rol === 'Admin'
     );
     this.unicoAdministrador = administradores.length === 1;
   }
@@ -75,21 +73,17 @@ export class TablaComponent {
       .subscribe({
         next: () => {
           this._AlertasService.showSuccess(
-            
             'Usuario desactivado correctamente',
-           
+
             'Éxito'
-          
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
         },
         error: (error: any) => {
           this._AlertasService.showError(
-            
             'No se pudo desactivar el usuario, intenta nuevamente',
-           
+
             'Ocurrió un problema'
-          
           );
           console.error(error);
         },
@@ -105,21 +99,17 @@ export class TablaComponent {
       .subscribe({
         next: () => {
           this._AlertasService.showSuccess(
-            
             'Usuario activado correctamente',
-           
+
             'Éxito'
-          
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
         },
         error: (error: any) => {
           this._AlertasService.showError(
-            
             'No se pudo activar el usuario, intenta nuevamente',
-           
+
             'Ocurrió un problema'
-          
           );
           console.error(error);
         },
@@ -142,21 +132,17 @@ export class TablaComponent {
       .subscribe({
         next: () => {
           this._AlertasService.showSuccess(
-            
             'Usuario eliminado correctamente',
-           
+
             'Éxito'
-          
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
         },
         error: (error: any) => {
           this._AlertasService.showError(
-            
             'No se pudo eliminar el usuario, intenta nuevamente',
-           
+
             'Ocurrió un problema'
-          
           );
           console.error(error);
         },

@@ -13,6 +13,7 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
+import { PrimeModule } from '../../prime/prime.module';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,8 @@ import { DropdownModule } from 'primeng/dropdown';
     TableModule,
     TagModule,
     InputTextareaModule,
-    DropdownModule
-
+    DropdownModule,
+    PrimeModule
   ]
 })
 export class InsumosModule { }
