@@ -34,8 +34,7 @@ export class RecetasTablaComponent implements OnInit {
 
   public ngOnInit(): void {
     this.obtenerRecetas();
-    
-    this._CompartidoService.actualizarTitulo('Roles');
+    this._CompartidoService.actualizarTitulo('Recetas');
   }
 
   obtenerRecetas() {
@@ -44,7 +43,6 @@ export class RecetasTablaComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          this.alertasService.showSuccess('Recetas obtenidas correctamente');
           this.recetas = data;
         },
         error: (error: any) => {
@@ -60,7 +58,7 @@ export class RecetasTablaComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          this.alertasService.showSuccess('Desbloqueado');
+          this.alertasService.showSuccess('Se desbloqueo correctamente la receta', 'Receta desbloqueada');
           this.obtenerRecetas();
         },
         error: (error: any) => {
@@ -75,7 +73,7 @@ export class RecetasTablaComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          this.alertasService.showSuccess('Bloqueado');
+          this.alertasService.showSuccess('Se bloqueo correctamente la receta', 'Receta bloqueada');
           this.obtenerRecetas();
         },
         error: (error: any) => {

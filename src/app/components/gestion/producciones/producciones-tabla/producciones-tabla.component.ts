@@ -6,6 +6,7 @@ import { ProduccionesService } from '../../../../services/producciones/produccio
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { SesionDTO } from '../../../../interfaces/usuario/sesion-dto';
 
+
 @Component({
   selector: 'app-producciones-tabla',
   templateUrl: './producciones-tabla.component.html',
@@ -24,6 +25,8 @@ export class ProduccionesTablaComponent implements OnInit {
   public posponerBtn: boolean = false;
   public idSeleccionado: number = 0;
   public idUsuarioSeleccionado: string = '';
+
+  _CompartidoService = inject(CompartidoService);
 
   constructor(
     private usuariosService: UsuariosService,
@@ -51,7 +54,6 @@ export class ProduccionesTablaComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ProduccionesTablaComponent inicializado');
     this.obtenerProducciones();
     this.obtenerOperadores();
 
@@ -95,7 +97,6 @@ export class ProduccionesTablaComponent implements OnInit {
       },
     });
   }
-
   eliminar(id: number) {
     this.produccionesService.eliminar(id).subscribe({
       next: (data: any) => {
@@ -216,5 +217,4 @@ export class ProduccionesTablaComponent implements OnInit {
       },
     });
   }
-
 }

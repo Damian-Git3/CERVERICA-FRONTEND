@@ -74,6 +74,7 @@ export class TablaComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'Usuario desactivado correctamente',
+
             'Éxito'
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
@@ -81,6 +82,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo desactivar el usuario, intenta nuevamente',
+
             'Ocurrió un problema'
           );
           console.error(error);
@@ -98,6 +100,7 @@ export class TablaComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'Usuario activado correctamente',
+
             'Éxito'
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
@@ -105,6 +108,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo activar el usuario, intenta nuevamente',
+
             'Ocurrió un problema'
           );
           console.error(error);
@@ -129,6 +133,7 @@ export class TablaComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'Usuario eliminado correctamente',
+
             'Éxito'
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
@@ -136,6 +141,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo eliminar el usuario, intenta nuevamente',
+
             'Ocurrió un problema'
           );
           console.error(error);

@@ -40,7 +40,6 @@ export class RolesTablaComponent {
   obtenerRoles() {
     this.rolesService.obtener().subscribe({
       next: (data: any) => {
-        this.alertasService.showSuccess('Roles obtenidos correctamente');
         this.roles = data;
         console.log(data);
       },

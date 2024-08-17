@@ -23,56 +23,52 @@ export class InsumosModalComponent implements OnInit {
   public labelBoton: string = '';
   public modificar: boolean = false;
   public unidadesMedida: any[] = ['KG', 'L', 'PZ'];
-  public mensajesError: string = ''; // Variable para almacenar los mensajes de error
+  public mensajesError: string = '';
+  cargando: boolean = false;
 
-  insumoForm: FormGroup = new FormGroup(
-    {
-      id: new FormControl({ value: '', disabled: true }),
-      nombre: new FormControl(''),
-      descripcion: new FormControl(''),
-      unidadMedida: new FormControl(''),
-      cantidadMaxima: new FormControl('', [Validators.required]),
-      cantidadMinima: new FormControl('', [Validators.required]),
-      costoUnitario: new FormControl({ value: '', disabled: true }),
-      merma: new FormControl(''),
-      activo: new FormControl(''),
-    },
-    { validators: this.cantidadValidator() }
-  );
+  insumoForm: FormGroup = new FormGroup({
+    id: new FormControl({ value: '', disabled: true }),
+    nombre: new FormControl('', [Validators.required]),
+    descripcion: new FormControl('', [Validators.required]),
+    unidadMedida: new FormControl('', [Validators.required]),
+    cantidadMaxima: new FormControl('', [Validators.required]),
+    cantidadMinima: new FormControl('', [Validators.required]),
+    merma: new FormControl('', [Validators.required]),
+  });
 
   constructor(
     private insumosService: InsumosService,
     private alertasService: AlertasService
   ) {}
 
-  ngOnInit() {
-    console.log('InsumosModalComponent inicializado');
-  }
+  ngOnInit() {}
 
   get f() {
     return this.insumoForm.controls;
-  }
-
-  // Función de validación personalizada para cantidad mínima y máxima
-  cantidadValidator(): ValidatorFn {
-    return (group: AbstractControl): { [key: string]: boolean } | null => {
-      const cantidadMaxima = group.get('cantidadMaxima')?.value;
-      const cantidadMinima = group.get('cantidadMinima')?.value;
-
-      if (cantidadMaxima > cantidadMinima) {
-        return { maximamenor: true };
-      } else if (cantidadMaxima < cantidadMinima) {
-        return { menormaxima: true };
-      }
-
-      return null;
-    };
   }
 
   // Método para obtener todos los errores del formulario
   obtenerErrores(): string {
     let mensajes: string[] = [];
 
+    // Primero, verifica si hay errores en el formulario general
+    if (this.insumoForm.errors) {
+      Object.keys(this.insumoForm.errors).forEach((errorKey) => {
+        let mensaje: string;
+        switch (errorKey) {
+          case 'cantidadError':
+            mensaje =
+              'Error en las cantidades: ' + this.insumoForm.errors![errorKey];
+            break;
+          default:
+            mensaje = `Error general: ${errorKey}`;
+            break;
+        }
+        mensajes.push(mensaje);
+      });
+    }
+
+    // Luego, revisa los errores específicos de cada control
     Object.keys(this.insumoForm.controls).forEach((key) => {
       const control = this.insumoForm.get(key);
       if (control && control.errors) {
@@ -82,11 +78,11 @@ export class InsumosModalComponent implements OnInit {
             case 'required':
               mensaje = `${key} es requerido`;
               break;
-            case 'maximamenor':
-              mensaje = 'La cantidad máxima no puede ser menor que la mínima';
+            case 'min':
+              mensaje = `${key} es menor al valor mínimo permitido`;
               break;
-            case 'menormaxima':
-              mensaje = 'La cantidad mínima no puede ser mayor que la máxima';
+            case 'max':
+              mensaje = `${key} excede el valor máximo permitido`;
               break;
             default:
               mensaje = `Error en ${key}`;
@@ -104,7 +100,7 @@ export class InsumosModalComponent implements OnInit {
     this.display = true;
 
     if (id) {
-      console.log(id);
+      this.cargando = true;
       this.modificar = true;
       this.titulo = 'Editar Insumo';
       this.labelBoton = 'Actualizar';
@@ -118,11 +114,12 @@ export class InsumosModalComponent implements OnInit {
         )
         .subscribe({
           next: (data: any) => {
-            console.log(data);
+            this.cargando = false;
             this.alertasService.showSuccess('Insumo obtenido correctamente');
             this.insumoForm.patchValue(data);
           },
           error: (error: any) => {
+            this.cargando = false;
             this.alertasService.showError('Error al obtener el insumo');
             console.error(error);
           },
@@ -132,8 +129,6 @@ export class InsumosModalComponent implements OnInit {
       this.labelBoton = 'Guardar';
       this.titulo = 'Crear Insumo';
     }
-
-    console.log(this.insumoForm.value);
   }
 
   public ocultar() {
@@ -143,9 +138,26 @@ export class InsumosModalComponent implements OnInit {
   }
 
   guardar() {
+    this.mensajesError = '';
+
+    if (
+      parseFloat(this.insumoForm.value.cantidadMaxima) <
+      parseFloat(this.insumoForm.value.cantidadMinima)
+    ) {
+      this.insumoForm.setErrors({
+        cantidadError: 'La cantidad máxima no puede ser menor que la mínima',
+      });
+    } else if (
+      parseFloat(this.insumoForm.value.cantidadMinima) >
+      parseFloat(this.insumoForm.value.cantidadMaxima)
+    ) {
+      this.insumoForm.setErrors({
+        cantidadError: 'La cantidad mínima no puede ser mayor que la máxima',
+      });
+    }
+
     if (this.insumoForm.invalid) {
       this.mensajesError = this.obtenerErrores();
-      console.log(this.mensajesError);
       this.alertasService.showError(
         'Verifica el formulario',
         'Tienes campos invalidas, validalos'
@@ -153,9 +165,11 @@ export class InsumosModalComponent implements OnInit {
       return;
     }
 
+    this.cargando = true;
+
     this.insumosService
       .crear(this.insumoForm.value)
-      .pipe(finalize(() => {}))
+      .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Insumo creado correctamente');
@@ -180,9 +194,10 @@ export class InsumosModalComponent implements OnInit {
       return;
     }
 
+    this.cargando = true;
     this.insumosService
       .modificar(this.f['id'].value, this.insumoForm.value)
-      .pipe(finalize(() => {}))
+      .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Insumo actualizado correctamente');
@@ -193,5 +208,9 @@ export class InsumosModalComponent implements OnInit {
           console.error(error);
         },
       });
+  }
+
+  get minFractionDigits(): number {
+    return this.insumoForm.value.unidadMedida === 'PZ' ? 0 : 2;
   }
 }

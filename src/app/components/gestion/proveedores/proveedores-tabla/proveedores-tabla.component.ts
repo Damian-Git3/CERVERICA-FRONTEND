@@ -38,7 +38,6 @@ export class ProveedoresTablaComponent implements OnInit {
       .pipe(finalize(() => { }))
       .subscribe({
         next: (data: any) => {
-          this.alertasService.showSuccess('Proveedores obtenidos correctamente');
           this.proveedores = data;
         },
         error: (error: any) => {

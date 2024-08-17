@@ -94,7 +94,7 @@
           pTooltip="Eliminar"
           severity="warning"
           [disabled]="unicoAdministrador && usuario.rol === 'Admin'"
-          (onClick)="eliminar(usuario.id)"
+          (onClick)="confirmarEliminar($event, usuario.id)"
         ></p-button>
       </td>
     </tr>
