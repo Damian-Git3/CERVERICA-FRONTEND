@@ -9,7 +9,7 @@ import { CompartidoService } from '../../../services/compartido/compartido.servi
 })
 export class MenuComponent {
   _CompartidoService = inject(CompartidoService);
-
+  public rol: string = '';
   public display: boolean = false;
   nombre: string = '';
   inicialesNombre: string = '';
@@ -20,6 +20,8 @@ export class MenuComponent {
 
   ngOnInit(): void {
     this.nombre = this._CompartidoService.obtenerSesion().nombre;
+    this.rol = this._CompartidoService.obtenerSesion().rol;
+    console.log(this.rol);
     this.inicialesNombre = this.obtenerIniciales(this.nombre);
   }
 

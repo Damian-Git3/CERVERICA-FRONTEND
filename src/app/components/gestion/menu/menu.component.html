@@ -1,77 +1,113 @@
 <p-sidebar [(visible)]="display">
   <div class="flex align-items-center justify-content-center">
-    <img src="./img/logo-navbar.png" width="150">
+    <img src="./img/logo-navbar.png" width="150" />
   </div>
 
   <div class="mt-5">
     <ul class="list-none p-0 m-0 overflow-hidden">
       <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['inicio']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['inicio']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="pi pi-home mr-2"></i>
           <span class="font-medium">Inicio</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['usuarios']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['usuarios']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="pi pi-user mr-2"></i>
           <span class="font-medium">Usuarios</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['roles']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['roles']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="pi pi-address-book mr-2"></i>
           <span class="font-medium">Roles</span>
         </a>
       </li>
 
       <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['producciones']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['producciones']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="fa-solid fa-wine-bottle mr-2"></i>
           <span class="font-medium">Producciones</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['insumos']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['insumos']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="pi pi-truck mr-2"></i>
           <span class="font-medium">Insumos</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['lotes-insumo']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['lotes-insumo']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="fa-solid fa-boxes-stacked mr-2"></i>
           <span class="font-medium">Lotes insumo</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['recetas']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['recetas']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="pi pi-book mr-2"></i>
           <span class="font-medium">Recetas</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['proveedores']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['proveedores']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="fa-solid fa-truck-ramp-box mr-2"></i>
           <span class="font-medium">Proveedores</span>
         </a>
       </li>
 
-      <li>
-        <a pRipple routerLinkActive="active" [routerLink]="['ventas']"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+      <li *ngIf="rol == 'Admin'">
+        <a
+          pRipple
+          routerLinkActive="active"
+          [routerLink]="['ventas']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="fa-solid fa-boxes-packing mr-2"></i>
           <span class="font-medium">Ventas</span>
         </a>
@@ -81,15 +117,21 @@
 
   <div class="mt-8">
     <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-    <a pRipple class="m-3 flex align-items-center flex-column gap-2 border-round p-ripple">
-      <p-avatar label="{{inicialesNombre}}" class="avatar-sidebar" />
-      <span class="font-bold">{{nombre}}</span>
+    <a
+      pRipple
+      class="m-3 flex align-items-center flex-column gap-2 border-round p-ripple"
+    >
+      <p-avatar label="{{ inicialesNombre }}" class="avatar-sidebar" />
+      <span class="font-bold">{{ nombre }}</span>
     </a>
 
     <ul class="list-none p-0 m-0 overflow-hidden">
       <li>
-        <a pRipple (click)="cerrarSesion()"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+        <a
+          pRipple
+          (click)="cerrarSesion()"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link"
+        >
           <i class="pi pi-sign-out mr-2"></i>
           <span class="font-medium">Cerrar sesión</span>
         </a>
