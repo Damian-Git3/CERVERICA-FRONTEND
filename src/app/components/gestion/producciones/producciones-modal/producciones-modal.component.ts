@@ -79,6 +79,7 @@ export class ProduccionesModalComponent implements OnInit {
         next: (data: any) => {
           this.alertasService.showInfo('Produccion creada correctamente');
           console.log('Produccion creada correctamente');
+          this.reload.emit();
           this.display = false;
         },
         error: (error: any) => {

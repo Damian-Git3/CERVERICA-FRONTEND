@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ProduccionesService } from '../../../../services/producciones/producciones.service';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
@@ -9,6 +9,7 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
   styleUrl: './avanzar-paso-modal.component.css',
 })
 export class AvanzarPasoModalComponent {
+  @Output() reload: EventEmitter<any> = new EventEmitter();
   public display: boolean = false;
   public form: FormGroup = this.fb.group({
     idProduccion: new FormControl(''),
@@ -31,6 +32,7 @@ export class AvanzarPasoModalComponent {
 
   hide() {
     this.display = false;
+    this.reload.emit();
   }
 
   avanzarPaso() {
@@ -43,8 +45,7 @@ export class AvanzarPasoModalComponent {
       },
       error: (error: any) => {
         console.error('Error:', error);
-        this.alertasService.showWarn
-        (error.error.message);
+        this.alertasService.showWarn(error.error.message);
         console.error('Error al avanzar paso');
       },
     });
