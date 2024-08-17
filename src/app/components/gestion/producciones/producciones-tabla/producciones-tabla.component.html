@@ -6,6 +6,7 @@
       (click)="obtenerProducciones()"
     />
     <p-button
+      *ngIf="usuario.rol == 'Admin'"
       icon="pi pi-plus"
       class="mr-2"
       label="Nueva Solicitud"
@@ -16,37 +17,227 @@
   </div>
   <div class="p-toolbar-group-center"></div>
   <div class="p-toolbar-group-end">
-    <span class="p-input-icon-left">
+    <!-- <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
       <input pInputText placeholder="Buscar" />
-    </span>
+    </span> -->
     <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" /> -->
   </div>
 </p-toolbar>
-<div class="border grid gap-2 m-1">
+<div class="border grid gap-3 m-1 justify-content-around">
   <p-card
     *ngFor="let produccion of producciones"
     [header]="produccion.nombreReceta"
-    subheader="Solicitud {{ produccion.fechaSolicitud | date: 'dd/MM/yyyy' }}"
-    [style]="{ width: '360px' }"
+    subheader="Solicitud {{ produccion.fechaSolicitud | date : 'dd/MM/yyyy' }}"
+    [style]="{ 'min-width': '400px', 'min-height': '400px' }"
     styleClass="border-round"
-  >
-    <ng-template pTemplate="header">
 
-    </ng-template>
-    <p><strong>Operador:</strong>{{produccion.nombreUsuario}}</p>
-    <p><strong>Operador:</strong>{{produccion.nombreUsuario}}</p>
+    >
+    <ng-template pTemplate="header"> </ng-template>
+    <p><strong>Operador:</strong>{{ produccion.nombreUsuario }}</p>
+    <p><strong>Tandas:</strong>{{ produccion.numeroTandas }}</p>
+    <p>
+      <strong>Estado: </strong>
+      <p-tag value="PENDIENTE" *ngIf="produccion.estatus == 1" />
+      <p-tag
+        severity="success"
+        value="ACEPTADA"
+        *ngIf="produccion.estatus == 2"
+      />
+      <p-tag severity="info" value="LISTO" *ngIf="produccion.estatus == 3" />
+      <p-tag
+        severity="warning"
+        value="FINALIZADA"
+        *ngIf="produccion.estatus == 4"
+      />
+      <p-tag
+        severity="danger"
+        value="RECHAZADA"
+        *ngIf="produccion.estatus == 5"
+      />
+      <p-tag
+        severity="secondary"
+        value="POSPUESTA"
+        *ngIf="produccion.estatus == 6"
+      />
+    </p>
     <ng-template pTemplate="footer">
-      <div class="flex gap-3 mt-1">
+      <div
+        class="grid gap-1 justify-content-center"
+        *ngIf="usuario.rol == 'Admin'"
+      >
         <p-button
-          label="Cancel"
+          *ngIf="produccion.estatus == 5 || produccion.estatus == 6"
+          label="Reenviar"
+          icon="pi pi-send"
           severity="secondary"
-          class="w-full"
-          styleClass="w-full"
+          size="small"
+          (onClick)="reenviar(produccion.id)"
         />
-        <p-button label="Save" class="w-full" styleClass="w-full" />
+        <p-button
+          *ngIf="produccion.estatus == 1"
+          label="Eliminar"
+          icon="pi pi-trash"
+          severity="secondary"
+          size="small"
+          (onClick)="eliminar(produccion.id)"
+        />
+        <p-button
+          *ngIf="produccion.estatus == 3"
+          label="Almacenar"
+          icon="pi pi-save"
+          severity="secondary"
+          size="small"
+          (onClick)="almacenar(produccion.id)"
+        />
+
+        <p-button
+          *ngIf="
+            produccion.estatus == 1 ||
+            produccion.estatus == 5 ||
+            produccion.estatus == 6
+          "
+          label="Reasignar"
+          icon="pi pi-user"
+          severity="secondary"
+          size="small"
+          (onClick)="
+            displayAsignarUsuario = true; idSeleccionado = produccion.id
+          "
+        />
+      </div>
+      <div
+        class="flex gap-1 justify-content-center"
+        *ngIf="usuario.rol == 'Operador'"
+      >
+        <p-button
+          *ngIf="produccion.estatus == 1"
+          label="Aceptar"
+          severity="secondary"
+          icon="pi pi-check"
+          size="small"
+          (onClick)="aceptar(produccion.id)"
+        />
+        <p-button
+          *ngIf="produccion.estatus == 1"
+          label="Rechazar"
+          severity="secondary"
+          icon="pi pi-times"
+          size="small"
+          (onClick)="
+            displayMensaje = true;
+            rechazarBtn = true;
+            idSeleccionado = produccion.id
+          "
+        />
+        <p-button
+          *ngIf="produccion.estatus == 1"
+          label="Posponer"
+          severity="secondary"
+          icon="pi pi-calendar"
+          size="small"
+          (onClick)="
+            displayMensaje = true;
+            posponerBtn = true;
+            idSeleccionado = produccion.id
+          "
+
+        />
+        <p-button
+          *ngIf="produccion.estatus == 2"
+          label="Ver Pasos"
+          severity="secondary"
+          icon="pi pi-eye"
+          size="small"
+          (onClick)="modalPasos.show(produccion.id)"
+        ></p-button>
+        <!-- AVANZAR PASO -->
+        <p-button
+          *ngIf="produccion.estatus == 2"
+          label="Avanzar Paso"
+          severity="secondary"
+          icon="pi pi-arrow-right"
+          size="small"
+          (onClick)="modalAvanzar.show(produccion.id)"
+        />
       </div>
     </ng-template>
   </p-card>
 </div>
-<app-producciones-modal #modal></app-producciones-modal>
+<app-producciones-modal
+  #modal
+  (reload)="obtenerProducciones()"
+></app-producciones-modal>
+
+<app-pasos-modal #modalPasos></app-pasos-modal>
+<app-avanzar-paso-modal #modalAvanzar></app-avanzar-paso-modal>
+
+<p-dialog [(visible)]="displayMensaje" header="Motivo" [modal]="true">
+  <textarea
+    pInputText
+    rows="5"
+    cols="30"
+    pInputTextarea
+    [autoResize]="true"
+    placeholder="Motivo"
+    class="w-full"
+    [(ngModel)]="motivo"
+  ></textarea>
+
+  <ng-template pTemplate="footer">
+    <div class="flex gap-1 justify-content-center">
+      <p-button
+        *ngIf="rechazarBtn"
+        label="Aceptar"
+        icon="pi pi-check"
+        (click)="rechazar()"
+      />
+      <p-button
+        *ngIf="posponerBtn"
+        label="Aceptar"
+        icon="pi pi-check"
+        (click)="posponer()"
+      />
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (click)="
+          displayMensaje = false;
+          rechazarBtn = false;
+          posponerBtn = false;
+          idSeleccionado = 0
+        "
+      />
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [(visible)]="displayAsignarUsuario"
+  [modal]="true"
+  header="Reasignar Operador"
+>
+  <div class="field">
+    <label for="idUsuario"> OPERADOR </label>
+    <p-dropdown
+      [(ngModel)]="idUsuarioSeleccionado"
+      [options]="usuariosOperador"
+      optionLabel="nombre"
+      placeholder="Receta"
+      optionValue="idUsuario"
+      placeholder="Asignar Operador"
+      styleClass="w-full"
+      appendTo="body"
+    />
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex gap-1 justify-content-center">
+      <p-button label="Aceptar" icon="pi pi-check" (click)="asignarUsuario()" />
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (click)="displayAsignarUsuario = false; idSeleccionado = 0"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

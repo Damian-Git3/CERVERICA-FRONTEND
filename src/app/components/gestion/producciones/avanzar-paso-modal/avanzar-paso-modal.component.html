@@ -1,0 +1,42 @@
+<p-dialog
+  [modal]="true"
+  [(visible)]="display"
+  (onHide)="hide()"
+  [style]="{ width: '25rem' }"
+>
+  <form [formGroup]="form">
+    <!-- MENSAJE -->
+    <div class="field">
+      <label for="mensaje"> MENSAJE </label>
+      <textarea
+        type="text"
+        pInputTextarea
+        formControlName="mensaje"
+        id="motivo"
+        class="w-full"
+      ></textarea>
+    </div>
+
+    <!-- MERMA -->
+    <div class="field">
+      <label for="merma"> MERMA </label>
+      <input
+        type="text"
+        pInputText
+        formControlName="mermaLitros"
+        id="merma"
+        class="w-full"
+      />
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <!-- AVANZAR PASO -->
+    <p-button
+      label="Avanzar Paso"
+      icon="pi pi-arrow-right"
+      (click)="avanzarPaso()"
+      class="w-full"
+    />
+  </ng-template>
+</p-dialog>

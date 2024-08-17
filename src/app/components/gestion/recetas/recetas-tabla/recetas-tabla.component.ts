@@ -34,7 +34,6 @@ export class RecetasTablaComponent implements OnInit {
 
   public ngOnInit(): void {
     this.obtenerRecetas();
-    
     this._CompartidoService.actualizarTitulo('Recetas');
   }
 
