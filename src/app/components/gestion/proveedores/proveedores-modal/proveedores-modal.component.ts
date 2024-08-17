@@ -67,7 +67,7 @@ export class ProveedoresModalComponent implements OnInit {
         next: (data: any) => {
           this.alertasService.showSuccess('Proveedor obtenido correctamente');
           console.log(data);
-          this.proveedoresForm.setValue(data);
+          this.proveedoresForm.patchValue(data);
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener el proveedor');

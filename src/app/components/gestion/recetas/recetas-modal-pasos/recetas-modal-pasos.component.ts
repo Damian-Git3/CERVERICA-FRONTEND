@@ -51,7 +51,7 @@ export class RecetasModalPasosComponent implements OnInit {
           this.pasos.push(this.fb.group({
             id: paso.id,
             descripcion: paso.descripcion,
-            orden: { value: paso.orden, disabled: true },
+            orden: { value: paso.orden, disabled: false },
             tiempo: paso.tiempo
           }));
         });
@@ -68,6 +68,7 @@ export class RecetasModalPasosComponent implements OnInit {
   crearPasos() {
     this.recetasService.crearPasos(this.idReceta, this.pasos.value).subscribe({
       next: (response: any) => {
+        this.alertasService.showSuccess('Pasos de la receta creados correctamente');
         console.log(response);
       },
       error: (e: any) => {
@@ -86,8 +87,11 @@ export class RecetasModalPasosComponent implements OnInit {
   }
 
   modicarPasos() {
+    console.log(this.pasos.value);
     this.recetasService.modificarPasos(this.idReceta, this.pasos.value).subscribe({
       next: (response: any) => {
+        this.alertasService.showSuccess('Pasos de la receta modificados correctamente');
+        this.hide();
         console.log(response);
       },
       error: (e: any) => {
