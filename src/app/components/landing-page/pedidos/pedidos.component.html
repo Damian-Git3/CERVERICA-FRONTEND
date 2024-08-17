@@ -4,7 +4,7 @@
     <a class="pedido" [routerLink]="['/cerverica/detalles-pedido', pedido.id]" *ngFor="let pedido of pedidosUsuario">
         <div class="cabezal">
             <p class="titulo-cabezal">No. Pedido: <br><span>#{{pedido.id}}</span></p>
-            <p class="titulo-cabezal">Total: <br><span>{{ 100 | currency:'MXN':'symbol' }}</span></p>
+            <p class="titulo-cabezal">Total: <br><span>{{ pedido.montoVenta | currency:'MXN':'symbol' }}</span></p>
             <p class="titulo-cabezal">Método pago: <br>
                 <span [ngSwitch]="pedido.metodoPago">
                     <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>

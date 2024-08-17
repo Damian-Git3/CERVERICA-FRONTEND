@@ -33,8 +33,26 @@ export class VentasService {
   }
 
   obtenerPedido(idPedido: number): Observable<Venta> {
-    return this._HttpClient.get<Venta>(
-      `${this._baseURL}/pedidos/${idPedido}`
-    );
+    return this._HttpClient.get<Venta>(`${this._baseURL}/pedidos/${idPedido}`);
+  }
+
+  obtenerVentas(): Observable<Venta[]> {
+    return this._HttpClient.get<Venta[]>(`${this._baseURL}`);
+  }
+
+  siguienteEstatus(idPedido: number): Observable<any> {
+    const url = `${this._baseURL}/siguiente-estatus/${idPedido}`;
+    return this._HttpClient.get<any>(url);
+  }
+
+  siguienteEstatusLanding(idPedido: number): Observable<any> {
+    const url = `${this._baseURL}/siguiente-estatus-landing/${idPedido}`;
+    return this._HttpClient.get<any>(url);
+  }
+
+  // Método para retroceder al estatus anterior
+  anteriorEstatus(idPedido: number): Observable<any> {
+    const url = `${this._baseURL}/anterior-estatus/${idPedido}`;
+    return this._HttpClient.get<any>(url);
   }
 }

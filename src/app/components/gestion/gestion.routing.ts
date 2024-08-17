@@ -8,6 +8,7 @@ import { ProveedoresModule } from './proveedores/proveedores.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { InicioComponent } from './inicio/inicio.component';
 import { LotesInsumoModule } from './lotes-insumo/lotes-insumo.module';
+import { VentasModule } from './ventas/ventas.module';
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
       {
         path: 'lotes-insumo',
         loadChildren: () => LotesInsumoModule,
+      },
+      {
+        path: 'ventas',
+        loadChildren: () => VentasModule,
       },
       {
         path: '**',

@@ -1,0 +1,37 @@
+/* Asegúrate de que el contenedor de la cuadrícula tenga suficiente espacio */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Dos columnas de igual ancho */
+  gap: 2rem; /* Espacio entre los elementos */
+  justify-items: center; /* Centra los elementos en la columna */
+  align-items: start; /* Alinea los elementos al inicio de la columna */
+  padding: 1rem; /* Espacio interno del contenedor */
+}
+
+@media (min-width: 1240px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
+  border-radius: 8px; /* Esquinas redondeadas */
+  overflow: hidden; /* Oculta el desbordamiento de los bordes redondeados */
+  background: #fff; /* Fondo blanco para las tarjetas */
+}
+
+.card-header {
+  background: #f5f5f5; /* Fondo gris claro para el encabezado */
+  padding: 1rem; /* Espacio interno en el encabezado */
+  border-bottom: 1px solid #ddd; /* Línea divisoria en la parte inferior */
+}
+
+.card-body {
+  padding: 1rem; /* Espacio interno en el cuerpo de la tarjeta */
+}
+
+h3 {
+  text-align: center;
+}

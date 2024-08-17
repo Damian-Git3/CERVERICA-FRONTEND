@@ -30,6 +30,14 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
+import { OrderListModule } from 'primeng/orderlist';
+
+import { DragDropModule } from 'primeng/dragdrop';
+
+import { PickListModule } from 'primeng/picklist';
+
+import { ChartModule } from 'primeng/chart';
+
 @NgModule({
   declarations: [],
   imports: [CommonModule, NgOptimizedImage],
@@ -65,6 +73,10 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
     InputNumberModule,
     TooltipModule,
     ConfirmPopupModule,
+    OrderListModule,
+    DragDropModule,
+    PickListModule,
+    ChartModule,
   ],
 })
 export class PrimeModule {}

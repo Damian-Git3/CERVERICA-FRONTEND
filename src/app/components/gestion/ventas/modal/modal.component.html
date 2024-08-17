@@ -1,0 +1,45 @@
+<p-dialog #modal [(visible)]="mostrarModal" [draggable]="false" [maximizable]="false" [modal]="true"
+    (onHide)="ocultar()">
+    <p-pickList [source]="productosDisponibles" [target]="productosEmpaquetados" sourceHeader="Productos Disponibles"
+        *ngIf="empaquetandoPedidos" targetHeader="Productos Seleccionados" [dragdrop]="true" [responsive]="true"
+        (onMoveToTarget)="verificarProductosEmpaquetados()" (onMoveToSource)="verificarProductosEmpaquetados()"
+        (onMoveAllToTarget)="verificarProductosEmpaquetados()" (onMoveAllToSource)="verificarProductosEmpaquetados()"
+        (onSourceReorder)="verificarProductosEmpaquetados()" (onTargetReorder)="verificarProductosEmpaquetados()"
+        (onSourceSelect)="verificarProductosEmpaquetados()">
+        <ng-template let-producto pTemplate="item">
+            <div class="flex flex-wrap p-2 align-items-center gap-3">
+                <!-- Imagen del producto -->
+                <img src="{{ producto.stock.receta.imagen }}" [alt]="producto.stock.receta.nombre"
+                    class="w-2rem shadow-2 flex-shrink-0 border-round" />
+
+                <!-- Información del producto -->
+                <div class="flex-1 flex flex-column gap-2">
+                    <!-- Nombre del producto -->
+                    <span class="font-bold">{{ producto.stock.receta.nombre }}</span>
+                    <!-- Cantidad de cervezas -->
+                    <div class="flex align-items-center gap-2">
+                        <i class="fa-solid fa-hashtag text-md"></i>
+                        <span>{{ producto.cantidad }} paquetes</span>
+                    </div>
+                    <!-- Pack de cervezas y cantidad de paquetes -->
+                    <div class="flex align-items-center gap-2">
+                        <i class="pi pi-box text-md"></i>
+                        <span>Paquete de {{ producto.pack }}</span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-pickList>
+
+    <div class="flex justify-content-end align-items-center mt-3">
+        <p-button label="Finalizar venta" icon="fa-solid fa-boxes-packing" [loading]="cargando" *ngIf="empaquetandoPedidos"
+            [disabled]="!habilitarMarcarListo" (click)="finalizarVenta()"></p-button>
+    </div>
+
+    <div class="flex justify-content-center align-items-center">
+        <p-button label="Empezar empaquetar" icon="fa-solid fa-boxes-packing" [loading]="cargando"
+            *ngIf="!empaquetandoPedidos" (click)="empezarEmpaquetar()"></p-button>
+    </div>
+
+    <p-progressBar mode="indeterminate" *ngIf="cargando" />
+</p-dialog>
