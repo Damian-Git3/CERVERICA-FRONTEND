@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { IInsumo } from '../../interfaces/insumo.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,14 @@ import { Observable } from 'rxjs';
 export class InsumosService {
   private _baseURL: string = `${environment.APIURL}/Insumos`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   obtener(): Observable<any> {
     return this.http.get(`${this._baseURL}`);
+  }
+
+  obtenerInsumos(): Observable<IInsumo[]> {
+    return this.http.get<IInsumo[]>(`${this._baseURL}`);
   }
 
   crear(data: any): Observable<any> {

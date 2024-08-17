@@ -173,8 +173,6 @@ export class InsumosModalComponent implements OnInit {
     if (this.insumoForm.invalid) {
       this.mensajesError = this.obtenerErrores();
 
-      console.log(this.mensajesError);
-
       this.alertasService.showError(
         'Verifica el formulario',
         'Tienes campos invalidas, validalos'

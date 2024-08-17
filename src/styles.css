@@ -238,3 +238,15 @@ th {
 .p-password input {
   width: 100%;
 }
+
+.p-calendar {
+  width: 100%;
+}
+
+.p-datepicker {
+  position: absolute !important;
+}
+
+.p-inputnumber{
+  width: 100%;
+}

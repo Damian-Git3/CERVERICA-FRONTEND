@@ -4,7 +4,6 @@ import { PrimeModule } from './components/prime/prime.module';
 import { RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,

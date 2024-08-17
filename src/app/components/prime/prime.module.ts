@@ -24,6 +24,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [],
@@ -56,6 +58,8 @@ import { DialogModule } from 'primeng/dialog';
     DialogModule,
     AvatarModule,
     AvatarGroupModule,
+    CalendarModule,
+    InputNumberModule,
   ],
 })
 export class PrimeModule {}

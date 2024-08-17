@@ -3,6 +3,7 @@ import { UsuariosService } from '../../../../services/usuarios/usuarios.service'
 import { finalize } from 'rxjs';
 import { UsuarioDTO } from '../../../../interfaces/usuarios/usuario-dto';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-tabla',
@@ -12,6 +13,7 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
 export class TablaComponent {
   _UsuariosService = inject(UsuariosService);
   _AlertasService = inject(AlertasService);
+  _CompartidoService = inject(CompartidoService);
 
   usuarios: UsuarioDTO[] = [];
   usuariosFiltrados: UsuarioDTO[] = [];
@@ -20,6 +22,7 @@ export class TablaComponent {
 
   ngOnInit(): void {
     this.obtenerUsuarios();
+    this._CompartidoService.actualizarTitulo('Inicio');
   }
 
   public obtenerUsuarios() {
