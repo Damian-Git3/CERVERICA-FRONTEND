@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-producciones-tabla',
@@ -8,9 +9,9 @@ import { MenuItem } from 'primeng/api';
 })
 export class ProduccionesTablaComponent implements OnInit {
   items: MenuItem[] | undefined;
+  _CompartidoService = inject(CompartidoService);
 
   ngOnInit() {
-    console.log('ProduccionesTablaComponent inicializado');
     this.items = [
       {
         label: 'Update',
@@ -21,5 +22,7 @@ export class ProduccionesTablaComponent implements OnInit {
         icon: 'pi pi-times',
       },
     ];
+
+    this._CompartidoService.actualizarTitulo('Producciones');
   }
 }

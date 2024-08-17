@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { IInsumo } from '../../../../interfaces/insumo.interface';
 import { InsumosService } from '../../../../services/insumos/insumos.service';
 import { finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-insumos-tabla',
@@ -13,6 +14,8 @@ export class InsumosTablaComponent implements OnInit {
 
   public insumos: IInsumo[] = [];
   public items: any[] = [];
+
+  _CompartidoService = inject(CompartidoService)
 
   constructor(
     private insumosService: InsumosService,
@@ -33,6 +36,8 @@ export class InsumosTablaComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerInsumos();
+
+    this._CompartidoService.actualizarTitulo('Insumos');
   }
 
   public obtenerInsumos() {

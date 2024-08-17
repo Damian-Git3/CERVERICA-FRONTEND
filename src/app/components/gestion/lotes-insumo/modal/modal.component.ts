@@ -61,22 +61,44 @@ export class ModalComponent {
     proveedor: [, Validators.required],
     insumo: [, Validators.required],
     fechaCaducidad: [, Validators.required],
-    cantidad: ['', Validators.required],
-    montoCompra: ['', Validators.required],
+    cantidad: [, Validators.required],
+    montoCompra: [, Validators.required],
   });
 
   editarForm: FormGroup = this._FormBuilder.group({
-    fechaCaducidad: ['', Validators.required],
-    cantidad: ['', Validators.required],
-    montoCompra: ['', Validators.required],
+    proveedor: [, Validators.required],
+    insumo: [, Validators.required],
+    fechaCaducidad: [, Validators.required],
+    cantidad: [, Validators.required],
+    montoCompra: [, Validators.required],
   });
 
   show(loteInsumo?: LoteInsumoDTO) {
     this.mostrarModal = true;
+    this.mensajesError = '';
+
     if (loteInsumo) {
-      this.modal.header = 'Editar lote insumo';
       this.nuevo = false;
+      this.modal.header = 'Editar lote insumo';
       this.loteInsumoSeleccionado = loteInsumo;
+
+      const proveedorSeleccionado = this.loteInsumoSeleccionado.proveedor;
+      const proveedorEnLista = this.proveedores.find(
+        (p) => p.nombreContacto === proveedorSeleccionado.nombreContacto
+      );
+
+      const insumoSeleccionado = this.loteInsumoSeleccionado.insumo;
+      const insumoEnLista = this.insumos.find(
+        (i) => i.nombre === insumoSeleccionado.nombre
+      );
+
+      this.editarForm.patchValue({
+        proveedor: proveedorEnLista,
+        insumo: insumoEnLista,
+        fechaCaducidad: new Date(this.loteInsumoSeleccionado.fechaCaducidad),
+        cantidad: this.loteInsumoSeleccionado.cantidad,
+        montoCompra: this.loteInsumoSeleccionado.montoCompra,
+      });
     } else {
       this.modal.header = 'Crear lote insumo';
       this.nuevo = true;
@@ -134,9 +156,11 @@ export class ModalComponent {
     this.cargando = true;
 
     let objetoEditar: EditarLoteInsumoDTO = {
-      fechaCaducidad: this.crearForm.value.fechaCaducidad,
-      cantidad: this.crearForm.value.cantidad,
-      montoCompra: this.crearForm.value.fechaCaducidad,
+      idProveedor: this.editarForm.value.proveedor.id,
+      idInsumo: this.editarForm.value.insumo.id,
+      fechaCaducidad: this.editarForm.value.fechaCaducidad,
+      cantidad: this.editarForm.value.cantidad,
+      montoCompra: this.editarForm.value.montoCompra,
     };
 
     this._LotesInsumoService

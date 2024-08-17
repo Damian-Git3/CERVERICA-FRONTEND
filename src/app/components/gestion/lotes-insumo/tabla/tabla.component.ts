@@ -18,6 +18,7 @@ export class TablaComponent {
   lotesInsumo: LoteInsumoDTO[] = [];
   lotesInsumoFiltrados: LoteInsumoDTO[] = [];
   cargando: boolean = false;
+  obteniendoTodos: boolean = false;
 
   ngOnInit(): void {
     this.obtenerLotesInsumo();
@@ -25,8 +26,31 @@ export class TablaComponent {
     this._CompartidoService.actualizarTitulo('Lotes insumo');
   }
 
+  public obtenerTodosLotesInsumos() {
+    this.cargando = true;
+    this.obteniendoTodos = true;
+
+    this._LotesInsumoService
+      .obtenerLotesInsumoTodos()
+      .pipe(finalize(() => (this.cargando = false)))
+      .subscribe({
+        next: (lotesInsumo: LoteInsumoDTO[]) => {
+          this.lotesInsumo = lotesInsumo;
+          this.lotesInsumoFiltrados = lotesInsumo;
+        },
+        error: (error: any) => {
+          this._AlertasService.showError(
+            'No se pudo obtener los lotes insumo, intenta nuevamente',
+            'Ocurrió un problema'
+          );
+          console.error(error);
+        },
+      });
+  }
+
   public obtenerLotesInsumo() {
     this.cargando = true;
+    this.obteniendoTodos = false;
 
     this._LotesInsumoService
       .obtenerLotesInsumo()
@@ -89,5 +113,15 @@ export class TablaComponent {
           console.error(error);
         },
       });
+  }
+
+  async confirmarEliminar(event: Event, id: number) {
+    console.log("Confirmando eliminacion");
+    
+
+    const confirmed = await this._AlertasService.confirmarEliminacion(event);
+    if (confirmed) {
+      this.eliminar(id);
+    }
   }
 }

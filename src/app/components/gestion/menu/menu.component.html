@@ -68,14 +68,6 @@
           <span class="font-medium">Proveedores</span>
         </a>
       </li>
-
-      <li>
-        <a pRipple (click)="cerrarSesion()"
-          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
-          <i class="pi pi-sign-out mr-2"></i>
-          <span class="font-medium">Cerrar sesión</span>
-        </a>
-      </li>
     </ul>
   </div>
 
@@ -85,5 +77,15 @@
       <p-avatar label="{{inicialesNombre}}" class="avatar-sidebar" />
       <span class="font-bold">{{nombre}}</span>
     </a>
+
+    <ul class="list-none p-0 m-0 overflow-hidden">
+      <li>
+        <a pRipple (click)="cerrarSesion()"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+          <i class="pi pi-sign-out mr-2"></i>
+          <span class="font-medium">Cerrar sesión</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </p-sidebar>

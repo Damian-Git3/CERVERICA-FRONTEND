@@ -27,6 +27,9 @@ import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { InputNumberModule } from 'primeng/inputnumber';
 
+import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+
 @NgModule({
   declarations: [],
   imports: [CommonModule, NgOptimizedImage],
@@ -60,6 +63,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     AvatarGroupModule,
     CalendarModule,
     InputNumberModule,
+    TooltipModule,
+    ConfirmPopupModule,
   ],
 })
 export class PrimeModule {}
