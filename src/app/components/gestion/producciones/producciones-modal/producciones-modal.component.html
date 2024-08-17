@@ -1,4 +1,50 @@
-<p-dialog [(visible)]="display">
-    <form action="
-    "></form>
+<p-dialog [(visible)]="display" [modal]="true">
+  <form [formGroup]="form">
+    <div class="field">
+      <label for="idUsuario"> OPERADOR </label>
+      <p-dropdown
+        formControlName="idUsuario"
+        [options]="usuariosOperador"
+        optionLabel="nombre"
+        placeholder="Receta"
+        optionValue="idUsuario"
+        placeholder="Asignar Operador"
+        styleClass="w-full"
+        appendTo="body"
+      />
+    </div>
+    <div class="field">
+      <label for="idReceta"> RECETA </label>
+      <p-dropdown
+        formControlName="idReceta"
+        [options]="recetas"
+        optionLabel="nombre"
+        placeholder="Receta"
+        optionValue="idReceta"
+        placeholder="Seleccionar Rreceta"
+        styleClass="w-full"
+        appendTo="body"
+      />
+    </div>
+    <div class="field">
+      <label for="numeroTandas">CANTIDAD</label>
+      <input
+        type="text"
+        pInputText
+        formControlName="numeroTandas"
+        label="CANTIDAD"
+        id="numeroTandas"
+        class="w-full"
+      />
+    </div>
+    <div class="field text-center">
+      <p-button
+        label="Guardar"
+        icon="pi pi-save"
+        (click)="guardar()"
+        class="w-full"
+        [disabled]="!form.valid"
+      ></p-button>
+    </div>
+  </form>
 </p-dialog>

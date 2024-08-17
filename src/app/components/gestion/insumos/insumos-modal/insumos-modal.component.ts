@@ -59,9 +59,9 @@ export class InsumosModalComponent implements OnInit {
       const cantidadMaxima = group.get('cantidadMaxima')?.value;
       const cantidadMinima = group.get('cantidadMinima')?.value;
 
-      if (cantidadMaxima < cantidadMinima) {
+      if (cantidadMaxima > cantidadMinima) {
         return { maximamenor: true };
-      } else if (cantidadMaxima > cantidadMinima) {
+      } else if (cantidadMaxima < cantidadMinima) {
         return { menormaxima: true };
       }
 
@@ -120,7 +120,7 @@ export class InsumosModalComponent implements OnInit {
           next: (data: any) => {
             console.log(data);
             this.alertasService.showSuccess('Insumo obtenido correctamente');
-            this.insumoForm.setValue(data);
+            this.insumoForm.patchValue(data);
           },
           error: (error: any) => {
             this.alertasService.showError('Error al obtener el insumo');
@@ -145,6 +145,7 @@ export class InsumosModalComponent implements OnInit {
   guardar() {
     if (this.insumoForm.invalid) {
       this.mensajesError = this.obtenerErrores();
+      console.log(this.mensajesError);
       this.alertasService.showError(
         'Verifica el formulario',
         'Tienes campos invalidas, validalos'

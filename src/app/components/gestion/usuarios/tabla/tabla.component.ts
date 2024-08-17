@@ -49,7 +49,7 @@ export class TablaComponent {
 
   private verificarUnicoAdministrador() {
     const administradores = this.usuarios.filter(
-      (user) => user.rol === 'Administrador'
+      (user) => user.rol === 'Admin'
     );
     this.unicoAdministrador = administradores.length === 1;
   }
