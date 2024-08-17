@@ -1,0 +1,32 @@
+<p-dialog
+  [modal]="true"
+  [(visible)]="display"
+  (onHide)="hide()"
+  [style]="{ width: '25rem' }"
+>
+  <p-card styleClass="m-1">
+    <div *ngFor="let ingrediente of receta.ingredientesReceta">
+      <p>
+        <strong> INGREDIENTE: </strong>
+        {{ ingrediente.nombreInsumo }}
+      </p>
+      <p>
+        <strong> CANTIDAD: </strong>
+        {{ ingrediente.cantidad }}
+        {{ ingrediente.unidadMedida }}
+      </p>
+    </div>
+  </p-card>
+  <p-card styleClass="m-1">
+    <div>
+      <p>
+        <strong> ORDEN: </strong>
+        {{ pasoActual.orden }}:
+      </p>
+      <p>
+        <strong> DESCRIPCION: </strong>
+        {{ pasoActual.descripcion }}
+      </p>
+    </div>
+  </p-card>
+</p-dialog>
