@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProduccionesService } from '../../../../services/producciones/producciones.service';
 
 @Component({
   selector: 'app-pasos-modal',
   templateUrl: './pasos-modal.component.html',
-  styleUrl: './pasos-modal.component.css'
+  styleUrl: './pasos-modal.component.css',
 })
 export class PasosModalComponent implements OnInit {
+  @Output() reload: EventEmitter<any> = new EventEmitter();
   public display: boolean = false;
   public produccion: any = {};
   public receta: any = {};
   public pasos: any[] = [];
   public pasoActual: any = {};
 
-
-  constructor(
-    private produccionesService: ProduccionesService
-  ) { }
+  constructor(private produccionesService: ProduccionesService) {}
 
   ngOnInit() {
     console.log('PasosModalComponent inicializado');
@@ -29,7 +27,7 @@ export class PasosModalComponent implements OnInit {
         next: (data: any) => {
           this.produccion = data;
           console.log('Produccion:', this.produccion.pasoActual);
-          this.receta = data.receta
+          this.receta = data.receta;
           this.pasos = this.produccion.pasosReceta;
           this.pasoActual = this.pasos[this.produccion.pasoActual];
           console.log('Produccion:', data);
@@ -45,5 +43,6 @@ export class PasosModalComponent implements OnInit {
 
   hide() {
     this.display = false;
+    this.reload.emit();
   }
 }
