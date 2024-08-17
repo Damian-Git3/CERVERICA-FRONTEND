@@ -1,5 +1,5 @@
 <p-dialog #modal [(visible)]="mostrarModal" [draggable]="false" [maximizable]="false" [modal]="true" (onHide)="hide()">
-    <form [formGroup]="crearForm" *ngIf="nuevo">
+    <form [formGroup]="crearForm" *ngIf="nuevo && !mostrarModalMerma">
         <div class="field">
             <label for="proveedor">Proveedor</label>
             <p-dropdown [options]="proveedores" inputId="proveedor" formControlName="proveedor" [appendTo]="'body'"
@@ -18,16 +18,11 @@
 
         <div class="field flex flex-column">
             <label for="fechaCaducidad">Fecha caducidad</label>
-            <p-calendar 
-                formControlName="fechaCaducidad" 
-                inputId="fechaCaducidad" 
-                [iconDisplay]="'input'"
-                [appendTo]="'body'" 
-                [showIcon]="true" 
-                [minDate]="minDate">
+            <p-calendar formControlName="fechaCaducidad" inputId="fechaCaducidad" [iconDisplay]="'input'"
+                [appendTo]="'body'" [showIcon]="true" [minDate]="minDate">
             </p-calendar>
         </div>
-        
+
 
         <div class="field flex flex-column">
             <label for="cantidad">Cantidad {{ crearForm.value.insumo?.unidadMedida }}</label>
@@ -46,18 +41,77 @@
 
         <div class="field flex justify-content-center gap-1">
             <p-button #btnGuardar label="Guardar" styleClass="w-full" icon="fa-solid fa-save" [loading]="cargando"
-                (click)="registrar()" [disabled]="crearForm.invalid"></p-button>
+                [disabled]="crearForm.invalid" (click)="registrar()" [disabled]="crearForm.invalid"></p-button>
             <p-button #btnCancelar label="Cancelar" styleClass="w-full" icon="fa-solid fa-times"
                 (click)="mostrarModal = false"></p-button>
         </div>
+    </form>
 
-        <!-- <div class="field flex justify-content-center gap-1">
+    <form [formGroup]="editarForm" *ngIf="!nuevo && !mostrarModalMerma">
+        <div class="field">
+            <label for="proveedor">Proveedor</label>
+            <p-dropdown [options]="proveedores" inputId="proveedor" formControlName="proveedor" [appendTo]="'body'"
+                optionLabel="nombreContacto" [filter]="true" filterBy="nombreContacto" [showClear]="true"
+                placeholder="Selecciona un proveedor">
+            </p-dropdown>
+        </div>
+
+        <div class="field">
+            <label for="insumo">Insumo</label>
+            <p-dropdown [options]="insumos" inputId="insumo" formControlName="insumo" optionLabel="nombre"
+                [appendTo]="'body'" [filter]="true" filterBy="nombre" [showClear]="true"
+                placeholder="Selecciona un insumo">
+            </p-dropdown>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="fechaCaducidad">Fecha caducidad</label>
+            <p-calendar formControlName="fechaCaducidad" inputId="fechaCaducidad" [iconDisplay]="'input'"
+                [appendTo]="'body'" [showIcon]="true" [minDate]="minDate">
+            </p-calendar>
+        </div>
+
+
+        <div class="field flex flex-column">
+            <label for="cantidad">Cantidad {{ crearForm.value.insumo?.unidadMedida }}</label>
+            <p-inputNumber formControlName="cantidad" inputId="cantidad" [minFractionDigits]="minFractionDigits" />
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="montoCompra">Monto de Compra</label>
+            <p-inputNumber formControlName="montoCompra" inputId="montoCompra" mode="currency" currency="MXN"
+                [minFractionDigits]="2"></p-inputNumber>
+        </div>
+
+        <div class="mensajes-error" *ngIf="mensajesError != ''">
+            <div [innerHTML]="mensajesError"></div>
+        </div>
+
+        <div class="field flex justify-content-center gap-1">
             <p-button #btnGuardar label="Editar" styleClass="w-full" icon="fa-solid fa-pencil" [loading]="cargando"
-                (click)="editar()"></p-button>
+                [disabled]="editarForm.invalid" (click)="editar()"></p-button>
             <p-button #btnCancelar label="Cancelar" styleClass="w-full" icon="fa-solid fa-times"
                 (click)="mostrarModal = false"></p-button>
-        </div> -->
-
-        <p-progressBar mode="indeterminate" *ngIf="cargando" />
+        </div>
     </form>
+
+    <form [formGroup]="mermaForm" *ngIf="mostrarModalMerma && !nuevo">
+        <div class="field flex flex-column">
+            <label for="cantidad">Cantidad {{ crearForm.value.insumo?.unidadMedida }}</label>
+            <p-inputNumber formControlName="cantidad" inputId="cantidad" [minFractionDigits]="minFractionDigits" />
+        </div>
+
+        <div class="mensajes-error" *ngIf="mensajesError != ''">
+            <div [innerHTML]="mensajesError"></div>
+        </div>
+
+        <div class="field flex justify-content-center gap-1">
+            <p-button label="Editar" styleClass="w-full" icon="fa-solid fa-pencil" [loading]="cargando"
+                [disabled]="mermaForm.invalid" (click)="guardarMerma()"></p-button>
+            <p-button label="Cancelar" styleClass="w-full" icon="fa-solid fa-times"
+                (click)="mostrarModal = false"></p-button>
+        </div>
+    </form>
+
+    <p-progressBar mode="indeterminate" *ngIf="cargando" />
 </p-dialog>

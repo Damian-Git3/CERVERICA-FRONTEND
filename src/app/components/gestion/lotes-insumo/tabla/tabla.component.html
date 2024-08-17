@@ -2,8 +2,12 @@
 
 <p-toolbar>
     <div class="p-toolbar-group-start">
-        <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerLotesInsumo()" />
-        <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+        <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerLotesInsumo()" pTooltip="Actualizar" />
+        <p-button icon="pi pi-plus" severity="success" class="mr-2" (click)="modal.show()" pTooltip="Agregar" />
+        <p-button icon="fa-solid fa-hourglass-end" class="mr-2" (click)="obtenerTodosLotesInsumos()"
+            *ngIf="!obteniendoTodos" pTooltip="Ver todos" />
+        <p-button icon="fa-solid fa-hourglass-half" class="mr-2" (click)="obtenerLotesInsumo()" *ngIf="obteniendoTodos"
+            pTooltip="Lotes insumos activos" />
     </div>
     <div class="p-toolbar-group-center">
         <span class="p-input-icon-left">
@@ -17,6 +21,9 @@
     [showCurrentPageReport]="true" [selectionMode]="'single'" currentPageReportTemplate="{first} de {last}">
     <ng-template pTemplate="header">
         <tr>
+            <th pSortableColumn="fechaCompra">
+                FECHA COMPRA <p-sortIcon field="fechaCompra" />
+            </th>
             <th pSortableColumn="proveedor">
                 PROVEEDOR <p-sortIcon field="proveedor" />
             </th>
@@ -26,20 +33,20 @@
             <th pSortableColumn="usuarioRegistro">
                 USUARIO REGISTRO <p-sortIcon field="usuarioRegistro" />
             </th>
-            <th pSortableColumn="fechaCompra">
-                FECHA COMPRA <p-sortIcon field="fechaCompra" />
-            </th>
             <th pSortableColumn="fechaCaducidad">
                 FECHA CADUCIDAD <p-sortIcon field="fechaCaducidad" />
             </th>
             <th pSortableColumn="cantidad">
                 CANTIDAD <p-sortIcon field="cantidad" />
             </th>
+            <th pSortableColumn="montoCompra">
+                MONTO COMPRA <p-sortIcon field="montoCompra" />
+            </th>
             <th pSortableColumn="precioUnidad">
                 PRECIO UNIDAD <p-sortIcon field="precioUnidad" />
             </th>
-            <th pSortableColumn="montoCompra">
-                MONTO COMPRA <p-sortIcon field="montoCompra" />
+            <th pSortableColumn="merma">
+                MERMA <p-sortIcon field="merma" />
             </th>
             <th pSortableColumn="caducado">
                 CADUCADO <p-sortIcon field="caducado" />
@@ -49,21 +56,29 @@
     </ng-template>
     <ng-template pTemplate="body" let-lote>
         <tr (dblclick)="modal.show(lote)">
+            <td>{{ lote.fechaCompra | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ lote.proveedor.nombreContacto }}</td>
             <td>{{ lote.insumo.nombre }}</td>
             <td>{{ lote.usuario.fullName }}</td>
-            <td>{{ lote.fechaCompra | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ lote.fechaCaducidad | date:'dd/MM/yyyy HH:mm' }}</td>
             <td>{{ lote.cantidad }} {{lote.insumo.unidadMedida}}</td>
-            <td>{{ lote.precioUnidad | currency:'MXN' }}</td>
             <td>{{ lote.montoCompra | currency:'MXN' }}</td>
-            <td>{{ lote.caducado }}</td>
-
+            <td>{{ lote.precioUnidad | currency:'MXN' }}</td>
             <td>
-                <p-button size="small" icon="pi pi-pencil" class="mr-2" (click)="modal.show(lote)"
+                <p-tag value="{{lote.merma }} {{lote.insumo.unidadMedida}}"
+                    [severity]="lote.merma > 0 ? 'danger' : 'success'"></p-tag>
+            </td>
+            <td>
+                <p-tag value="{{lote.caducado }} {{lote.insumo.unidadMedida}}"
+                    [severity]="lote.caducado > 0 ? 'danger' : 'success'"></p-tag>
+            </td>
+            <td>
+                <p-button size="small" icon="pi pi-pencil" class="mr-2" (click)="modal.show(lote)" severity="warning"
                     [disabled]="lote.numeroProducciones > 0" [pTooltip]="'Editar'"></p-button>
-                <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="warning"
-                    [disabled]="lote.numeroProducciones > 0" (onClick)="eliminar(lote.id)"></p-button>
+                <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="danger"
+                    [disabled]="lote.numeroProducciones > 0" (onClick)="confirmarEliminar($event, lote.id)"></p-button>
+                <p-button size="small" icon="fa-solid fa-down-long" class="mr-2" pTooltip="Merma" severity="danger"
+                    [disabled]="lote.numeroProducciones > 0" (onClick)="modal.show(lote, true)"></p-button>
             </td>
         </tr>
     </ng-template>

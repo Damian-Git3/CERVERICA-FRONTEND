@@ -8,7 +8,7 @@ import {
   BrowserAnimationsModule,
 } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { authInterceptor } from './auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
@@ -19,5 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(withInterceptors([authInterceptor])),
     MessageService,
+    ConfirmationService
   ],
 };

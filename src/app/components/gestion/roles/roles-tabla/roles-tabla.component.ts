@@ -34,7 +34,7 @@ export class RolesTablaComponent {
   ngOnInit() {
     this.obtenerRoles();
 
-    this._CompartidoService.actualizarTitulo('Inicio');
+    this._CompartidoService.actualizarTitulo('Roles');
   }
 
   obtenerRoles() {

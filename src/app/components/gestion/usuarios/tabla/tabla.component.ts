@@ -22,7 +22,7 @@ export class TablaComponent {
 
   ngOnInit(): void {
     this.obtenerUsuarios();
-    this._CompartidoService.actualizarTitulo('Inicio');
+    this._CompartidoService.actualizarTitulo('Usuarios');
   }
 
   public obtenerUsuarios() {
@@ -110,6 +110,13 @@ export class TablaComponent {
           console.error(error);
         },
       });
+  }
+
+  async confirmarEliminar(event: Event, id: string) {
+    const confirmed = await this._AlertasService.confirmarEliminacion(event);
+    if (confirmed) {
+      this.eliminar(id);
+    }
   }
 
   eliminar(id: string) {

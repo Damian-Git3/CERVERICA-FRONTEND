@@ -65,13 +65,14 @@ export class LotesInsumoService {
       loteInsumo
     );
   }
+
   editarMermaLoteInsumo(
     id: number,
     merma: number
   ): Observable<{ message: string }> {
     return this._http.post<{ message: string }>(
-      `${this._baseURL}/merma/${id}`,
-      { merma }
+      `${this._baseURL}/merma/${id}?merma=${merma}`,
+      {}
     );
   }
 

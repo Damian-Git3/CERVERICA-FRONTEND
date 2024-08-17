@@ -183,16 +183,6 @@ main {
   border-color: var(--color-principal);
 }
 
-.p-button {
-  background: var(--color-principal);
-  border: 1px solid var(--color-principal);
-}
-
-.p-button:focus {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--color-principal),
-    0 1px 2px 0 black;
-}
-
 td,
 th {
   text-align: center;
@@ -211,17 +201,6 @@ th {
 .p-inputtext:enabled:focus {
   box-shadow: 0 0 0 0.2rem var(--color-secundario);
   border-color: var(--color-principal);
-}
-
-.p-button {
-  background: var(--color-principal);
-  border: 1px solid var(--color-principal);
-  color: white;
-}
-
-.p-button:focus {
-  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--color-principal),
-    0 1px 2px 0 black;
 }
 
 .mensajes-error {

@@ -30,8 +30,7 @@ export class CompartidoService {
   }
 
   actualizarTitulo(nuevoTitulo: string) {
-    this.tituloModulo = nuevoTitulo;
-    this._TituloModulo.next(this.tituloModulo);
+    this._TituloModulo.next(nuevoTitulo);
   }
 
   guardarSesion(sesion: SesionDTO) {

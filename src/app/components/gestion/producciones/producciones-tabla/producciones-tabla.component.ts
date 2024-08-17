@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { UsuariosService } from '../../../../services/usuarios/usuarios.service';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
@@ -31,6 +31,7 @@ export class ProduccionesTablaComponent implements OnInit {
     private produccionesService: ProduccionesService,
     private compartidoService: CompartidoService
   ) {
+
     this.items = [
       {
         label: 'Update',
@@ -41,6 +42,10 @@ export class ProduccionesTablaComponent implements OnInit {
         icon: 'pi pi-times',
       },
     ];
+
+
+    this._CompartidoService.actualizarTitulo('Producciones');
+
     this.usuario = this.compartidoService.obtenerSesion();
     console.log('Usuario:', this.usuario);
   }
@@ -49,6 +54,7 @@ export class ProduccionesTablaComponent implements OnInit {
     console.log('ProduccionesTablaComponent inicializado');
     this.obtenerProducciones();
     this.obtenerOperadores();
+
   }
 
   obtenerOperadores() {

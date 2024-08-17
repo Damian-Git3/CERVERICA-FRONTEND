@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { inject, Injectable } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AlertasService {
-  constructor(private messageService: MessageService) {}
+  _MessageService = inject(MessageService);
+  _ConfirmationService = inject(ConfirmationService);
 
   showSuccess(message: string, summary?: string) {
-    this.messageService.add({
+    this._MessageService.add({
       severity: 'success',
       summary: summary ?? 'Éxito',
       detail: message,
@@ -16,7 +17,7 @@ export class AlertasService {
   }
 
   showError(message: string, summary?: string) {
-    this.messageService.add({
+    this._MessageService.add({
       severity: 'error',
       summary: summary ?? 'Error',
       detail: message,
@@ -24,7 +25,7 @@ export class AlertasService {
   }
 
   showInfo(message: string, summary?: string) {
-    this.messageService.add({
+    this._MessageService.add({
       severity: 'info',
       summary: summary ?? 'Información',
       detail: message,
@@ -32,7 +33,7 @@ export class AlertasService {
   }
 
   showWarn(message: string, summary?: string) {
-    this.messageService.add({
+    this._MessageService.add({
       severity: 'warn',
       summary: summary ?? 'Advertencia',
       detail: message,
@@ -40,7 +41,7 @@ export class AlertasService {
   }
 
   showCustom(message: string, severity: string, summary: string) {
-    this.messageService.add({
+    this._MessageService.add({
       severity,
       summary,
       detail: message,
@@ -48,6 +49,25 @@ export class AlertasService {
   }
 
   clear() {
-    this.messageService.clear();
+    this._MessageService.clear();
+  }
+
+  confirmarEliminacion(event: Event): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      this._ConfirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Estas seguro de eliminar este registro?',
+        icon: 'pi pi-info-circle',
+        acceptButtonStyleClass: 'p-button-danger p-button-sm',
+        acceptLabel: 'Sí',
+        rejectLabel: 'No',
+        accept: () => {
+          resolve(true);
+        },
+        reject: () => {
+          resolve(false);
+        },
+      });
+    });
   }
 }
