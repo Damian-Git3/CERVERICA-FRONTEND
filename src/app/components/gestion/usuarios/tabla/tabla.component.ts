@@ -36,6 +36,7 @@ export class TablaComponent {
           this.usuarios = usuarios;
           this.usuariosFiltrados = usuarios;
           this.verificarUnicoAdministrador(); // Verificar si hay un único administrador
+          //this.verificarUnicoAdministradorActivo();
         },
         error: (error: any) => {
           this._AlertasService.showError(
@@ -47,9 +48,17 @@ export class TablaComponent {
       });
   }
 
+  private verificarUnicoAdministradorActivo() {
+    const administradores = this.usuarios.filter(
+      (user) => user.rol === 'Admin' && user.activo === true
+    );
+
+    this.unicoAdministrador = administradores.length === 1;
+  }
+
   private verificarUnicoAdministrador() {
     const administradores = this.usuarios.filter(
-      (user) => user.rol === 'Admin'
+      (user) => user.rol === 'Admin' && user.activo === true
     );
     this.unicoAdministrador = administradores.length === 1;
   }

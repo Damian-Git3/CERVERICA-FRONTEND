@@ -2,19 +2,35 @@
 
 <p-toolbar>
   <div class="p-toolbar-group-start">
-    <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerUsuarios()" />
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerUsuarios()"
+    />
     <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
   </div>
   <div class="p-toolbar-group-center">
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
-      <input pInputText placeholder="Buscar" (input)="filtrarUsuarios($event)" />
+      <input
+        pInputText
+        placeholder="Buscar"
+        (input)="filtrarUsuarios($event)"
+      />
     </span>
   </div>
 </p-toolbar>
 
-<p-table #dt [value]="usuariosFiltrados" [styleClass]="'p-datatable-sm'" [rows]="10" [paginator]="true"
-  [showCurrentPageReport]="true" [selectionMode]="'single'" currentPageReportTemplate="{first} de {last}">
+<p-table
+  #dt
+  [value]="usuariosFiltrados"
+  [styleClass]="'p-datatable-sm'"
+  [rows]="10"
+  [paginator]="true"
+  [showCurrentPageReport]="true"
+  [selectionMode]="'single'"
+  currentPageReportTemplate="{first} de {last}"
+>
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
@@ -25,31 +41,61 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-usuario>
-    <tr (dblclick)="
+    <tr
+      (dblclick)="
         usuario.activo && !unicoAdministrador && usuario.rol === 'Admin'
           ? modal.show(usuario)
           : null
-      ">
+      "
+    >
       <td>{{ usuario.nombre }}</td>
       <td>{{ usuario.correo }}</td>
       <td>{{ usuario.rol }}</td>
       <td>
-        <p-tag *ngIf="usuario.activo" severity="success" value="ACTIVO" [rounded]="true" />
-        <p-tag *ngIf="!usuario.activo" severity="danger" value="INACTIVO" [rounded]="true" />
+        <p-tag
+          *ngIf="usuario.activo"
+          severity="success"
+          value="ACTIVO"
+          [rounded]="true"
+        />
+        <p-tag
+          *ngIf="!usuario.activo"
+          severity="danger"
+          value="INACTIVO"
+          [rounded]="true"
+        />
       </td>
       <td>
-        <p-button [disabled]="
+        <p-button
+          [disabled]="
             !usuario.activo || (unicoAdministrador && usuario.rol === 'Admin')
-          " size="small" icon="pi pi-pencil" class="mr-2" (click)="modal.show(usuario)"
-          [pTooltip]="'Editar'"></p-button>
-        <p-button size="small" [icon]="usuario.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'" class="mr-2"
-          [pTooltip]="usuario.activo ? 'Bloquear' : 'Desbloquear'" (onClick)="
+          "
+          size="small"
+          icon="pi pi-pencil"
+          class="mr-2"
+          (click)="modal.show(usuario)"
+          [pTooltip]="'Editar'"
+        ></p-button>
+        <p-button
+          size="small"
+          [icon]="usuario.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'"
+          class="mr-2"
+          [pTooltip]="usuario.activo ? 'Bloquear' : 'Desbloquear'"
+          (onClick)="
             usuario.activo ? desactivar(usuario.id) : activar(usuario.id)
-          " [disabled]="unicoAdministrador && usuario.rol === 'Admin'"
-          [severity]="usuario.activo ? 'success' : 'danger'"></p-button>
-        <p-button size="small" icon="pi pi-trash" class="mr-2" pTooltip="Eliminar" severity="warning"
+          "
+          [disabled]="unicoAdministrador && usuario.rol === 'Admin' && usuario.activo"
+          [severity]="usuario.activo ? 'success' : 'danger'"
+        ></p-button>
+        <p-button
+          size="small"
+          icon="pi pi-trash"
+          class="mr-2"
+          pTooltip="Eliminar"
+          severity="warning"
           [disabled]="unicoAdministrador && usuario.rol === 'Admin'"
-          (onClick)="confirmarEliminar($event, usuario.id)"></p-button>
+          (onClick)="confirmarEliminar($event, usuario.id)"
+        ></p-button>
       </td>
     </tr>
   </ng-template>
