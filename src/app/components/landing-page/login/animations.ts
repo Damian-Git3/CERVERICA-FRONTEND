@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 
 export function initializeLoginAnimations(
   contenedorLogin: ElementRef,
-  carouselElement: ElementRef
+  carouselElement: ElementRef,
 ) {
   const inputs = document.querySelectorAll<HTMLInputElement>('.input-field');
   const toggleButtons = document.querySelectorAll<HTMLButtonElement>('.toggle');
@@ -24,7 +24,7 @@ export function initializeLoginAnimations(
     }
 
     const currentImage = document.querySelector<HTMLImageElement>(
-      `.img-${index}`
+      `.img-${index}`,
     );
     images.forEach((img) => img.classList.remove('show'));
     if (currentImage) currentImage.classList.add('show');
@@ -34,7 +34,7 @@ export function initializeLoginAnimations(
 
     bullets.forEach((bull) => bull.classList.remove('active'));
     const currentBullet = document.querySelector<HTMLSpanElement>(
-      `.bullets span[data-value="${index}"]`
+      `.bullets span[data-value="${index}"]`,
     );
     if (currentBullet) currentBullet.classList.add('active');
   }

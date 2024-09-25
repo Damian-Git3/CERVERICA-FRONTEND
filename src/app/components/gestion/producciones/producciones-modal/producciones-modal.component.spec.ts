@@ -11,9 +11,8 @@ describe('ProduccionesModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProduccionesModalComponent ]
-    })
-    .compileComponents();
+      declarations: [ProduccionesModalComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

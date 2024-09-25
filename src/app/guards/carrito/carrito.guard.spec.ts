@@ -4,8 +4,8 @@ import { CanActivateFn } from '@angular/router';
 import { carritoGuard } from './carrito.guard';
 
 describe('carritoGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => carritoGuard(...guardParameters));
+  const executeGuard: CanActivateFn = (...guardParameters) =>
+    TestBed.runInInjectionContext(() => carritoGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

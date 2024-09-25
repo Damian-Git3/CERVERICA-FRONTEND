@@ -14,15 +14,13 @@ export class InsumosTablaComponent implements OnInit {
   public insumos: IInsumo[] = [];
   public items: any[] = [];
 
-
   _CompartidoService = inject(CompartidoService);
 
   cargando: boolean = false;
 
-
   constructor(
     private insumosService: InsumosService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {}
 
   ngOnInit() {

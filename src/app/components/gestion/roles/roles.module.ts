@@ -11,8 +11,6 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { RolesRoutes } from './roles.routing';
 
-
-
 @NgModule({
   declarations: [RolesModalComponent, RolesTablaComponent],
   imports: [

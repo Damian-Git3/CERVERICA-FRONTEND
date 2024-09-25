@@ -29,6 +29,11 @@ import { InicioComponent } from './inicio/inicio.component';
     ToolbarModule,
     PrimeModule,
   ],
-  declarations: [GestionComponent, MenuComponent, NavbarComponent, InicioComponent],
+  declarations: [
+    GestionComponent,
+    MenuComponent,
+    NavbarComponent,
+    InicioComponent,
+  ],
 })
 export class GestionModule {}

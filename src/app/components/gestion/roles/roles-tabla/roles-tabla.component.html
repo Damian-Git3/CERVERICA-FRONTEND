@@ -1,6 +1,10 @@
 <p-toolbar>
   <div class="p-toolbar-group-start">
-    <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerRoles()" />
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerRoles()"
+    />
     <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
 
     <!-- <p-button icon="pi pi-upload" /> -->
@@ -29,8 +33,16 @@
       <td>{{ rol.name }}</td>
       <td>{{ rol.totalUsers }}</td>
       <td>
-        <p-button icon="fa-regular fa-eye" class="mr-2" (click)="modal.show(rol)"></p-button>
-        <p-button icon="fa-solid fa-trash" class="mr-2" (click)="eliminar(rol.id)"></p-button>
+        <p-button
+          icon="fa-regular fa-eye"
+          class="mr-2"
+          (click)="modal.show(rol)"
+        ></p-button>
+        <p-button
+          icon="fa-solid fa-trash"
+          class="mr-2"
+          (click)="eliminar(rol.id)"
+        ></p-button>
       </td>
     </tr>
   </ng-template>

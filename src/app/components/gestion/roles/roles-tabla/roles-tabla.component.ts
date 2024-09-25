@@ -17,7 +17,7 @@ export class RolesTablaComponent {
   _CompartidoService = inject(CompartidoService);
   constructor(
     private rolesService: RolesService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {
     this.items = [
       {

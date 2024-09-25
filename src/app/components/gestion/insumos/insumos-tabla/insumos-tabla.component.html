@@ -56,11 +56,11 @@
   <ng-template pTemplate="body" let-producto>
     <tr (dblclick)="producto.activo ? modal.show(producto.id) : null">
       <td>{{ producto.nombre }}</td>
-      <td>{{ producto.cantidadTotalLotes}}</td>
+      <td>{{ producto.cantidadTotalLotes }}</td>
       <td>{{ producto.unidadMedida }}</td>
       <td>{{ producto.cantidadMaxima }} {{ producto.unidadMedida }}</td>
       <td>{{ producto.cantidadMinima }} {{ producto.unidadMedida }}</td>
-      <td>{{ producto.costoUnitario | currency : "MXN" }}</td>
+      <td>{{ producto.costoUnitario | currency: "MXN" }}</td>
       <td>{{ producto.merma }} {{ producto.unidadMedida }}</td>
       <td>
         <p-tag

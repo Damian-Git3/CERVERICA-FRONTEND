@@ -40,7 +40,7 @@ export const carritoGuard: CanActivateFn = (route, state) => {
               Object.values(recetasAgrupadas);
 
             _CarritoService.asignarListaCantidadTotalCervezasCarrito(
-              arrayCantidadCervezasReceta
+              arrayCantidadCervezasReceta,
             );
           },
           error: (e) => {

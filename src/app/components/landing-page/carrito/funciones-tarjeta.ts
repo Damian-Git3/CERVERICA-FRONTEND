@@ -1,16 +1,16 @@
 export function inicializarFuncionesTarjeta() {
   const cardNumberInput = document.querySelector(
-    '.card-number-input'
+    '.card-number-input',
   ) as HTMLInputElement;
   const cardNumberBox = document.querySelector(
-    '.card-number-box'
+    '.card-number-box',
   ) as HTMLElement;
 
   const cardHolderInput = document.querySelector(
-    '.card-holder-input'
+    '.card-holder-input',
   ) as HTMLInputElement;
   const cardHolderName = document.querySelector(
-    '.card-holder-name'
+    '.card-holder-name',
   ) as HTMLElement;
 
   const monthInput = document.querySelector('.month-input') as HTMLInputElement;

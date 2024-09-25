@@ -6,7 +6,6 @@ import { ProduccionesService } from '../../../../services/producciones/produccio
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { SesionDTO } from '../../../../interfaces/usuario/sesion-dto';
 
-
 @Component({
   selector: 'app-producciones-tabla',
   templateUrl: './producciones-tabla.component.html',
@@ -32,9 +31,8 @@ export class ProduccionesTablaComponent implements OnInit {
     private usuariosService: UsuariosService,
     private alertasService: AlertasService,
     private produccionesService: ProduccionesService,
-    private compartidoService: CompartidoService
+    private compartidoService: CompartidoService,
   ) {
-
     this.items = [
       {
         label: 'Update',
@@ -46,7 +44,6 @@ export class ProduccionesTablaComponent implements OnInit {
       },
     ];
 
-
     this._CompartidoService.actualizarTitulo('Producciones');
 
     this.usuario = this.compartidoService.obtenerSesion();
@@ -56,7 +53,6 @@ export class ProduccionesTablaComponent implements OnInit {
   ngOnInit() {
     this.obtenerProducciones();
     this.obtenerOperadores();
-
   }
 
   obtenerOperadores() {
@@ -80,15 +76,14 @@ export class ProduccionesTablaComponent implements OnInit {
   obtenerProducciones() {
     this.produccionesService.obtener().subscribe({
       next: (data: any) => {
-
         if (this.usuario.rol === 'Operador') {
           this.producciones = data.filter(
-            (produccion: any) => produccion.idUsuario === this.usuario.idUsuario
+            (produccion: any) =>
+              produccion.idUsuario === this.usuario.idUsuario,
           );
         } else {
           this.producciones = data;
         }
-
 
         console.log('Producciones obtenidas', this.producciones);
       },
@@ -126,37 +121,41 @@ export class ProduccionesTablaComponent implements OnInit {
   }
 
   rechazar() {
-    this.produccionesService.rechazarSolicitud(this.idSeleccionado, this.motivo).subscribe({
-      next: (data: any) => {
-        console.log('Produccion rechazada');
-        this.alertasService.showSuccess('Produccion rechazada');
-        this.displayMensaje = false;
-        this.rechazarBtn = false;
-        this.motivo = '';
-        this.obtenerProducciones();
-      },
-      error: (error: any) => {
-        console.error('Error al rechazar la produccion');
-        this.alertasService.showError('Error al rechazar la produccion');
-      },
-    });
+    this.produccionesService
+      .rechazarSolicitud(this.idSeleccionado, this.motivo)
+      .subscribe({
+        next: (data: any) => {
+          console.log('Produccion rechazada');
+          this.alertasService.showSuccess('Produccion rechazada');
+          this.displayMensaje = false;
+          this.rechazarBtn = false;
+          this.motivo = '';
+          this.obtenerProducciones();
+        },
+        error: (error: any) => {
+          console.error('Error al rechazar la produccion');
+          this.alertasService.showError('Error al rechazar la produccion');
+        },
+      });
   }
 
   posponer() {
-    this.produccionesService.posponerSolicitud(this.idSeleccionado, this.motivo).subscribe({
-      next: (data: any) => {
-        console.log('Produccion pospuesta');
-        this.alertasService.showSuccess('Produccion pospuesta');
-        this.displayMensaje = false;
-        this.posponerBtn = false;
-        this.motivo = '';
-        this.obtenerProducciones();
-      },
-      error: (error: any) => {
-        console.error('Error al posponer la produccion');
-        this.alertasService.showError('Error al posponer la produccion');
-      },
-    });
+    this.produccionesService
+      .posponerSolicitud(this.idSeleccionado, this.motivo)
+      .subscribe({
+        next: (data: any) => {
+          console.log('Produccion pospuesta');
+          this.alertasService.showSuccess('Produccion pospuesta');
+          this.displayMensaje = false;
+          this.posponerBtn = false;
+          this.motivo = '';
+          this.obtenerProducciones();
+        },
+        error: (error: any) => {
+          console.error('Error al posponer la produccion');
+          this.alertasService.showError('Error al posponer la produccion');
+        },
+      });
   }
 
   reenviar(id: number) {
@@ -188,7 +187,8 @@ export class ProduccionesTablaComponent implements OnInit {
   }
 
   asignarUsuario() {
-    this.produccionesService.asignarOperador(this.idSeleccionado, this.idUsuarioSeleccionado)
+    this.produccionesService
+      .asignarOperador(this.idSeleccionado, this.idUsuarioSeleccionado)
       .subscribe({
         next: (data: any) => {
           console.log('Usuario asignado');
@@ -201,7 +201,6 @@ export class ProduccionesTablaComponent implements OnInit {
           this.alertasService.showError('Error al asignar el usuario');
         },
       });
-
   }
 
   avanzarPaso(id: number) {

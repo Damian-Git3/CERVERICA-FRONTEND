@@ -22,13 +22,13 @@ export class VentasService {
     return this._HttpClient.post<VentaDTO>(
       `${this._baseURL}/CrearVenta`,
       nuevaVenta,
-      { headers }
+      { headers },
     );
   }
 
   obtenerPedidosUsuario(): Observable<PedidoDTO[]> {
     return this._HttpClient.get<PedidoDTO[]>(
-      `${this._baseURL}/pedidos-usuario`
+      `${this._baseURL}/pedidos-usuario`,
     );
   }
 

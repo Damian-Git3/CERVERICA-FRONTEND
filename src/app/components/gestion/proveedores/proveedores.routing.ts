@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: '',
     component: ProveedoresTablaComponent,
-   },
+  },
 ];
 
 export const ProveedoresRoutes = RouterModule.forChild(routes);

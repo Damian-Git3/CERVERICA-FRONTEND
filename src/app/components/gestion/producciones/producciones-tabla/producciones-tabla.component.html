@@ -28,11 +28,10 @@
   <p-card
     *ngFor="let produccion of producciones"
     [header]="produccion.nombreReceta"
-    subheader="Solicitud {{ produccion.fechaSolicitud | date : 'dd/MM/yyyy' }}"
+    subheader="Solicitud {{ produccion.fechaSolicitud | date: 'dd/MM/yyyy' }}"
     [style]="{ 'min-width': '400px', 'min-height': '400px' }"
     styleClass="border-round"
-
-    >
+  >
     <ng-template pTemplate="header"> </ng-template>
     <p><strong>Operador:</strong>{{ produccion.nombreUsuario }}</p>
     <p><strong>Tandas:</strong>{{ produccion.numeroTandas }}</p>
@@ -141,7 +140,6 @@
             posponerBtn = true;
             idSeleccionado = produccion.id
           "
-
         />
         <p-button
           *ngIf="produccion.estatus == 2"
@@ -170,7 +168,10 @@
 ></app-producciones-modal>
 
 <app-pasos-modal #modalPasos (reload)="obtenerProducciones()"></app-pasos-modal>
-<app-avanzar-paso-modal #modalAvanzar (reload)="obtenerProducciones()"></app-avanzar-paso-modal>
+<app-avanzar-paso-modal
+  #modalAvanzar
+  (reload)="obtenerProducciones()"
+></app-avanzar-paso-modal>
 
 <p-dialog [(visible)]="displayMensaje" header="Motivo" [modal]="true">
   <textarea
