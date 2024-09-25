@@ -5,6 +5,8 @@ import { Producto } from '../../../interfaces/productos/producto';
 import { finalize } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ComentarioDTO } from '../../../interfaces/comentario/comentario-dto';
+import { ComentariosService } from '../../../services/comentarios/comentarios.service';
+import { NuevoComentarioDTO } from '../../../interfaces/comentario/nuevo-comentario-dto';
 
 @Component({
   selector: 'app-detalles-producto',
@@ -14,10 +16,12 @@ import { ComentarioDTO } from '../../../interfaces/comentario/comentario-dto';
 export class DetallesProductoComponent {
   _Route = inject(ActivatedRoute);
   _ProductosService = inject(ProductosService);
+  _ComentariosService = inject(ComentariosService);
   formBuilder = inject(FormBuilder);
 
   idProducto: number | null = null;
   producto: Producto | null = null;
+  comentarios: ComentarioDTO[] = [];
   puntuacion: number = 0;
 
   cargando: boolean = false;
@@ -29,6 +33,7 @@ export class DetallesProductoComponent {
     this.idProducto = idParam ? parseInt(idParam, 10) : null;
 
     this.obtenerProducto();
+    this.obtenerComentarios();
 
     this.formComentario = this.formBuilder.group({
       puntuacion: ['', [Validators.required]],
@@ -54,14 +59,39 @@ export class DetallesProductoComponent {
     }
   }
 
+  obtenerComentarios() {
+    if (this.idProducto != null) {
+      this.cargando = true;
+
+      this._ComentariosService
+        .obtenerComentarios(this.idProducto)
+        .pipe(finalize(() => (this.cargando = false)))
+        .subscribe({
+          next: (comentarios: ComentarioDTO[]) => {
+            this.comentarios = comentarios;
+            console.log(this.comentarios);
+          },
+          error: (error: any) => {},
+        });
+    }
+  }
+
   guardarComentario() {
-    let comentario: ComentarioDTO = {
-      puntuacion: this.formComentario.value.puntuacion,
-      comentario: this.formComentario.value.comentario,
-    };
+    if (this.idProducto != null) {
+      let nuevoComentario: NuevoComentarioDTO = {
+        puntuacion: this.formComentario.value.puntuacion,
+        textoComentario: this.formComentario.value.comentario,
+        idReceta: this.idProducto,
+      };
 
-    console.log('hola');
-
-    console.log(comentario);
+      this._ComentariosService.agregarComentario(nuevoComentario).subscribe({
+        next: () => {
+          this.obtenerComentarios();
+        },
+        error: (e) => {
+          console.error('Error al agregar favorito:', e);
+        },
+      });
+    }
   }
 }

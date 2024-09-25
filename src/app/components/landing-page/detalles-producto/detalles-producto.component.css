@@ -77,3 +77,51 @@
   margin-top: 1rem;
   font-size: 15px;
 }
+
+.contenedor-comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.contenido-comentario {
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.encabezado-comentario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nombre-usuario {
+  font-weight: bold;
+  font-size: 14px;
+  color: #1a2551;
+}
+
+.puntuacion {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.puntuacion .pi-star {
+  color: #f4c150;
+  font-size: 16px;
+  margin-left: 3px;
+}
+
+.texto-comentario {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+  line-height: 1.4;
+}

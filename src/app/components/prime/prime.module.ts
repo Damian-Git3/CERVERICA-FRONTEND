@@ -40,6 +40,8 @@ import { ChartModule } from 'primeng/chart';
 
 import { RatingModule } from 'primeng/rating';
 
+import { CardModule } from 'primeng/card';
+
 @NgModule({
   declarations: [],
   imports: [CommonModule, NgOptimizedImage],
@@ -79,7 +81,8 @@ import { RatingModule } from 'primeng/rating';
     DragDropModule,
     PickListModule,
     ChartModule,
-    RatingModule
+    RatingModule,
+    CardModule
   ],
 })
 export class PrimeModule {}
