@@ -1,0 +1,37 @@
+<p-progressBar mode="indeterminate" *ngIf="cargando" />
+
+<div class="seccion-cerveza">
+    <img src="{{producto?.imagen}}" class="botella" alt="Botella">
+
+    <div class="imagen-izquierda" style="background-image: url('{{producto?.rutaFondo}}');">
+        <img src="{{producto?.rutaFondo}}" alt="Fondo" class="bg">
+    </div>
+
+    <div class="container">
+        <div class="contenedor-detalles">
+            <div class="detalles">
+                <h1 class="nombre-botella">{{producto?.nombre}} <small>{{producto?.especificaciones}}</small></h1>
+
+                <p>{{producto?.descripcion}}</p>
+
+                <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="seccion-comentarios">
+    <h2>Comentarios</h2>
+
+    <form [formGroup]="formComentario" (ngSubmit)="guardarComentario()">
+        <p-rating formControlName="puntuacion" />
+        <textarea rows="5" style="width: 100%; margin-top: 1rem;" pInputTextarea placeholder="Deja tu comentario..."
+            formControlName="comentario"></textarea>
+        <div style="display: flex; justify-content: end;">
+            <button type="submit" [disabled]="formComentario.invalid" pButton [loading]="cargando"
+                style="margin-top: .5rem;">
+                Comentar
+            </button>
+        </div>
+    </form>
+</div>

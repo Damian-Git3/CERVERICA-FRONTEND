@@ -138,6 +138,10 @@ main {
   margin-right: 1rem;
 }
 
+.p-button {
+  text-align: center;
+}
+
 .p-badge {
   font-size: 0.5rem;
   max-width: 1rem;
@@ -232,4 +236,8 @@ th {
 .img-td {
   width: 25px;
   height: 100px;
+}
+
+.p-rating-icon-active {
+  color: var(--color-principal);
 }
