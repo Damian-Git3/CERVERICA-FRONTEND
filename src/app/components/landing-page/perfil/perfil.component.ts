@@ -65,7 +65,7 @@ export class PerfilComponent {
             if (sesionDTO.isSuccess) {
               this._AlertasService.showSuccess(
                 'Por favor, vuelve a iniciar sesión para aplicar los cambios',
-                'Cambio de contraseña exitoso'
+                'Cambio de contraseña exitoso',
               );
               this._CompartidoService.cerrarSesion();
             }
@@ -73,8 +73,9 @@ export class PerfilComponent {
           error: (respuestaError: any) => {
             if (!respuestaError.error.isSuccess) {
               this.mensajesError = respuestaError.error.message;
-            } else{
-              this.mensajesError = "Tuviste un error por favor vuelve a intentarlo"
+            } else {
+              this.mensajesError =
+                'Tuviste un error por favor vuelve a intentarlo';
             }
           },
         });

@@ -5,7 +5,6 @@ import { ModalComponent } from './modal/modal.component';
 import { LotesInsumoRoutes } from './lotes-insumo.routing';
 import { PrimeModule } from '../../prime/prime.module';
 
-
 @NgModule({
   declarations: [TablaComponent, ModalComponent],
   imports: [CommonModule, LotesInsumoRoutes, PrimeModule],

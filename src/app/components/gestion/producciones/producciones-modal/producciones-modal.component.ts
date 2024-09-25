@@ -22,12 +22,10 @@ export class ProduccionesModalComponent implements OnInit {
   });
 
   constructor(
-
     private usuariosService: UsuariosService,
     private recetasService: RecetaService,
     private produccionesService: ProduccionesService,
-    private alertasService: AlertasService
-
+    private alertasService: AlertasService,
   ) {}
 
   ngOnInit() {
@@ -73,20 +71,18 @@ export class ProduccionesModalComponent implements OnInit {
 
   guardar() {
     console.log(this.form.value);
-    this.produccionesService
-      .crear(this.form.value)
-      .subscribe({
-        next: (data: any) => {
-          this.alertasService.showInfo('Produccion creada correctamente');
-          console.log('Produccion creada correctamente');
-          this.reload.emit();
-          this.display = false;
-        },
-        error: (error: any) => {
-          console.log(error);
-          this.alertasService.showError(error.error);
-          console.error('Error al crear la produccion');
-        }
-      });
+    this.produccionesService.crear(this.form.value).subscribe({
+      next: (data: any) => {
+        this.alertasService.showInfo('Produccion creada correctamente');
+        console.log('Produccion creada correctamente');
+        this.reload.emit();
+        this.display = false;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertasService.showError(error.error);
+        console.error('Error al crear la produccion');
+      },
+    });
   }
 }

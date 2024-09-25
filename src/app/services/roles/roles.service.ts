@@ -12,13 +12,13 @@ export class RolesService {
 
   constructor(
     private http: HttpClient,
-    private _CompartidoService: CompartidoService
+    private _CompartidoService: CompartidoService,
   ) {}
 
   crear(roleName: string): Observable<any> {
     const token = this._CompartidoService.obtenerSesion().token;
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post(`${this._baseURL}`, roleName , { headers });
+    return this.http.post(`${this._baseURL}`, roleName, { headers });
   }
 
   obtener(): Observable<any> {
@@ -36,7 +36,11 @@ export class RolesService {
   asignar(roleId: number, userId: number): Observable<any> {
     const token = this._CompartidoService.obtenerSesion().token;
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.post(`${this._baseURL}/assing`, { roleId, userId }, { headers });
+    return this.http.post(
+      `${this._baseURL}/assing`,
+      { roleId, userId },
+      { headers },
+    );
   }
 
   obtenerRolesUsuarios(): Observable<any> {

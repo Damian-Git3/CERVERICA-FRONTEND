@@ -1,2 +1,1 @@
-export interface DetalleVentaInformacionDTO {
-}
+export interface DetalleVentaInformacionDTO {}

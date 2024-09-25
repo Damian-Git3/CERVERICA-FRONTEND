@@ -14,7 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 export class CompartidoService {
   private tituloModulo: string = '';
   private _TituloModulo: BehaviorSubject<string> = new BehaviorSubject<string>(
-    ''
+    '',
   );
 
   constructor(
@@ -22,7 +22,7 @@ export class CompartidoService {
     private _AuthService: AuthService,
     private _MessageService: MessageService,
     private _AccountService: AccountService,
-    private _Router: Router
+    private _Router: Router,
   ) {}
 
   get TituloModulo() {
@@ -63,7 +63,7 @@ export class CompartidoService {
   }
 
   extractErrorPassword(
-    errors: { code: string; description: string }[]
+    errors: { code: string; description: string }[],
   ): string[] {
     return errors.map((error) => error.description);
   }
@@ -89,7 +89,7 @@ export class CompartidoService {
   }
 
   extraerMensajesCodigo400(
-    errorArray: { code: string; description: string }[]
+    errorArray: { code: string; description: string }[],
   ): string {
     const errorMessages = errorArray.map((error) => error.description);
     return errorMessages.join('<br>');

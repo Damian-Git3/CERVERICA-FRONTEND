@@ -8,9 +8,8 @@ describe('CarritoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CarritoComponent]
-    })
-    .compileComponents();
+      declarations: [CarritoComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CarritoComponent);
     component = fixture.componentInstance;

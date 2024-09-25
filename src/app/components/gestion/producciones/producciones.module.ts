@@ -18,7 +18,12 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasosModalComponent } from './pasos-modal/pasos-modal.component';
 import { AvanzarPasoModalComponent } from './avanzar-paso-modal/avanzar-paso-modal.component';
 @NgModule({
-  declarations: [ProduccionesTablaComponent, ProduccionesModalComponent, PasosModalComponent, AvanzarPasoModalComponent],
+  declarations: [
+    ProduccionesTablaComponent,
+    ProduccionesModalComponent,
+    PasosModalComponent,
+    AvanzarPasoModalComponent,
+  ],
   imports: [
     CommonModule,
     ProduccionesRoutes,
@@ -34,7 +39,7 @@ import { AvanzarPasoModalComponent } from './avanzar-paso-modal/avanzar-paso-mod
     ImageModule,
     TagModule,
     ConfirmDialogModule,
-    InputTextareaModule
+    InputTextareaModule,
   ],
 })
 export class ProduccionesModule {}

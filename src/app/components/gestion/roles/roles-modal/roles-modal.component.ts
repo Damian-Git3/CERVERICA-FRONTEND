@@ -29,7 +29,10 @@ export class RolesModalComponent implements OnInit {
     roleName: new FormControl(''),
   });
 
-  constructor(private rolesService: RolesService, private alertasService: AlertasService) {}
+  constructor(
+    private rolesService: RolesService,
+    private alertasService: AlertasService,
+  ) {}
 
   ngOnInit() {
     console.log('RolesModalComponent inicializado');

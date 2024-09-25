@@ -163,7 +163,7 @@ export class CarritoComponent {
           next: (nuevaVenta: VentaDTO) => {
             this._AlertasService.showSuccess(
               "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'",
-              '¡Compra realizada con éxito!'
+              '¡Compra realizada con éxito!',
             );
             this._CarritoService.vaciarProductosCarrito();
 
@@ -234,7 +234,7 @@ export class CarritoComponent {
 
   obtenerProductoCorrespondiente(productoCarrito: ProductoCarrito): any {
     return this.productos.find(
-      (producto) => producto.id === productoCarrito.receta.id
+      (producto) => producto.id === productoCarrito.receta.id,
     );
   }
 

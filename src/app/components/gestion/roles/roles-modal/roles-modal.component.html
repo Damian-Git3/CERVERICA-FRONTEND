@@ -1,11 +1,10 @@
 <p-dialog
   #modal
-[(visible)]="display"
+  [(visible)]="display"
   [draggable]="false"
   [maximizable]="false"
   [modal]="true"
   (onHide)="hide()"
-
 >
   <form [formGroup]="form">
     <div class="field">

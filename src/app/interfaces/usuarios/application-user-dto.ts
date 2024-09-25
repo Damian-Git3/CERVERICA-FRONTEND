@@ -1,3 +1,3 @@
 export interface ApplicationUserDTO {
-    fullName: string
+  fullName: string;
 }

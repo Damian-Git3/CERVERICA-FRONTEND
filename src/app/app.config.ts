@@ -19,6 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(withInterceptors([authInterceptor])),
     MessageService,
-    ConfirmationService
+    ConfirmationService,
   ],
 };

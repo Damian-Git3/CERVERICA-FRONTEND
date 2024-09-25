@@ -84,7 +84,9 @@
           (onClick)="
             usuario.activo ? desactivar(usuario.id) : activar(usuario.id)
           "
-          [disabled]="unicoAdministrador && usuario.rol === 'Admin' && usuario.activo"
+          [disabled]="
+            unicoAdministrador && usuario.rol === 'Admin' && usuario.activo
+          "
           [severity]="usuario.activo ? 'success' : 'danger'"
         ></p-button>
         <p-button
