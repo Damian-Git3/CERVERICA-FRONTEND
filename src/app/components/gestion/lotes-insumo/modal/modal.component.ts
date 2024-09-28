@@ -56,23 +56,23 @@ export class ModalComponent {
   }
 
   crearForm: FormGroup = this._FormBuilder.group({
-    proveedor: [, Validators.required],
-    insumo: [, Validators.required],
-    fechaCaducidad: [, Validators.required],
-    cantidad: [, Validators.required],
-    montoCompra: [, Validators.required],
+    proveedor: [null, Validators.required],
+    insumo: [null, Validators.required],
+    fechaCaducidad: [null, Validators.required],
+    cantidad: [null, Validators.required],
+    montoCompra: [null, Validators.required],
   });
 
   editarForm: FormGroup = this._FormBuilder.group({
-    proveedor: [, Validators.required],
-    insumo: [, Validators.required],
-    fechaCaducidad: [, Validators.required],
-    cantidad: [, Validators.required],
-    montoCompra: [, Validators.required],
+    proveedor: [null, Validators.required],
+    insumo: [null, Validators.required],
+    fechaCaducidad: [null, Validators.required],
+    cantidad: [null, Validators.required],
+    montoCompra: [null, Validators.required],
   });
 
   mermaForm: FormGroup = this._FormBuilder.group({
-    cantidad: [, Validators.required],
+    cantidad: [null, Validators.required],
   });
 
   show(loteInsumo?: LoteInsumoDTO, mostrarModalMerma?: boolean) {
