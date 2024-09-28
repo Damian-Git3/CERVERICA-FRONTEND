@@ -13,7 +13,7 @@ export class GraficasService {
 
   getNuevosClientesPorMes(): Observable<any> {
     return this._HttpClient.get<any>(
-      `${this._baseURL}/nuevos-clientes-por-mes`
+      `${this._baseURL}/nuevos-clientes-por-mes`,
     );
   }
 
@@ -31,7 +31,7 @@ export class GraficasService {
 
   getPedidosPorMetodoPago(): Observable<any> {
     return this._HttpClient.get<any>(
-      `${this._baseURL}/pedidos-por-metodo-pago`
+      `${this._baseURL}/pedidos-por-metodo-pago`,
     );
   }
 }

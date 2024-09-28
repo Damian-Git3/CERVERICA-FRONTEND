@@ -6,7 +6,9 @@
 
 .card-producto {
   background-color: var(--color-card);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.1),
     0 12px 24px rgba(0, 0, 0, 0.1);
   transition: 0.3s ease-in;
   display: flex;
@@ -20,7 +22,9 @@
 .card-producto:hover {
   transform: translateY(-10px);
   transition: 0.3s ease-in;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 12px 24px rgba(0, 0, 0, 0.2),
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.2),
+    0 12px 24px rgba(0, 0, 0, 0.2),
     0 18px 36px rgba(0, 0, 0, 0.2);
 }
 
@@ -122,14 +126,16 @@
   width: 90%;
   height: 40px;
   border-radius: 10px;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   background-color: var(--color-principal);
   font-size: 1rem;
   font-weight: 500;
   color: #fff;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
   margin-bottom: 1rem;
 }
 
@@ -311,7 +317,9 @@
   color: #fff;
   cursor: pointer;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
   margin-bottom: 1rem;
 }
 

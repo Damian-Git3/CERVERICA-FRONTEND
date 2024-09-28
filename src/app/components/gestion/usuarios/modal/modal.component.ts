@@ -7,10 +7,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
 import { UsuarioDTO } from '../../../../interfaces/usuarios/usuario-dto';
@@ -82,7 +80,7 @@ export class ModalComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'EL usuario fue guardado exitosamente',
-            'Usuario guardado'
+            'Usuario guardado',
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -91,7 +89,7 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema'
+              'Ocurrió un problema',
             );
 
             this.mensajesError =
@@ -99,7 +97,7 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el usuario vuelve a intentarlo',
-              'Ocurrió un problema'
+              'Ocurrió un problema',
             );
           }
           console.error(error);
@@ -124,7 +122,7 @@ export class ModalComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'EL usuario fue editado exitosamente',
-            'Usuario editado'
+            'Usuario editado',
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -133,7 +131,7 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema'
+              'Ocurrió un problema',
             );
 
             this.mensajesError =
@@ -141,7 +139,7 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el usuario vuelve a intentarlo',
-              'Ocurrió un problema'
+              'Ocurrió un problema',
             );
           }
           console.error(error);

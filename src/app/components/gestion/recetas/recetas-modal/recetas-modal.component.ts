@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import {
-  Form,
   FormArray,
   FormBuilder,
   FormControl,
@@ -57,7 +56,7 @@ export class RecetasModalComponent implements OnInit {
     private recetasService: RecetaService,
     private alertasService: AlertasService,
     private insumosService: InsumosService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit() {
@@ -164,7 +163,7 @@ export class RecetasModalComponent implements OnInit {
                 nombre: [ingrediente.nombre],
                 cantidad: [ingrediente.cantidad],
                 unidadMedida: [ingrediente.unidadMedida],
-              })
+              }),
             );
           });
         },
@@ -182,7 +181,7 @@ export class RecetasModalComponent implements OnInit {
         nombre: [insumo.nombre],
         unidadMedida: [insumo.unidadMedida],
         cantidad: [''],
-      })
+      }),
     );
   }
 
@@ -221,7 +220,7 @@ export class RecetasModalComponent implements OnInit {
     selected.forEach((insumo: any) => {
       if (
         !current.controls.find(
-          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre
+          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre,
         )
       ) {
         this.agregarIngrediente(insumo);
@@ -233,7 +232,7 @@ export class RecetasModalComponent implements OnInit {
       const ingrediente = current.at(i);
       if (
         !selected.find(
-          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value
+          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value,
         )
       ) {
         current.removeAt(i);

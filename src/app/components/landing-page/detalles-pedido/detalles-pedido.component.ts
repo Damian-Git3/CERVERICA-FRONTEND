@@ -33,7 +33,7 @@ export class DetallesPedidoComponent {
           this.cantidadTotalProductos = this.venta.productosPedido.length;
           this.totalPrecioCervezas = this.venta.productosPedido.reduce(
             (total, detalle) => total + (detalle.montoVenta ?? 0), // Usa ?? 0 para proporcionar un valor predeterminado
-            0
+            0,
           );
 
           this.cargandoPedido = false;

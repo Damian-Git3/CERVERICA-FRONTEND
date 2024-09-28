@@ -21,7 +21,7 @@ export class AvanzarPasoModalComponent {
   constructor(
     private fb: FormBuilder,
     private produccionesService: ProduccionesService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {}
 
   show(id: number) {

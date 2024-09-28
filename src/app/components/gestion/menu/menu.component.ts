@@ -1,5 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { CompartidoService } from '../../../services/compartido/compartido.service';
 
 @Component({

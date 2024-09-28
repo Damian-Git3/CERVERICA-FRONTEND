@@ -10,7 +10,6 @@ import { CrearVentaDTO } from '../../../interfaces/ventas/crear-venta-dto';
 import { DetalleVentaDTO } from '../../../interfaces/ventas/detalle-venta-dto';
 import { VentaDTO } from '../../../interfaces/ventas/venta-dto';
 import { inicializarFuncionesTarjeta } from './funciones-tarjeta';
-import { EliminarProductoCarritoDTO } from '../../../interfaces/carrito/eliminar-producto-carrito-dto';
 import { ProductosService } from '../../../services/productos/productos.service';
 import { Producto } from '../../../interfaces/productos/producto';
 import { AlertasService } from '../../../services/shared/alertas/alertas.service';
@@ -163,7 +162,7 @@ export class CarritoComponent {
           next: (nuevaVenta: VentaDTO) => {
             this._AlertasService.showSuccess(
               "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'",
-              '¡Compra realizada con éxito!'
+              '¡Compra realizada con éxito!',
             );
             this._CarritoService.vaciarProductosCarrito();
 
@@ -234,7 +233,7 @@ export class CarritoComponent {
 
   obtenerProductoCorrespondiente(productoCarrito: ProductoCarrito): any {
     return this.productos.find(
-      (producto) => producto.id === productoCarrito.receta.id
+      (producto) => producto.id === productoCarrito.receta.id,
     );
   }
 

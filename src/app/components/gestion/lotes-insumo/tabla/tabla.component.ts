@@ -14,7 +14,6 @@ export class TablaComponent {
   _LotesInsumoService = inject(LotesInsumoService);
   _AlertasService = inject(AlertasService);
   _CompartidoService = inject(CompartidoService);
-  
 
   lotesInsumo: LoteInsumoDTO[] = [];
   lotesInsumoFiltrados: LoteInsumoDTO[] = [];
@@ -42,7 +41,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los lotes insumo, intenta nuevamente',
-            'Ocurrió un problema'
+            'Ocurrió un problema',
           );
           console.error(error);
         },
@@ -66,7 +65,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los lotes insumo, intenta nuevamente',
-            'Ocurrió un problema'
+            'Ocurrió un problema',
           );
           console.error(error);
         },
@@ -88,7 +87,7 @@ export class TablaComponent {
         loteInsumo.fechaCompra.toString().toLowerCase().includes(query) ||
         loteInsumo.caducado.toString().toLowerCase().includes(query) ||
         loteInsumo.precioUnidad.toString().toLowerCase().includes(query) ||
-        loteInsumo.montoCompra.toString().toLowerCase().includes(query)
+        loteInsumo.montoCompra.toString().toLowerCase().includes(query),
     );
   }
 
@@ -102,14 +101,14 @@ export class TablaComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'Lote insumo eliminado correctamente',
-            'Éxito'
+            'Éxito',
           );
           this.obtenerLotesInsumo();
         },
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo eliminar el lote insumo, intenta nuevamente',
-            'Ocurrió un problema'
+            'Ocurrió un problema',
           );
           console.error(error);
         },

@@ -1,7 +1,4 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { CompartidoService } from '../../services/compartido/compartido.service';
-import { MessageService } from 'primeng/api';
+import { CanActivateFn } from '@angular/router';
 
 export const gestionGuard: CanActivateFn = (route, state) => {
   /* const router = inject(Router);
