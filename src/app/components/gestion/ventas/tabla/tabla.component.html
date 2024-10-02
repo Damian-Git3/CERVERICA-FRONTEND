@@ -1,99 +1,110 @@
 <p-progressBar mode="indeterminate" *ngIf="cargando" />
+<div class="animate__animated animate__backInRight">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button
+      styleClass="global-hover-effect"
+        icon="fa-solid fa-rotate-right"
+        class="mr-2"
+        (click)="obtenerVentas()"
+        pTooltip="Actualizar"
+      />
+    </div>
+    <div class="p-toolbar-group-center">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          placeholder="Buscar"
+          (input)="filtrarVentas($event)"
+        />
+      </span>
+    </div>
+  </p-toolbar>
 
-<p-toolbar>
-  <div class="p-toolbar-group-start">
-    <p-button
-      icon="fa-solid fa-rotate-right"
-      class="mr-2"
-      (click)="obtenerVentas()"
-      pTooltip="Actualizar"
-    />
-  </div>
-  <div class="p-toolbar-group-center">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input pInputText placeholder="Buscar" (input)="filtrarVentas($event)" />
-    </span>
-  </div>
-</p-toolbar>
+  <p-table
+    #dt
+    [value]="ventasFiltradas"
+    [styleClass]="'p-datatable-sm'"
+    [rows]="10"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [selectionMode]="'single'"
+    currentPageReportTemplate="{first} de {last}"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="fechaVenta">
+          FECHA VENTA <p-sortIcon field="fechaVenta" />
+        </th>
+        <th pSortableColumn="totalCervezas">
+          TOTAL CERVEZAS <p-sortIcon field="totalCervezas" />
+        </th>
+        <th pSortableColumn="metodoPago">
+          MÉTODO PAGO <p-sortIcon field="metodoPago" />
+        </th>
+        <th pSortableColumn="metodoEnvio">
+          MÉTODO ENVIO <p-sortIcon field="metodoEnvio" />
+        </th>
+        <th pSortableColumn="montoVenta">
+          MONTO VENTA <p-sortIcon field="montoVenta" />
+        </th>
+        <th pSortableColumn="estatus">
+          ESTATUS <p-sortIcon field="estatus" />
+        </th>
+        <th>ACCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-venta>
+      <tr>
+        <td>{{ venta.fechaVenta | date : "dd/MM/yyyy HH:mm" }}</td>
+        <td>{{ venta.totalCervezas }}</td>
+        <td>{{ obtenerMetodoPago(venta.metodoPago) }}</td>
+        <td>{{ obtenerMetodoEnvio(venta.metodoEnvio) }}</td>
+        <td>{{ venta.montoVenta | currency : "MXN" }}</td>
+        <td>
+          <p-tag
+            [value]="obtenerNombreEstatusVenta(venta.estatusVenta)"
+            [severity]="obtenerSeverityEstatusVenta(venta.estatusVenta)"
+          ></p-tag>
+        </td>
+        <td>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            icon="fa-solid fa-backward"
+            class="mr-2"
+            pTooltip="Retroceder paso"
+            severity="danger"
+            *ngIf="venta.estatusVenta != 1"
+            (onClick)="retrocederPaso(venta.id)"
+          ></p-button>
 
-<p-table
-  #dt
-  [value]="ventasFiltradas"
-  [styleClass]="'p-datatable-sm'"
-  [rows]="10"
-  [paginator]="true"
-  [showCurrentPageReport]="true"
-  [selectionMode]="'single'"
-  currentPageReportTemplate="{first} de {last}"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="fechaVenta">
-        FECHA VENTA <p-sortIcon field="fechaVenta" />
-      </th>
-      <th pSortableColumn="totalCervezas">
-        TOTAL CERVEZAS <p-sortIcon field="totalCervezas" />
-      </th>
-      <th pSortableColumn="metodoPago">
-        MÉTODO PAGO <p-sortIcon field="metodoPago" />
-      </th>
-      <th pSortableColumn="metodoEnvio">
-        MÉTODO ENVIO <p-sortIcon field="metodoEnvio" />
-      </th>
-      <th pSortableColumn="montoVenta">
-        MONTO VENTA <p-sortIcon field="montoVenta" />
-      </th>
-      <th pSortableColumn="estatus">ESTATUS <p-sortIcon field="estatus" /></th>
-      <th>ACCIONES</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-venta>
-    <tr>
-      <td>{{ venta.fechaVenta | date: "dd/MM/yyyy HH:mm" }}</td>
-      <td>{{ venta.totalCervezas }}</td>
-      <td>{{ obtenerMetodoPago(venta.metodoPago) }}</td>
-      <td>{{ obtenerMetodoEnvio(venta.metodoEnvio) }}</td>
-      <td>{{ venta.montoVenta | currency: "MXN" }}</td>
-      <td>
-        <p-tag
-          [value]="obtenerNombreEstatusVenta(venta.estatusVenta)"
-          [severity]="obtenerSeverityEstatusVenta(venta.estatusVenta)"
-        ></p-tag>
-      </td>
-      <td>
-        <p-button
-          size="small"
-          icon="fa-solid fa-backward"
-          class="mr-2"
-          pTooltip="Retroceder paso"
-          severity="danger"
-          *ngIf="venta.estatusVenta != 1"
-          (onClick)="retrocederPaso(venta.id)"
-        ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            icon="fa-solid fa-boxes-packing"
+            class="mr-2"
+            pTooltip="Empezar empaquetar cervezas"
+            severity="info"
+            (onClick)="modal.mostrar(venta)"
+            *ngIf="venta.estatusVenta == 1"
+          ></p-button>
 
-        <p-button
-          size="small"
-          icon="fa-solid fa-boxes-packing"
-          class="mr-2"
-          pTooltip="Empezar empaquetar cervezas"
-          severity="info"
-          (onClick)="modal.mostrar(venta)"
-          *ngIf="venta.estatusVenta == 1"
-        ></p-button>
-
-        <p-button
-          size="small"
-          icon="fa-solid fa-boxes-packing"
-          class="mr-2"
-          pTooltip="Empaquetar cervezas"
-          severity="warning"
-          (onClick)="modal.mostrar(venta)"
-          *ngIf="venta.estatusVenta == 2"
-        ></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            icon="fa-solid fa-boxes-packing"
+            class="mr-2"
+            pTooltip="Empaquetar cervezas"
+            severity="warning"
+            (onClick)="modal.mostrar(venta)"
+            *ngIf="venta.estatusVenta == 2"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 
 <app-modal #modal (reload)="obtenerVentas()"></app-modal>

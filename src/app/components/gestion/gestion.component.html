@@ -13,6 +13,7 @@
             label="Menu"
             [class]="'menu.btn'"
             (click)="menu.display = !menu.display"
+            styleClass="global-hover-effect"
           ></p-button>
         </div>
       </div>
@@ -22,7 +23,7 @@
     </div>
   </div>
   <div class="flex-1 p-2">
-    <p-card styleClass="h-full">
+    <p-card styleClass="h-full ">
       <router-outlet></router-outlet>
     </p-card>
   </div>
