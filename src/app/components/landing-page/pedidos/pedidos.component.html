@@ -9,6 +9,7 @@
                 <span [ngSwitch]="pedido.metodoPago">
                     <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>
                     <ng-container *ngSwitchCase="2">Tarjeta 💳</ng-container>
+                    <ng-container *ngSwitchCase="3">Stripe 💳</ng-container>
                     <ng-container *ngSwitchDefault>Método pago no reconocido</ng-container>
                 </span>
             </p>

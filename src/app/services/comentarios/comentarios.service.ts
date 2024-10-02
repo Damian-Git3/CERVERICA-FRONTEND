@@ -23,7 +23,7 @@ export class ComentariosService {
   // Método para agregar un nuevo comentario
   agregarComentario(nuevoComentario: NuevoComentarioDTO): Observable<any> {
     return this._Http.post(
-      `${this._baseURL}/agregar.comentario`,
+      `${this._baseURL}/agregar-comentario`,
       nuevoComentario
     );
   }

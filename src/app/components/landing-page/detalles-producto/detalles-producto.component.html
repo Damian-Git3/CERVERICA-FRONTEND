@@ -15,15 +15,20 @@
                 <p>{{producto?.descripcion}}</p>
 
                 <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false" />
+
+                <div class="contenedor-comprar">
+                    <p-button label="Comprar ahora! ➡️" icon="pi pi-dollar" outlined="true" styleClass="btn-favoritos"
+                        (onClick)="_Router.navigateByUrl('/cerverica/productos');" />
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="seccion-comentarios">
+<div>
     <h2>Comentarios</h2>
 
-    <form [formGroup]="formComentario" (ngSubmit)="guardarComentario()">
+    <form [formGroup]="formComentario" (ngSubmit)="guardarComentario()" *ngIf="!usuarioComento">
         <p-rating formControlName="puntuacion" />
         <textarea rows="5" style="width: 100%; margin-top: 1rem;" pInputTextarea placeholder="Deja tu comentario..."
             formControlName="comentario"></textarea>
@@ -35,27 +40,40 @@
         </div>
     </form>
 
-    <div class="contenedor-comentarios">
-        <p-card class="comentario" *ngFor="let comentario of comentarios">
-            <!-- Avatar del usuario -->
-            <p-avatar label="{{ comentario.nombreUsuario[0].toUpperCase() }}" styleClass="mr-2 avatar" shape="circle"
-                [style]="{ 'background-color': '#f5d9ab', color: 'black', 'max-width': '5rem', 'max-height': '5rem'}"></p-avatar>
+    <p-dropdown [options]="opcionesOrdenamiento" [(ngModel)]="opcionSeleccionada" placeholder="Ordenar por"
+        [style]="{'margin-top': '1rem', 'margin-bottom': '1rem'}" (onChange)="ordenarComentarios($event)">
+    </p-dropdown>
 
-            <!-- Contenido del comentario -->
-            <div class="contenido-comentario">
-                <div class="encabezado-comentario">
-                    <!-- Nombre del usuario -->
-                    <span class="nombre-usuario">{{ comentario.nombreUsuario }}</span>
+    <div>
+        <p-progressBar mode="indeterminate" *ngIf="cargandoComentarios" />
 
-                    <!-- Puntuación (estrellas) -->
-                    <div class="puntuacion">
-                        {{comentario.puntuacion}} <i class="pi pi-star"></i>
+        <div *ngIf="comentarios.length > 0" class="contenedor-comentarios">
+            <p-card *ngFor="let comentario of comentarios">
+                <div class="comentario">
+                    <div class="usuario-comentario">
+                        <p-avatar label="{{ comentario.nombreUsuario[0].toUpperCase() }}" styleClass="mr-2 avatar"
+                            shape="circle"
+                            [style]="{ 'background-color': '#f5d9ab', color: 'black', 'max-width': '3rem', 'max-height': '3rem'}"></p-avatar>
+
+                        <p>{{ comentario.nombreUsuario }}</p>
                     </div>
-                </div>
 
-                <!-- Texto del comentario -->
-                <p class="texto-comentario">{{ comentario.textoComentario }}</p>
-            </div>
-        </p-card>
+                    <div class="fecha-comentario">
+                        Comentado en México 🪅 el {{ comentario.fecha | date: 'd \'de\' MMMM \'de\' y' }}
+                    </div>
+
+                    <div class="calificacion-comentario">
+                        <p-rating [(ngModel)]="comentario.puntuacion" [readonly]="true" [cancel]="false" />
+
+                        <p>{{comentario.puntuacion}}/5</p>
+                    </div>
+
+                    <p class="texto-comentario">{{ comentario.textoComentario }}</p>
+                </div>
+            </p-card>
+        </div>
+
+        <p class="sin-comentarios" *ngIf="comentarios.length == 0">¡Aún no hay comentarios! Sé el primero en compartir
+            tu opinión. 💬</p>
     </div>
 </div>

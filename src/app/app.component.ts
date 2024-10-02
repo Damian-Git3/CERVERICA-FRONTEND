@@ -3,6 +3,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { PrimeModule } from './components/prime/prime.module';
 import { RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,7 @@ export class AppComponent {
   constructor(private primengConfig: PrimeNGConfig) {}
 
   ngOnInit() {
+    registerLocaleData(localeEs, 'es');
     this.primengConfig.ripple = true;
   }
 }

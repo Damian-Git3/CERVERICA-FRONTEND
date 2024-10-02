@@ -118,146 +118,6 @@
       </div>
     </form>
 
-    <div class="summary-item">
-      <span class="titulo-summary">Método pago</span>
-
-      <p-dropdown [options]="metodosPago" [(ngModel)]="metodoPagoSeleccionado" optionLabel="label"
-        placeholder="Selecciona un método de pago" (onChange)="validarMetodoPago($event)" styleClass="dropdown">
-      </p-dropdown>
-    </div>
-
-    <div class="mensajes-error" #mensajesErrorMetodoPago></div>
-
-    <div class="container" *ngIf="metodoPagoSeleccionado?.value == '2'">
-      <div class="card-container">
-        <div class="front">
-          <div class="image">
-            <img src="img/chip.png" alt="" />
-            <img src="img/logo-navbar.png" alt="" />
-          </div>
-          <div class="card-number-box">#### #### #### ####</div>
-          <div class="flexbox">
-            <div class="box">
-              <span>Nombre completo</span>
-              <div class="card-holder-name">Nombre completo</div>
-            </div>
-            <div class="box">
-              <span>Expiración</span>
-              <div class="expiration">
-                <span class="exp-month">MM</span>
-                <span>/</span>
-                <span class="exp-year">YY</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="back">
-          <div class="stripe"></div>
-          <div class="box">
-            <span>CVV</span>
-            <div class="cvv-box"></div>
-            <img src="img/logo-navbar.png" alt="" />
-          </div>
-        </div>
-      </div>
-
-      <form [formGroup]="formTarjeta">
-        <div class="inputBox">
-          <span>Número de tarjeta</span>
-          <input type="text" maxlength="16" class="card-number-input" formControlName="numeroTarjeta" />
-          <div *ngIf="
-              formTarjeta.get('numeroTarjeta')?.touched &&
-              formTarjeta.get('numeroTarjeta')?.invalid
-            " class="mensajes-error">
-            <small *ngIf="formTarjeta.get('numeroTarjeta')?.errors?.['required']">
-              El número de tarjeta es obligatorio.
-            </small>
-          </div>
-        </div>
-        <div class="inputBox">
-          <span>Nombre en tarjeta</span>
-          <input type="text" class="card-holder-input" formControlName="nombrePersonaTarjeta" />
-          <div *ngIf="
-              formTarjeta.get('nombrePersonaTarjeta')?.touched &&
-              formTarjeta.get('nombrePersonaTarjeta')?.invalid
-            " class="mensajes-error">
-            <small *ngIf="formTarjeta.get('nombrePersonaTarjeta')?.errors?.['required']">
-              El nombre en tarjeta es obligatorio.
-            </small>
-          </div>
-        </div>
-        <div class="flexbox">
-          <div class="inputBox">
-            <span>Mes de expiración</span>
-            <select name="" id="" class="month-input" formControlName="mesExpiracion">
-              <option value="month" selected disabled>Mes</option>
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
-              <option value="08">08</option>
-              <option value="09">09</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
-            <div *ngIf="
-              formTarjeta.get('mesExpiracion')?.touched &&
-              formTarjeta.get('mesExpiracion')?.invalid
-            " class="mensajes-error">
-              <small *ngIf="formTarjeta.get('mesExpiracion')?.errors?.['required']">
-                El mes de expiracion es obligatorio.
-              </small>
-            </div>
-          </div>
-          <div class="inputBox">
-            <span>Año expiración</span>
-            <select name="" id="" class="year-input" formControlName="anioExpiracion">
-              <option value="year" selected disabled>Año</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
-            </select>
-
-            <div *ngIf="
-              formTarjeta.get('anioExpiracion')?.touched &&
-              formTarjeta.get('anioExpiracion')?.invalid
-            " class="mensajes-error">
-              <small *ngIf="formTarjeta.get('anioExpiracion')?.errors?.['required']">
-                El año de expiración es obligatorio.
-              </small>
-            </div>
-          </div>
-          <div class="inputBox">
-            <span>cvv</span>
-            <input type="text" maxlength="4" class="cvv-input" formControlName="cvv" />
-            <div *ngIf="
-              formTarjeta.get('cvv')?.touched &&
-              formTarjeta.get('cvv')?.invalid
-            " class="mensajes-error">
-              <small *ngIf="formTarjeta.get('cvv')?.errors?.['required']">
-                El cvv es obligatorio.
-              </small>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="summary-item" *ngIf="metodoPagoSeleccionado?.value == '1'">
-      El repartidor recogerá el pago en efectivo en el momento de la entrega de
-      su pedido. Por favor, tenga el importe exacto preparado para facilitar la
-      transacción
-    </div>
-
     <div class="summary-item total">
       <span>PRECIO TOTAL</span>
       <span>{{ totalPrecioCervezas | currency : "MXN" }}</span>
@@ -265,6 +125,17 @@
 
     <p-progressBar mode="indeterminate" *ngIf="creandoVenta" />
 
-    <button class="checkout" (click)="realizarPedido()" [disabled]="this.contadorProductosCarrito == 0">PAGAR</button>
+    <!-- <button class="checkout" (click)="realizarPedido()" [disabled]="this.contadorProductosCarrito == 0">PAGAR</button> -->
+
+    <button class="checkout" (click)="pagarConStripe()" [disabled]="this.contadorProductosCarrito == 0">
+      PAGAR CON
+      <img src="img/stripe.svg" alt="Stripe Logo" class="stripe-logo">
+    </button>
   </div>
 </div>
+
+<p-dialog header="¡Estás a punto de completar tu compra! 🍻" [modal]="true" [(visible)]="pagandoCarrito" [style]="{ width: '60%' }"
+  (onHide)="limpiarCheckout()">
+  <p-progressBar mode="indeterminate" *ngIf="creandoVenta" />
+  <div id="checkout"></div>
+</p-dialog>

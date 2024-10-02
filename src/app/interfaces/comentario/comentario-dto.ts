@@ -3,5 +3,7 @@ export interface ComentarioDTO {
   puntuacion: number;
   textoComentario: string;
   nombreUsuario: string;
+  fecha: string;
+  idUsuario: string;
   idReceta: number;
 }

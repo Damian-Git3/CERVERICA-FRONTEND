@@ -50,6 +50,10 @@
   margin-left: -15px;
 }
 
+.contenedor-comprar {
+  margin-top: 1rem;
+}
+
 .detalles {
   padding: 0 15px;
   flex: 0 0 33.3333333333%;
@@ -81,7 +85,7 @@
 .contenedor-comentarios {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 3rem;
 }
 
 .avatar {
@@ -97,7 +101,7 @@
 
 .encabezado-comentario {
   display: flex;
-  justify-content: space-between;
+  justify-content: end;
   align-items: center;
 }
 
@@ -117,11 +121,42 @@
   color: #f4c150;
   font-size: 16px;
   margin-left: 3px;
+  fill: #f4c150;
+}
+
+.fecha-comentario {
+  color: #a1a0a0;
+}
+
+.usuario-comentario {
+  display: flex;
+  gap: 1rem;
+  font-weight: bold;
+}
+
+.comentario {
+  display: flex;
+  flex-direction: column;
+}
+
+.calificacion-comentario {
+  display: flex;
+  gap: 1rem;
+  font-weight: bold;
+  align-items: center;
 }
 
 .texto-comentario {
-  font-size: 14px;
-  color: #555;
-  margin-top: 5px;
-  line-height: 1.4;
+  font-size: 1.2rem;
+}
+
+.ordenar-comentarios {
+  margin-bottom: 10rem;
+  margin-top: 10rem;
+}
+
+.sin-comentarios {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
 }

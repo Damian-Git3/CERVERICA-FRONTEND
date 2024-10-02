@@ -7,6 +7,7 @@ import { MessageService } from 'primeng/api';
 import { ActualizarProductoCarritoDTO } from '../../../../interfaces/carrito/actualizar-producto-carrito-dto';
 import { Producto } from '../../../../interfaces/productos/producto';
 import { CantidadCervezasReceta } from '../../../../interfaces/carrito/cantidad-cervezas-receta';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-receta',
@@ -28,6 +29,8 @@ export class RecetaComponent {
     [];
   private cantidadCervezasReceta: any;
 
+  eliminandoReceta: boolean = false;
+
   ngOnInit(): void {
     this._CarritoService.ProductosCarrito.subscribe(
       (productosCarrito) => (this.productosCarrito = productosCarrito)
@@ -47,6 +50,8 @@ export class RecetaComponent {
   }
 
   eliminarProductoCarrito() {
+    this.eliminandoReceta = true;
+
     let productoCarritoEliminar: EliminarProductoCarritoDTO = {
       idReceta: this.productoCarrito.idReceta,
       cantidadLote: this.productoCarrito.cantidadLote,
@@ -57,6 +62,7 @@ export class RecetaComponent {
         productoCarritoEliminar,
         this._CompartidoService.obtenerSesion().token
       )
+      .pipe(finalize(() => (this.eliminandoReceta = false)))
       .subscribe({
         next: () => {
           this._MessageService.add({

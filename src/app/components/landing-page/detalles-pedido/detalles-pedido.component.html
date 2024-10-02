@@ -37,9 +37,9 @@
       <span class="titulo-summary">Envio</span>
 
       <span [ngSwitch]="venta?.metodoEnvio">
-        <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>
-        <ng-container *ngSwitchCase="2">Tarjeta {{ obtenerUltimosCuatroDigitosTarjeta() }}💳</ng-container>
-        <ng-container *ngSwitchDefault>Método pago no reconocido</ng-container>
+        <ng-container *ngSwitchCase="1">Reco. Tienda 🏭</ng-container>
+        <ng-container *ngSwitchCase="2">Envio domicilio 🚚</ng-container>
+        <ng-container *ngSwitchDefault>Método envio no reconocido</ng-container>
       </span>
     </div>
 
@@ -47,8 +47,9 @@
       <span class="titulo-summary">Método pago</span>
 
       <span [ngSwitch]="venta?.metodoPago">
-        <ng-container *ngSwitchCase="1">Reco. Tienda 🏭</ng-container>
-        <ng-container *ngSwitchCase="2">Envio domicilio 🚚</ng-container>
+        <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>
+        <ng-container *ngSwitchCase="2">Tarjeta {{ obtenerUltimosCuatroDigitosTarjeta() }}💳</ng-container>
+        <ng-container *ngSwitchCase="3">Stripe 💳</ng-container>
         <ng-container *ngSwitchDefault>Método envio no reconocido</ng-container>
       </span>
     </div>
