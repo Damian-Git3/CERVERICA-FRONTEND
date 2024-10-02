@@ -26,7 +26,7 @@ import { StripeEmbeddedCheckout } from '@stripe/stripe-js';
   templateUrl: './carrito.component.html',
   styleUrl: './carrito.component.css',
 })
-export class CarritoComponent {
+export class CarritoComponent implements OnInit {
   _CompartidoService = inject(CompartidoService);
   _CarritoService = inject(CarritoService);
   _VentasService = inject(VentasService);
@@ -155,36 +155,35 @@ export class CarritoComponent {
       next: (nuevaVenta: VentaDTO) => {
         this._AlertasService.showSuccess(
           "Tu compra ha sido confirmada. Puedes revisar el estado en la sección 'Mis pedidos'",
-          '¡Compra realizada con éxito!',
+          '¡Compra realizada con éxito!'
         );
         this._CarritoService.vaciarProductosCarrito();
 
-            this.creandoVenta = false;
+        this.creandoVenta = false;
 
-            this._Router.navigateByUrl('cerverica/pedidos');
-          },
-          error: (error) => {
-            if (error.status == 409) {
-              this._CompartidoService.solicitarActualizarProductos();
+        this._Router.navigateByUrl('cerverica/pedidos');
+      },
+      error: (error) => {
+        if (error.status == 409) {
+          this._CompartidoService.solicitarActualizarProductos();
 
-              const listaProductos =
-                error.error.productosCarritoEliminados.join(', ');
+          const listaProductos =
+            error.error.productosCarritoEliminados.join(', ');
 
-              const mensajeDetalle = `Lamentamos el inconveniente, pero nos quedamos sin stock en las siguientes cervezas: ${listaProductos}`;
+          const mensajeDetalle = `Lamentamos el inconveniente, pero nos quedamos sin stock en las siguientes cervezas: ${listaProductos}`;
 
-              this._MessageService.add({
-                severity: 'info',
-                summary: 'Cervezas sin stock',
-                detail: mensajeDetalle,
-              });
-            } else {
-              console.log(error);
-            }
+          this._MessageService.add({
+            severity: 'info',
+            summary: 'Cervezas sin stock',
+            detail: mensajeDetalle,
+          });
+        } else {
+          console.log(error);
+        }
 
-            this.creandoVenta = false;
-          },
-        });
-    }
+        this.creandoVenta = false;
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -236,7 +235,7 @@ export class CarritoComponent {
 
   obtenerProductoCorrespondiente(productoCarrito: ProductoCarrito): any {
     return this.productos.find(
-      (producto) => producto.id === productoCarrito.receta.id,
+      (producto) => producto.id === productoCarrito.receta.id
     );
   }
 
