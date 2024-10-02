@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ToolbarModule } from 'primeng/toolbar';
 import { PrimeModule } from '../prime/prime.module';
 import { InicioComponent } from './inicio/inicio.component';
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { InicioComponent } from './inicio/inicio.component';
     DialogModule,
     ToolbarModule,
     PrimeModule,
+    ImageModule,
   ],
   declarations: [
     GestionComponent,

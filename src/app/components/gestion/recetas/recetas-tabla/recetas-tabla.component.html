@@ -1,123 +1,134 @@
-<p-toolbar>
-  <div class="p-toolbar-group-start">
-    <p-button
-      icon="fa-solid fa-rotate-right"
-      class="mr-2"
-      (click)="obtenerRecetas()"
-    />
-    <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
-
-    <!-- <p-button icon="pi pi-upload" [disabled]="true"/> -->
-  </div>
-  <div class="p-toolbar-group-center"></div>
-  <div class="p-toolbar-group-end">
-    <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" [disabled]="true" /> -->
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input
-        pInputText
-        placeholder="BUSCAR"
-        (input)="
-          tablaRecetas.filterGlobal($any($event).target.value, 'contains')
-        "
+<div class="animate__animated animate__backInRight">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button
+      styleClass="global-hover-effect"
+        icon="fa-solid fa-rotate-right"
+        class="mr-2"
+        (click)="obtenerRecetas()"
       />
-    </span>
-  </div>
-</p-toolbar>
+      <p-button styleClass="global-hover-effect" icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
 
-<p-table
-  #tablaRecetas
-  dataKey="id"
-  [value]="recetas"
-  [styleClass]="'p-datatable-sm'"
-  [rows]="10"
-  [paginator]="true"
-  [showCurrentPageReport]="true"
-  [selectionMode]="'single'"
-  currentPageReportTemplate="{first} de {last}"
-  [globalFilterFields]="[
-    'id',
-    'nombre',
-    'litrosEstimados',
-    'precioLitro',
-    'descripcion',
-    'costoProduccion',
-    'fechaRegistrado',
-    'activo',
-  ]"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="imagen">IMAGEN <p-sortIcon field="imagen" /></th>
-      <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
-      <th pSortableColumn="litrosEstimados">
-        LITROS ESTIMADOS <p-sortIcon field="litrosEstimados" />
-      </th>
-      <th pSortableColumn="precioLitro">
-        PRECIO LITRO <p-sortIcon field="precioLitro" />
-      </th>
-      <th pSortableColumn="costoProduccion">
-        COSTO PRODUCCION <p-sortIcon field="costoProduccion" />
-      </th>
-
-      <th pSortableColumn="fechaRegistrado">
-        FECHA REGISTRADO <p-sortIcon field="fechaRegistrado" />
-      </th>
-      <th pSortableColumn="activo">ACTIVO <p-sortIcon field="activo" /></th>
-
-      <th>ACCIONES</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-receta>
-    <tr (dblclick)="receta.activo ? modal.show(receta.id) : null">
-      <td><img class="img-td" src="{{ receta.imagen }}" /></td>
-      <td>{{ receta.nombre }}</td>
-      <td>{{ receta.litrosEstimados }}</td>
-      <td>{{ receta.precioLitro }}</td>
-      <td>{{ receta.costoProduccion }}</td>
-
-      <td>{{ receta.fechaRegistrado | date }}</td>
-      <td>
-        <p-tag
-          *ngIf="receta.activo"
-          severity="success"
-          value="ACTIVO"
-          [rounded]="true"
+      <!-- <p-button icon="pi pi-upload" [disabled]="true"/> -->
+    </div>
+    <div class="p-toolbar-group-center"></div>
+    <div class="p-toolbar-group-end">
+      <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" [disabled]="true" /> -->
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          placeholder="BUSCAR"
+          (input)="
+            tablaRecetas.filterGlobal($any($event).target.value, 'contains')
+          "
         />
-        <p-tag
-          *ngIf="!receta.activo"
-          severity="danger"
-          value="INACTIVO"
-          [rounded]="true"
-        />
-      </td>
-      <td>
-        <p-button
-          [disabled]="!receta.activo"
-          size="small"
-          icon="pi pi-pencil"
-          class="mr-2"
-          (click)="modal.show(receta.id)"
-          [pTooltip]="'Editar'"
-        ></p-button>
-        <p-button
-          size="small"
-          [icon]="receta.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'"
-          class="mr-2"
-          [pTooltip]="receta.activo ? 'Bloquear' : 'Desbloquear'"
-          (onClick)="receta.activo ? desactivar(receta.id) : activar(receta.id)"
-          [severity]="receta.activo ? 'success' : 'danger'"
-        ></p-button>
-        <p-button
-          size="small"
-          icon="pi pi-trash"
-          class="mr-2"
-          pTooltip="Eliminar"
-          severity="warning"
-          (onClick)="eliminar(receta.id)"
-        ></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+      </span>
+    </div>
+  </p-toolbar>
+
+  <p-table
+    #tablaRecetas
+    dataKey="id"
+    [value]="recetas"
+    [styleClass]="'p-datatable-sm'"
+    [rows]="10"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [selectionMode]="'single'"
+    currentPageReportTemplate="{first} de {last}"
+    [globalFilterFields]="[
+      'id',
+      'nombre',
+      'litrosEstimados',
+      'precioLitro',
+      'descripcion',
+      'costoProduccion',
+      'fechaRegistrado',
+      'activo'
+    ]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="imagen">IMAGEN <p-sortIcon field="imagen" /></th>
+        <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
+        <th pSortableColumn="litrosEstimados">
+          LITROS ESTIMADOS <p-sortIcon field="litrosEstimados" />
+        </th>
+        <th pSortableColumn="precioLitro">
+          PRECIO LITRO <p-sortIcon field="precioLitro" />
+        </th>
+        <th pSortableColumn="costoProduccion">
+          COSTO PRODUCCION <p-sortIcon field="costoProduccion" />
+        </th>
+
+        <th pSortableColumn="fechaRegistrado">
+          FECHA REGISTRADO <p-sortIcon field="fechaRegistrado" />
+        </th>
+        <th pSortableColumn="activo">ESTATUS <p-sortIcon field="activo" /></th>
+
+        <th>ACCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-receta>
+      <tr (dblclick)="receta.activo ? modal.show(receta.id) : null">
+        <td><img class="img-td" src="{{ receta.imagen }}" /></td>
+        <td>{{ receta.nombre }}</td>
+        <td>{{ receta.litrosEstimados }} L</td>
+        <td>{{ receta.precioLitro | currency : "MXN" }}</td>
+        <td>{{ receta.costoProduccion | currency : "MXN" }}</td>
+
+        <td>{{ receta.fechaRegistrado | date }}</td>
+        <td>
+          <p-tag
+            *ngIf="receta.activo"
+            severity="success"
+            value="ACTIVO"
+            [rounded]="true"
+          />
+          <p-tag
+            *ngIf="!receta.activo"
+            severity="danger"
+            value="INACTIVO"
+            [rounded]="true"
+          />
+        </td>
+        <td>
+          <p-button
+          styleClass="global-hover-effect"
+            [disabled]="!receta.activo"
+            size="small"
+            icon="pi pi-pencil"
+            class="mr-2"
+            (click)="modal.show(receta.id)"
+            [pTooltip]="'Editar'"
+          ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            [icon]="
+              receta.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
+            "
+            class="mr-2"
+            [pTooltip]="receta.activo ? 'Bloquear' : 'Desbloquear'"
+            (onClick)="
+              receta.activo ? desactivar(receta.id) : activar(receta.id)
+            "
+            [severity]="receta.activo ? 'success' : 'danger'"
+          ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            icon="pi pi-trash"
+            class="mr-2"
+            pTooltip="Eliminar"
+            severity="warning"
+            (onClick)="eliminar(receta.id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
 <app-recetas-modal #modal (reload)="obtenerRecetas()"></app-recetas-modal>

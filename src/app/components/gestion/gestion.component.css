@@ -1,3 +1,8 @@
 td {
   text-align: center;
 }
+
+:host ::ng-deep div.p-card-body,
+:host ::ng-deep div.p-card-content {
+  height: 100%;
+}

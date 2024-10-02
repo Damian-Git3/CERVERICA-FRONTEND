@@ -36,10 +36,6 @@ const routes: Routes = [
         loadChildren: () => RecetasModule,
       },
       {
-        path: 'roles',
-        loadChildren: () => RolesModule,
-      },
-      {
         path: 'proveedores',
         loadChildren: () => ProveedoresModule,
       },
