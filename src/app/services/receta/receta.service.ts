@@ -88,4 +88,10 @@ export class RecetaService {
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get(`${this._baseURL}/${id}/ConStock`, { headers });
   }
+
+  obtenerRecetasLanding(): Observable<any> {
+    const token = this._CompartidoService.obtenerSesion().token;
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get(`${this._baseURL}/obtener-recetas-landing`, { headers });
+  }
 }

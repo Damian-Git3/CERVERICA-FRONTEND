@@ -6,6 +6,8 @@ export interface Producto {
   precioPaquete6: number;
   precioPaquete12: number;
   precioPaquete24: number;
+  lotesMinimos: number;
+  lotesMaximos: number;
   imagen: string;
   rutaFondo: string;
   fecha_registrado: string;

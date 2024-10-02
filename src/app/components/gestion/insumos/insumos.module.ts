@@ -8,12 +8,12 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { ButtonModule } from 'primeng/button';
-import { InsumosRoutes } from './insumos.routing';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { PrimeModule } from '../../prime/prime.module';
+import { InsumosRoutes } from './insumos.routing';
 
 @NgModule({
   declarations: [

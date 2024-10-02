@@ -1,1 +1,39 @@
-<p>produccion-modal works!</p>
+<p-dialog [(visible)]="display" [draggable]="false" [maximizable]="false" [header]="titulo" [modal]="true"
+    (onHide)="ocultar()">
+    <form [formGroup]="produccionForm" class="contenedor-form">
+
+        <div *ngIf="productoSeleccionado" class="contenedor-form">
+            <img src="{{ productoSeleccionado.imagen }}" alt="{{ productoSeleccionado.nombre }}">
+        </div>
+
+        <div *ngIf="productoSeleccionado" class="contenedor-form">
+            <h1>{{ productoSeleccionado.nombre }}</h1>
+        </div>
+
+        <div *ngIf="productoSeleccionado">
+            <h2>{{ productoSeleccionado.especificaciones }}</h2>
+        </div>
+
+        <div class="field flex flex-column">
+            <label for="cantidadProducir">CANTIDAD A PRODUCIR</label>
+            <select formControlName="cantidadProducir" id="cantidadProducir" class="p-select">
+                <option [value]="10" selected>10</option>
+                <option [value]="20">20</option>
+                <option [value]="30">30</option>
+            </select>
+        </div>
+
+        <div class="mensajes-error" *ngIf="mensajesError != ''">
+            <div [innerHTML]="mensajesError"></div>
+        </div>
+
+        <div class="field flex justify-content-center gap-1">
+            <p-button [label]="labelBoton" styleClass="w-full" icon="fa-solid fa-save"
+                [disabled]="produccionForm.invalid" [loading]="cargando" (click)="guardar()"></p-button>
+            <p-button label="Cancelar" styleClass="w-full" icon="fa-solid fa-times"
+                (click)="display = false"></p-button>
+        </div>
+    </form>
+
+    <p-progressBar mode="indeterminate" *ngIf="cargando" />
+</p-dialog>

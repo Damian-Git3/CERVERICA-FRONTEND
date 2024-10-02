@@ -1,0 +1,10 @@
+.contenedor-form {
+    display: flex;    
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-form img {
+    width: 50%;
+}

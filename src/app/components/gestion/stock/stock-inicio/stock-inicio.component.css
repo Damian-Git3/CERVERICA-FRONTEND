@@ -1,0 +1,152 @@
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+}
+
+.contenedor-inicio {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    width: 100%;
+}
+
+.contenedor-informacion-productos .informacion h2 {
+    color: var(--color-principal);
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+}
+
+.contenedor-informacion-productos .informacion h1 {
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+    text-transform: uppercase;
+}
+
+.contenedor-informacion-productos .informacion p {
+    font-size: 1.2rem;
+}
+
+.informacion {
+    margin-bottom: 5rem;
+}
+
+.card-producto {
+    cursor: pointer;   
+}
+
+.card-carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-carousel .contenedor-imagen {
+    width: 125px;
+    max-width: 125px;
+    position: relative;
+    min-height: 150px;
+    max-height: 150px;
+    overflow: hidden;
+}
+
+.card-carousel .contenedor-imagen .fondo-cerveza {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scale(1);
+    transition: all 1s ease-in-out;
+}
+
+.card-carousel:hover .contenedor-imagen .fondo-cerveza {
+    transform: scale(1.2);
+}
+
+.card-carousel .contenedor-imagen .contenedor-botella {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-carousel .contenedor-imagen .botella-cerveza {
+    max-width: 100%;
+    height: 120px;
+}
+
+.card-carousel .product-nombre {
+    font-weight: bold;
+}
+
+.card-carousel .product-especificaciones {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+.card-carousel .product-precio {
+    color: var(--color-principal);
+}
+
+.contenedor-informacion-productos {
+    overflow: hidden;
+}
+
+.contenedor-informacion-productos .productos {
+    max-width: 100%;
+}
+
+.contenedor-imagen-producto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.leyenda-inicio {
+    margin-top: 5rem;
+    text-align: right;
+    width: 100%;
+}
+
+.leyenda-inicio {
+    color: var(--gris-50-opacidad);
+}
+
+.rojo {
+    color: rgb(158, 20, 20);
+}
+
+.amarillo {
+    color: rgb(255, 230, 0);
+}
+
+.verde {
+    color: green;
+}
+
+@media (min-width: 1024px) {
+    .contenedor-inicio {
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .contenedor-informacion-productos .informacion h1 {
+        font-size: 5rem;
+        letter-spacing: 0.5rem;
+        text-transform: uppercase;
+    }
+}
