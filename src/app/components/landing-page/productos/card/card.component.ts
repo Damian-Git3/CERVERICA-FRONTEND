@@ -79,13 +79,13 @@ export class CardComponent {
             cantidadTotalCervezas: this.paqueteSeleccionado,
           };
         }
-      }
+      },
     );
   }
 
   obtenerPaqueteSeleccionado(): number {
     const productoCarrito = this.productosCarrito.find(
-      (productoCarrito) => productoCarrito.idReceta === this.producto.id
+      (productoCarrito) => productoCarrito.idReceta === this.producto.id,
     );
 
     if (productoCarrito) {
@@ -119,7 +119,7 @@ export class CardComponent {
       this._favoritosService
         .agregarFavoritos(
           favoritoUsuarioAgregar,
-          this._CompartidoService.obtenerSesion().token
+          this._CompartidoService.obtenerSesion().token,
         )
         .subscribe({
           next: (favoritoUsuarioAgregado: FavoritoUsuario) => {
@@ -152,7 +152,7 @@ export class CardComponent {
       this._favoritosService
         .eliminarFavoritos(
           favoritoUsuarioEliminar,
-          this._CompartidoService.obtenerSesion().token
+          this._CompartidoService.obtenerSesion().token,
         )
         .subscribe({
           next: () => {
@@ -188,7 +188,7 @@ export class CardComponent {
               this._CarritoService
                 .actualizarProductoCarrito(
                   productoCarritoActualizar,
-                  this._CompartidoService.obtenerSesion().token
+                  this._CompartidoService.obtenerSesion().token,
                 )
                 .subscribe({
                   next: (productoCarrito: ProductoCarrito) => {
@@ -206,7 +206,7 @@ export class CardComponent {
                     } else {
                       console.error(
                         'Error al actualizar producto en el carrito:',
-                        e
+                        e,
                       );
 
                       this._MessageService.add({
@@ -232,7 +232,7 @@ export class CardComponent {
               this._CarritoService
                 .agregarProductoCarrito(
                   nuevoProductoCarrito,
-                  this._CompartidoService.obtenerSesion().token
+                  this._CompartidoService.obtenerSesion().token,
                 )
                 .subscribe({
                   next: (productoCarrito: ProductoCarrito) => {
@@ -261,7 +261,7 @@ export class CardComponent {
                 });
             }
           },
-          { once: true }
+          { once: true },
         );
       }
     } else {
@@ -288,8 +288,8 @@ export class CardComponent {
     if (this.esCantidadDisminuible()) {
       this.cantidadCervezasReceta.cantidadTotalCervezas -=
         this.paqueteSeleccionado;
-        console.log("nomas");
-        
+      console.log('nomas');
+
       this.cantidadPaquetes--;
       this.CantidadElement.nativeElement.innerHTML = this.cantidadPaquetes;
     }
@@ -329,7 +329,7 @@ export class CardComponent {
     return this.productosCarrito.some(
       (productoCarrito) =>
         productoCarrito.idReceta === this.producto.id &&
-        productoCarrito.cantidadLote === this.paqueteSeleccionado
+        productoCarrito.cantidadLote === this.paqueteSeleccionado,
     );
   }
 
@@ -337,7 +337,7 @@ export class CardComponent {
     const productoCarrito = this.productosCarrito.find(
       (p) =>
         p.idReceta === this.producto.id &&
-        p.cantidadLote === this.paqueteSeleccionado
+        p.cantidadLote === this.paqueteSeleccionado,
     );
 
     this.cantidadPaquetes = productoCarrito ? productoCarrito.cantidad : 1;
@@ -351,7 +351,7 @@ export class CardComponent {
 
   seEncuentraEnProductosCarrito(idReceta: number): boolean {
     const productoEncontrado: any = this.productosCarrito.find(
-      (productoCarrito) => productoCarrito.idReceta === idReceta
+      (productoCarrito) => productoCarrito.idReceta === idReceta,
     );
     return !!productoEncontrado; // Devuelve true si lo encuentra, false si no.
   }

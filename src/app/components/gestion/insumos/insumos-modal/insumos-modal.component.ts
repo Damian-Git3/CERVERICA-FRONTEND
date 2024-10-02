@@ -38,7 +38,7 @@ export class InsumosModalComponent implements OnInit {
 
   constructor(
     private insumosService: InsumosService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {}
 
   ngOnInit() {}
@@ -110,7 +110,7 @@ export class InsumosModalComponent implements OnInit {
           catchError((error) => {
             console.error(error);
             return error;
-          })
+          }),
         )
         .subscribe({
           next: (data: any) => {
@@ -160,7 +160,7 @@ export class InsumosModalComponent implements OnInit {
       this.mensajesError = this.obtenerErrores();
       this.alertasService.showError(
         'Verifica el formulario',
-        'Tienes campos invalidas, validalos'
+        'Tienes campos invalidas, validalos',
       );
       return;
     }
@@ -189,7 +189,7 @@ export class InsumosModalComponent implements OnInit {
 
       this.alertasService.showError(
         'Verifica el formulario',
-        'Tienes campos invalidas, validalos'
+        'Tienes campos invalidas, validalos',
       );
       return;
     }

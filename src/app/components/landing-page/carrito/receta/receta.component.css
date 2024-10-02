@@ -1,5 +1,4 @@
-
-.contendor-item{
+.contendor-item {
   display: flex;
   flex-direction: column;
 }
@@ -41,7 +40,9 @@
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 
 .quantity button:hover {

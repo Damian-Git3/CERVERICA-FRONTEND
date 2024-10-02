@@ -12,7 +12,7 @@ export class RecetaService {
 
   constructor(
     private http: HttpClient,
-    private _CompartidoService: CompartidoService
+    private _CompartidoService: CompartidoService,
   ) {}
 
   obtener(): Observable<any> {

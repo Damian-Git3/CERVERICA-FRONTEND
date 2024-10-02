@@ -8,9 +8,8 @@ describe('NavbarLandingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NavbarLandingComponent]
-    })
-    .compileComponents();
+      declarations: [NavbarLandingComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarLandingComponent);
     component = fixture.componentInstance;

@@ -51,7 +51,7 @@ export class DetallesProductoComponent {
     const valor = event.value;
     if (valor === 'recientes') {
       this.comentarios.sort(
-        (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+        (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime(),
       );
     } else if (valor === 'principales') {
       this.comentarios.sort((a, b) => b.puntuacion - a.puntuacion);
@@ -114,7 +114,7 @@ export class DetallesProductoComponent {
 
     if (idUsuario) {
       this.usuarioComento = this.comentarios.some(
-        (comentario) => comentario.idUsuario === idUsuario
+        (comentario) => comentario.idUsuario === idUsuario,
       );
     }
   }

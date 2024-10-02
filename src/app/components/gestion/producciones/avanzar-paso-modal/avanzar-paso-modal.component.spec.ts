@@ -8,9 +8,8 @@ describe('AvanzarPasoModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AvanzarPasoModalComponent]
-    })
-    .compileComponents();
+      declarations: [AvanzarPasoModalComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AvanzarPasoModalComponent);
     component = fixture.componentInstance;

@@ -37,19 +37,19 @@ export class CarritoService {
   }
 
   asignarListaCantidadTotalCervezasCarrito(
-    nuevaLista: CantidadCervezasReceta[]
+    nuevaLista: CantidadCervezasReceta[],
   ) {
     this.cantidadTotalCervezasEnCarritoPorReceta = nuevaLista;
     this._CantidadTotalCervezasEnCarritoPorReceta.next(
-      this.cantidadTotalCervezasEnCarritoPorReceta
+      this.cantidadTotalCervezasEnCarritoPorReceta,
     );
   }
 
   actualizarCantidadTotalCervezasCarrito(
-    cantidadCervezasReceta: CantidadCervezasReceta
+    cantidadCervezasReceta: CantidadCervezasReceta,
   ) {
     const index = this.cantidadTotalCervezasEnCarritoPorReceta.findIndex(
-      (c) => c.idReceta === cantidadCervezasReceta.idReceta
+      (c) => c.idReceta === cantidadCervezasReceta.idReceta,
     );
 
     if (index !== -1) {
@@ -58,49 +58,49 @@ export class CarritoService {
     }
 
     this._CantidadTotalCervezasEnCarritoPorReceta.next(
-      this.cantidadTotalCervezasEnCarritoPorReceta
+      this.cantidadTotalCervezasEnCarritoPorReceta,
     );
   }
 
   obtenerCantidadCervezasCarrito(idReceta: number) {
     return this.cantidadTotalCervezasEnCarritoPorReceta.find(
-      (c) => c.idReceta === idReceta
+      (c) => c.idReceta === idReceta,
     );
   }
 
   agregarProductoCarrito(
     productoCarritoAgregar: AgregarProductoCarritoDTO,
-    token: string
+    token: string,
   ): Observable<ProductoCarrito> {
     const headers = { Authorization: `Bearer ${token}` };
     return this._HttpClient.post<ProductoCarrito>(
       `${this._baseURL}/agregar-producto-carrito`,
       productoCarritoAgregar,
-      { headers }
+      { headers },
     );
   }
 
   actualizarProductoCarrito(
     productoCarritoActualizar: ActualizarProductoCarritoDTO,
-    token: string
+    token: string,
   ): Observable<ProductoCarrito> {
     const headers = { Authorization: `Bearer ${token}` };
     return this._HttpClient.post<ProductoCarrito>(
       `${this._baseURL}/actualizar-producto-carrito`,
       productoCarritoActualizar,
-      { headers }
+      { headers },
     );
   }
 
   eliminarProductoCarrito(
     productoCarritoEliminar: EliminarProductoCarritoDTO,
-    token: string
+    token: string,
   ): Observable<{ message: string }> {
     const headers = { Authorization: `Bearer ${token}` };
     return this._HttpClient.post<{ message: string }>(
       `${this._baseURL}/eliminar-producto-carrito`,
       productoCarritoEliminar,
-      { headers }
+      { headers },
     );
   }
 
@@ -108,7 +108,7 @@ export class CarritoService {
     const headers = { Authorization: `Bearer ${token}` };
     return this._HttpClient.get<ProductoCarrito[]>(
       `${this._baseURL}/obtener-productos-carrito`,
-      { headers }
+      { headers },
     );
   }
 
@@ -119,7 +119,7 @@ export class CarritoService {
 
   eliminarListaProductosCarrito(productoCarrito: ProductoCarrito) {
     const index = this.productosCarrito.findIndex(
-      (p) => p.id === productoCarrito.id
+      (p) => p.id === productoCarrito.id,
     );
 
     if (index !== -1) {
@@ -131,7 +131,7 @@ export class CarritoService {
 
   actualizarListaProductosCarrito(productoCarrito: ProductoCarrito) {
     const index = this.productosCarrito.findIndex(
-      (p) => p.id === productoCarrito.id
+      (p) => p.id === productoCarrito.id,
     );
 
     if (index !== -1) {

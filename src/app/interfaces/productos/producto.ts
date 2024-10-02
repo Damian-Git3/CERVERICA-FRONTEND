@@ -5,7 +5,7 @@ export interface Producto {
   precioPaquete1: number;
   precioPaquete6: number;
   precioPaquete12: number;
-  precioPaquete24: number
+  precioPaquete24: number;
   puntuacion: number;
   imagen: string;
   rutaFondo: string;

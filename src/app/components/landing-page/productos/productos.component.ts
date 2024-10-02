@@ -39,12 +39,12 @@ export class ProductosComponent {
 
   constructor(
     private _productosService: ProductosService,
-    private _favoritosService: FavoritosService
+    private _favoritosService: FavoritosService,
   ) {}
 
   actualizarProductos(): void {
     const favoritosSet = new Set(
-      this.favoritosUsuario.map((favorito) => favorito.idReceta)
+      this.favoritosUsuario.map((favorito) => favorito.idReceta),
     );
 
     this.productosOriginales.forEach((producto) => {
@@ -59,7 +59,7 @@ export class ProductosComponent {
 
     if (this.mostrandoFavoritos) {
       this.productos = this.productos.filter((producto) =>
-        favoritosSet.has(producto.id)
+        favoritosSet.has(producto.id),
       );
     }
 
@@ -71,13 +71,13 @@ export class ProductosComponent {
 
         case 'precioAsc':
           this.productos = this.productos.sort(
-            (a, b) => a.precioPaquete1 - b.precioPaquete1
+            (a, b) => a.precioPaquete1 - b.precioPaquete1,
           );
           break;
 
         case 'precioDesc':
           this.productos = this.productos.sort(
-            (a, b) => b.precioPaquete1 - a.precioPaquete1
+            (a, b) => b.precioPaquete1 - a.precioPaquete1,
           );
           break;
 
@@ -99,7 +99,7 @@ export class ProductosComponent {
       this.productos = this.productos.filter((producto) =>
         producto.nombre
           .toLowerCase()
-          .includes(this.filtroBusqueda.toLowerCase())
+          .includes(this.filtroBusqueda.toLowerCase()),
       );
     }
   }
@@ -119,7 +119,7 @@ export class ProductosComponent {
 
   eliminarFavorito(idRecetaEliminar: number): void {
     this.favoritosUsuario = this.favoritosUsuario.filter(
-      (favorito) => favorito.idReceta !== idRecetaEliminar
+      (favorito) => favorito.idReceta !== idRecetaEliminar,
     );
     this.actualizarProductos();
   }

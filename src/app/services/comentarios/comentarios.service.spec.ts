@@ -6,11 +6,14 @@ import { ComentariosService } from './comentarios.service';
 describe('Service: Comentarios', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ComentariosService]
+      providers: [ComentariosService],
     });
   });
 
-  it('should ...', inject([ComentariosService], (service: ComentariosService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject(
+    [ComentariosService],
+    (service: ComentariosService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 });

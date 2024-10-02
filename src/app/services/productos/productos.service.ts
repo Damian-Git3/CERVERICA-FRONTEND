@@ -14,13 +14,13 @@ export class ProductosService {
 
   obtenerProductosCarousel(): Observable<Producto[]> {
     return this.http.get<Producto[]>(
-      `${this._baseURL}/obtener-recetas-carousel`
+      `${this._baseURL}/obtener-recetas-carousel`,
     );
   }
 
   obtenerProductos(): Observable<Producto[]> {
     return this.http.get<Producto[]>(
-      `${this._baseURL}/obtener-recetas-landing`
+      `${this._baseURL}/obtener-recetas-landing`,
     );
   }
 

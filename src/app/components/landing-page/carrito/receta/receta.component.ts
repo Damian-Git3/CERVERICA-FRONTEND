@@ -33,7 +33,7 @@ export class RecetaComponent {
 
   ngOnInit(): void {
     this._CarritoService.ProductosCarrito.subscribe(
-      (productosCarrito) => (this.productosCarrito = productosCarrito)
+      (productosCarrito) => (this.productosCarrito = productosCarrito),
     );
 
     this._CarritoService.CantidadTotalCervezasEnCarritoPorReceta.subscribe(
@@ -43,9 +43,9 @@ export class RecetaComponent {
 
         this.cantidadCervezasReceta =
           this._CarritoService.obtenerCantidadCervezasCarrito(
-            this.productoCarrito.idReceta
+            this.productoCarrito.idReceta,
           );
-      }
+      },
     );
   }
 
@@ -60,7 +60,7 @@ export class RecetaComponent {
     this._CarritoService
       .eliminarProductoCarrito(
         productoCarritoEliminar,
-        this._CompartidoService.obtenerSesion().token
+        this._CompartidoService.obtenerSesion().token,
       )
       .pipe(finalize(() => (this.eliminandoReceta = false)))
       .subscribe({
@@ -71,7 +71,7 @@ export class RecetaComponent {
             detail: 'Haz eliminado correctamente el producto de tu carrito',
           });
           this._CarritoService.eliminarListaProductosCarrito(
-            this.productoCarrito
+            this.productoCarrito,
           );
         },
         error: (error) => {
@@ -90,7 +90,7 @@ export class RecetaComponent {
         this.productoCarrito.cantidadLote;
       this.productoCarrito.cantidad--;
       this._CarritoService.actualizarCantidadTotalCervezasCarrito(
-        this.cantidadCervezasReceta
+        this.cantidadCervezasReceta,
       );
       this.actualizarProductoCarritoConRetraso();
     }
@@ -102,7 +102,7 @@ export class RecetaComponent {
         this.productoCarrito.cantidadLote;
       this.productoCarrito.cantidad++;
       this._CarritoService.actualizarCantidadTotalCervezasCarrito(
-        this.cantidadCervezasReceta
+        this.cantidadCervezasReceta,
       );
       this.actualizarProductoCarritoConRetraso();
     }
@@ -145,7 +145,7 @@ export class RecetaComponent {
     this._CarritoService
       .actualizarProductoCarrito(
         productoCarritoActualizar,
-        this._CompartidoService.obtenerSesion().token
+        this._CompartidoService.obtenerSesion().token,
       )
       .subscribe({
         next: (productoCarrito: ProductoCarrito) => {

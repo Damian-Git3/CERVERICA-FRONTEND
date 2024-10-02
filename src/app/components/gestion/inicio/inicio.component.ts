@@ -42,7 +42,7 @@ export class InicioComponent {
 
   inicializarGraficaNuevosClientesPorMes() {
     const labels = this.nuevosClientesPorMes.map(
-      (item) => `${item.mes}/${item.año}`
+      (item) => `${item.mes}/${item.año}`,
     );
     const data = this.nuevosClientesPorMes.map((item) => item.nuevosClientes);
 
@@ -184,7 +184,7 @@ export class InicioComponent {
 
   inicializarGraficaPedidosPorMetodoPago() {
     const labels = this.pedidosPorMetodoPago.map(
-      (item) => `${item.metodoPago}`
+      (item) => `${item.metodoPago}`,
     );
     const data = this.pedidosPorMetodoPago.map((item) => item.cantidad);
 

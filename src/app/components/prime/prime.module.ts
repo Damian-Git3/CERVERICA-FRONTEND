@@ -85,7 +85,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ChartModule,
     RatingModule,
     CardModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ],
 })
 export class PrimeModule {}

@@ -79,14 +79,14 @@ export class ModalComponent {
           next: () => {
             this._AlertasService.showSuccess(
               'Empezaste a empaquetar este pedido',
-              'Estatus cambiado con éxito!'
+              'Estatus cambiado con éxito!',
             );
 
             this.empaquetandoPedidos = true;
           },
           error: (error: any) => {
             this._AlertasService.showError(
-              'Error al cambiar el estatus, intenta nuevamente'
+              'Error al cambiar el estatus, intenta nuevamente',
             );
             console.error(error);
           },
@@ -105,14 +105,14 @@ export class ModalComponent {
           next: () => {
             this._AlertasService.showSuccess(
               'Finalizaste con éxito la venta!',
-              'Venta finalizada'
+              'Venta finalizada',
             );
 
             this.ocultar();
           },
           error: (error: any) => {
             this._AlertasService.showError(
-              'Error al cambiar el estatus, intenta nuevamente'
+              'Error al cambiar el estatus, intenta nuevamente',
             );
             console.error(error);
           },

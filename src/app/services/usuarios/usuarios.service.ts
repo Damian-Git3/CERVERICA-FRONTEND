@@ -21,17 +21,17 @@ export class UsuariosService {
   agregarUsuario(nuevoUsuario: CrearUsuarioDTO): Observable<UsuarioDTO> {
     return this._Http.post<UsuarioDTO>(
       `${this._baseURL}/agregar`,
-      nuevoUsuario
+      nuevoUsuario,
     );
   }
 
   editarUsuario(
     id: string,
-    usuarioEditado: EditarUsuarioDTO
+    usuarioEditado: EditarUsuarioDTO,
   ): Observable<void> {
     return this._Http.put<void>(
       `${this._baseURL}/editar/${id}`,
-      usuarioEditado
+      usuarioEditado,
     );
   }
 

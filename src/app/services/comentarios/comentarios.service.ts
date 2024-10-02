@@ -16,7 +16,7 @@ export class ComentariosService {
   // Método para obtener todos los comentarios de un producto
   obtenerComentarios(idProducto: number): Observable<ComentarioDTO[]> {
     return this._Http.get<ComentarioDTO[]>(
-      `${this._baseURL}/obtener-comentarios/${idProducto}`
+      `${this._baseURL}/obtener-comentarios/${idProducto}`,
     );
   }
 
@@ -24,7 +24,7 @@ export class ComentariosService {
   agregarComentario(nuevoComentario: NuevoComentarioDTO): Observable<any> {
     return this._Http.post(
       `${this._baseURL}/agregar-comentario`,
-      nuevoComentario
+      nuevoComentario,
     );
   }
 }

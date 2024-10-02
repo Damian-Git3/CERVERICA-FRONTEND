@@ -13,7 +13,7 @@ export class ProveedoresService {
 
   constructor(
     private http: HttpClient,
-    private _CompartidoService: CompartidoService
+    private _CompartidoService: CompartidoService,
   ) {}
 
   obtener() {
