@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { PrimeModule } from './components/prime/prime.module';
 import { RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { Messaging } from '@angular/fire/messaging';
+import { FcmService } from './services/firebase/fcm.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +16,21 @@ import localeEs from '@angular/common/locales/es';
   imports: [RouterOutlet, PrimeModule, FontAwesomeModule],
 })
 export class AppComponent {
-  title = 'CervericaLanding';
+  title = 'cerverica-landing';
+  private messaging = inject(Messaging);
 
-  constructor(private primengConfig: PrimeNGConfig) {}
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private fcmService: FcmService
+  ) {}
 
   ngOnInit() {
     registerLocaleData(localeEs, 'es');
     this.primengConfig.ripple = true;
+    this.fcmService.requestPermission();
+    this.fcmService.messages.subscribe((message) => {
+      console.log('New message received:', message);
+      // Aquí puedes manejar la notificación en la UI
+    });
   }
 }

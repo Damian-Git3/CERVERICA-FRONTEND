@@ -16,7 +16,6 @@ import { CrearVentaDTO } from '../../../interfaces/ventas/crear-venta-dto';
 import { DetalleVentaDTO } from '../../../interfaces/ventas/detalle-venta-dto';
 import { VentaDTO } from '../../../interfaces/ventas/venta-dto';
 import { inicializarFuncionesTarjeta } from './funciones-tarjeta';
-import { EliminarProductoCarritoDTO } from '../../../interfaces/carrito/eliminar-producto-carrito-dto';
 import { ProductosService } from '../../../services/productos/productos.service';
 import { Producto } from '../../../interfaces/productos/producto';
 import { AlertasService } from '../../../services/shared/alertas/alertas.service';
@@ -160,31 +159,32 @@ export class CarritoComponent {
         );
         this._CarritoService.vaciarProductosCarrito();
 
-        this.creandoVenta = false;
+            this.creandoVenta = false;
 
-        this._Router.navigateByUrl('cerverica/pedidos');
-      },
-      error: (error) => {
-        if (error.status == 409) {
-          this._CompartidoService.solicitarActualizarProductos();
+            this._Router.navigateByUrl('cerverica/pedidos');
+          },
+          error: (error) => {
+            if (error.status == 409) {
+              this._CompartidoService.solicitarActualizarProductos();
 
-          const listaProductos =
-            error.error.productosCarritoEliminados.join(', ');
+              const listaProductos =
+                error.error.productosCarritoEliminados.join(', ');
 
-          const mensajeDetalle = `Lamentamos el inconveniente, pero nos quedamos sin stock en las siguientes cervezas: ${listaProductos}`;
+              const mensajeDetalle = `Lamentamos el inconveniente, pero nos quedamos sin stock en las siguientes cervezas: ${listaProductos}`;
 
-          this._MessageService.add({
-            severity: 'info',
-            summary: 'Cervezas sin stock',
-            detail: mensajeDetalle,
-          });
-        } else {
-          console.log(error);
-        }
+              this._MessageService.add({
+                severity: 'info',
+                summary: 'Cervezas sin stock',
+                detail: mensajeDetalle,
+              });
+            } else {
+              console.log(error);
+            }
 
-        this.creandoVenta = false;
-      },
-    });
+            this.creandoVenta = false;
+          },
+        });
+    }
   }
 
   ngOnInit(): void {

@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RolesService } from '../../../../services/roles/roles.service';
 import { MenuItem } from 'primeng/api';
-import { Toast } from 'primeng/toast';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 

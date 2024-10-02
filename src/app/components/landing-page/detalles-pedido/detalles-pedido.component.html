@@ -11,11 +11,18 @@
         src="{{ productoPedido.stock?.receta?.imagen }}"
         alt="Imagen del producto {{ productoPedido.stock?.receta?.nombre }}"
       />
+      <img
+        src="{{ productoPedido.stock?.receta?.imagen }}"
+        alt="Imagen del producto {{ productoPedido.stock?.receta?.nombre }}"
+      />
       <div class="item-details">
         <span>{{ productoPedido.stock?.receta?.nombre }}</span>
         <span>{{ productoPedido.stock?.receta?.especificaciones }}</span>
         <span>Paquete de {{ productoPedido.pack }}</span>
       </div>
+      <span class="price"
+        >{{ productoPedido.costoUnitario | currency: "MXN" }} c/u</span
+      >
       <span class="price"
         >{{ productoPedido.costoUnitario | currency: "MXN" }} c/u</span
       >

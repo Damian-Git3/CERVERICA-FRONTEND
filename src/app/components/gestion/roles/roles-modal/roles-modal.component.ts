@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   OnInit,
   Output,
@@ -8,7 +7,6 @@ import {
 } from '@angular/core';
 import { RolesService } from '../../../../services/roles/roles.service';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 

@@ -11,13 +11,10 @@ import { LotesInsumoService } from '../../../../services/lotes-insumo/lotes-insu
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import {
-  AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UsuarioDTO } from '../../../../interfaces/usuarios/usuario-dto';
 import { CrearLoteInsumoDTO } from '../../../../interfaces/lotes-insumo/crear-lote-insumo-dto';
 import { finalize } from 'rxjs';
 import { EditarLoteInsumoDTO } from '../../../../interfaces/lotes-insumo/editar-lote-insumo-dto';
@@ -59,23 +56,23 @@ export class ModalComponent {
   }
 
   crearForm: FormGroup = this._FormBuilder.group({
-    proveedor: [, Validators.required],
-    insumo: [, Validators.required],
-    fechaCaducidad: [, Validators.required],
-    cantidad: [, Validators.required],
-    montoCompra: [, Validators.required],
+    proveedor: [null, Validators.required],
+    insumo: [null, Validators.required],
+    fechaCaducidad: [null, Validators.required],
+    cantidad: [null, Validators.required],
+    montoCompra: [null, Validators.required],
   });
 
   editarForm: FormGroup = this._FormBuilder.group({
-    proveedor: [, Validators.required],
-    insumo: [, Validators.required],
-    fechaCaducidad: [, Validators.required],
-    cantidad: [, Validators.required],
-    montoCompra: [, Validators.required],
+    proveedor: [null, Validators.required],
+    insumo: [null, Validators.required],
+    fechaCaducidad: [null, Validators.required],
+    cantidad: [null, Validators.required],
+    montoCompra: [null, Validators.required],
   });
 
   mermaForm: FormGroup = this._FormBuilder.group({
-    cantidad: [, Validators.required],
+    cantidad: [null, Validators.required],
   });
 
   show(loteInsumo?: LoteInsumoDTO, mostrarModalMerma?: boolean) {

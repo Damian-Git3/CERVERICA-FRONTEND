@@ -7,10 +7,8 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
 import { UsuarioDTO } from '../../../../interfaces/usuarios/usuario-dto';

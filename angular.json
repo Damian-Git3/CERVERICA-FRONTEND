@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "CervericaLanding": {
+    "cerverica-landing": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -32,7 +32,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "src/styles.css",
@@ -74,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "CervericaLanding:build:production"
+              "buildTarget": "cerverica-landing:build:production"
             },
             "development": {
-              "buildTarget": "CervericaLanding:build:development"
+              "buildTarget": "cerverica-landing:build:development"
             }
           },
           "defaultConfiguration": "development"

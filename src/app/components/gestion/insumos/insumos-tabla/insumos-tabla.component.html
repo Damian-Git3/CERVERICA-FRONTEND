@@ -32,13 +32,15 @@
 >
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
-      <th pSortableColumn="unidadMedida">
-        UNIDAD <p-sortIcon field="unidadMedida" />
+      <th pSortableColumn="nombre">
+        NOMBRE
+        <p-sortIcon field="nombre" />
       </th>
+
       <th pSortableColumn="inventario">
         INVENTARIO <p-sortIcon field="inventario" />
       </th>
+
       <th pSortableColumn="cantidadMaxima">
         MAXIMO <p-sortIcon field="cantidadMaxima" />
       </th>
@@ -56,8 +58,8 @@
   <ng-template pTemplate="body" let-producto>
     <tr (dblclick)="producto.activo ? modal.show(producto.id) : null">
       <td>{{ producto.nombre }}</td>
-      <td>{{ producto.cantidadTotalLotes }}</td>
-      <td>{{ producto.unidadMedida }}</td>
+      <td>{{ producto.cantidadTotalLotes }} {{ producto.unidadMedida }}</td>
+
       <td>{{ producto.cantidadMaxima }} {{ producto.unidadMedida }}</td>
       <td>{{ producto.cantidadMinima }} {{ producto.unidadMedida }}</td>
       <td>{{ producto.costoUnitario | currency: "MXN" }}</td>

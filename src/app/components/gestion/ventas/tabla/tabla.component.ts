@@ -1,5 +1,4 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { VentaDTO } from '../../../../interfaces/ventas/venta-dto';
 import { Venta } from '../../../../interfaces/ventas/venta';
 import { VentasService } from '../../../../services/ventas/ventas.service';
 import { finalize } from 'rxjs';
