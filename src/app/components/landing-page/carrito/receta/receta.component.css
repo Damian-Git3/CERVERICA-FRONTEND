@@ -1,3 +1,7 @@
+.contendor-item {
+  display: flex;
+  flex-direction: column;
+}
 .item {
   display: flex;
   justify-content: space-between;

@@ -12,6 +12,7 @@ import { carritoGuard } from '../../guards/carrito/carrito.guard';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
+import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,12 @@ const routes: Routes = [
         path: 'productos',
         pathMatch: 'full',
         component: ProductosComponent,
+        canActivate: [carritoGuard],
+      },
+      {
+        path: 'producto/:id',
+        pathMatch: 'full',
+        component: DetallesProductoComponent,
         canActivate: [carritoGuard],
       },
       {

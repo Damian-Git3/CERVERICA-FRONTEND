@@ -147,6 +147,10 @@ main {
   margin-right: 1rem;
 }
 
+.p-button {
+  text-align: center;
+}
+
 .p-badge {
   font-size: 0.5rem;
   max-width: 1rem;
@@ -249,4 +253,8 @@ th {
 
 .global-hover-effect:hover {
   transform: scale(1.1); /* Aumenta el tamaño al 110% */
+}
+
+.p-rating-icon-active {
+  color: var(--color-principal);
 }

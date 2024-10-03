@@ -17,12 +17,11 @@ export class VentasService {
 
   constructor() {}
 
-  crearVenta(nuevaVenta: CrearVentaDTO, token: string): Observable<VentaDTO> {
-    const headers = { Authorization: `Bearer ${token}` };
+  crearVenta(nuevaVenta: CrearVentaDTO): Observable<VentaDTO> {
     return this._HttpClient.post<VentaDTO>(
       `${this._baseURL}/CrearVenta`,
       nuevaVenta,
-      { headers },
+      {},
     );
   }
 

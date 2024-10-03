@@ -1,12 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { ProductoCarrito } from '../../interfaces/carrito/producto-carrito';
 import { AgregarProductoCarritoDTO } from '../../interfaces/carrito/agregar-producto-carrito-dto';
 import { ActualizarProductoCarritoDTO } from '../../interfaces/carrito/actualizar-producto-carrito-dto';
 import { EliminarProductoCarritoDTO } from '../../interfaces/carrito/eliminar-producto-carrito-dto';
 import { CantidadCervezasReceta } from '../../interfaces/carrito/cantidad-cervezas-receta';
+import { loadStripe } from '@stripe/stripe-js';
+import { CrearVentaDTO } from '../../interfaces/ventas/crear-venta-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -147,5 +149,30 @@ export class CarritoService {
   vaciarProductosCarrito() {
     this.productosCarrito = [];
     this._ProductosCarrito.next(this.productosCarrito);
+  }
+
+  async checkout(crearVentaDTO: CrearVentaDTO) {
+    try {
+      const response: any = await this._HttpClient
+        .post(`${this._baseURL}/checkout`, crearVentaDTO)
+        .toPromise();
+
+      const clientSecret = response.clientSecret;
+
+      const stripe = await loadStripe(environment.PUBLIC_STRIPE_API_KEY);
+
+      if (!stripe) {
+        throw new Error('Stripe.js no se cargó correctamente.');
+      }
+
+      const checkout = await stripe.initEmbeddedCheckout({
+        fetchClientSecret: async () => clientSecret,
+      });
+
+      return checkout;
+    } catch (error) {
+      console.error('Error durante el proceso de pago', error);
+      throw error;
+    }
   }
 }

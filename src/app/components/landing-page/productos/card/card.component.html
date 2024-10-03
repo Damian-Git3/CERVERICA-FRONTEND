@@ -12,7 +12,7 @@
       ></i>
     </div>
 
-    <div class="card-imagen">
+    <a class="card-imagen" [routerLink]="['/cerverica/producto', producto.id]">
       <img
         src="{{ producto.rutaFondo }}"
         alt="Fondo cerveza"
@@ -25,7 +25,7 @@
           class="botella-cerveza"
         />
       </div>
-    </div>
+    </a>
 
     <div class="card-info">
       <div class="product-nombre">

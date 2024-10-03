@@ -3,6 +3,8 @@ import { PrimeNGConfig } from 'primeng/api';
 import { PrimeModule } from './components/prime/prime.module';
 import { RouterOutlet } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 import { Messaging } from '@angular/fire/messaging';
 import { FcmService } from './services/firebase/fcm.service';
 
@@ -17,9 +19,13 @@ export class AppComponent {
   title = 'cerverica-landing';
   private messaging = inject(Messaging);
 
-  constructor(private primengConfig: PrimeNGConfig, private fcmService: FcmService) {}
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private fcmService: FcmService
+  ) {}
 
   ngOnInit() {
+    registerLocaleData(localeEs, 'es');
     this.primengConfig.ripple = true;
     this.fcmService.requestPermission();
     this.fcmService.messages.subscribe((message) => {

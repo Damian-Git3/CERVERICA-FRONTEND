@@ -1,26 +1,33 @@
-<div class="item">
-  <img src="{{ productoCarrito.receta.imagen }}" alt="Shirt Image" />
-  <div class="item-details">
-    <span>{{ productoCarrito.receta.nombre }}</span>
-    <span>{{ productoCarrito.receta.especificaciones }}</span>
-    <span>Paquete de {{ productoCarrito.cantidadLote }}</span>
+<div class="contenedor-item">
+  <p-progressBar mode="indeterminate" *ngIf="eliminandoReceta" />
+  <div class="item">
+    <img src="{{ productoCarrito.receta.imagen }}" alt="Shirt" />
+    <div class="item-details">
+      <span>{{ productoCarrito.receta.nombre }}</span>
+      <span>{{ productoCarrito.receta.especificaciones }}</span>
+      <span>Paquete de {{ productoCarrito.cantidadLote }}</span>
+    </div>
+    <span class="price"
+      >{{ productoCarrito.precioPaquete | currency: "MXN" }} c/u</span
+    >
+    <div class="quantity">
+      <button
+        (click)="disminuirCantidad()"
+        [disabled]="!esCantidadDisminuible()"
+      >
+        -
+      </button>
+      <input type="text" value="{{ productoCarrito.cantidad }}" />
+      <button (click)="aumentarCantidad()" [disabled]="!esCantidadAumentable()">
+        +
+      </button>
+    </div>
+    <span class="price">
+      {{
+        productoCarrito.cantidadLote * productoCarrito.cantidad
+          | currency: "MXN"
+      }}
+    </span>
+    <button class="remove" (click)="eliminarProductoCarrito()">×</button>
   </div>
-  <span class="price"
-    >{{ productoCarrito.precioPaquete | currency: "MXN" }} c/u</span
-  >
-  <div class="quantity">
-    <button (click)="disminuirCantidad()" [disabled]="!esCantidadDisminuible()">
-      -
-    </button>
-    <input type="text" value="{{ productoCarrito.cantidad }}" />
-    <button (click)="aumentarCantidad()" [disabled]="!esCantidadAumentable()">
-      +
-    </button>
-  </div>
-  <span class="price">
-    {{
-      productoCarrito.cantidadLote * productoCarrito.cantidad | currency: "MXN"
-    }}
-  </span>
-  <button class="remove" (click)="eliminarProductoCarrito()">×</button>
 </div>
