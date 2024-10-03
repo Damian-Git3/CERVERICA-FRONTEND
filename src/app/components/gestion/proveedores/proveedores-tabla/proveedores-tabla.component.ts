@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProveedoresService } from '../../../../services/proveedores/proveedores.service';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { finalize } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-proveedores-tabla',
@@ -15,7 +17,11 @@ export class ProveedoresTablaComponent implements OnInit {
   constructor(
     private proveedoresService: ProveedoresService,
     private alertasService: AlertasService,
+    private title: Title,
+    private compartidoService: CompartidoService
   ) {
+    this.title.setTitle('Proveedores');
+    this.compartidoService.actualizarTitulo('Proveedores');
     this.items = [
       {
         label: 'Update',
@@ -68,7 +74,7 @@ export class ProveedoresTablaComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess(
-            'Proveedor desactivado correctamente',
+            'Proveedor desactivado correctamente'
           );
           this.obtenerProveedores();
         },

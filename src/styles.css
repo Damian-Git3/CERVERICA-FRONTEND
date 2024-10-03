@@ -3,6 +3,8 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import 'animate.css';
+
 
 @font-face {
   font-family: "Futura";
@@ -243,6 +245,14 @@ th {
 .img-td {
   width: 25px;
   height: 100px;
+}
+
+.global-hover-effect {
+  transition: transform 0.3s ease-in-out; /* Transición suave */
+}
+
+.global-hover-effect:hover {
+  transform: scale(1.1); /* Aumenta el tamaño al 110% */
 }
 
 .p-rating-icon-active {
