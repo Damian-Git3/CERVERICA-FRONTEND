@@ -15,7 +15,6 @@ import { ProductoCarrito } from '../../../interfaces/carrito/producto-carrito';
 import { CrearVentaDTO } from '../../../interfaces/ventas/crear-venta-dto';
 import { DetalleVentaDTO } from '../../../interfaces/ventas/detalle-venta-dto';
 import { VentaDTO } from '../../../interfaces/ventas/venta-dto';
-import { inicializarFuncionesTarjeta } from './funciones-tarjeta';
 import { ProductosService } from '../../../services/productos/productos.service';
 import { Producto } from '../../../interfaces/productos/producto';
 import { AlertasService } from '../../../services/shared/alertas/alertas.service';

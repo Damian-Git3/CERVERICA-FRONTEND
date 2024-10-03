@@ -41,7 +41,7 @@
 }
 
 .card-producto {
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 .card-carousel {
@@ -118,9 +118,6 @@
     margin-top: 5rem;
     text-align: right;
     width: 100%;
-}
-
-.leyenda-inicio {
     color: var(--gris-50-opacidad);
 }
 

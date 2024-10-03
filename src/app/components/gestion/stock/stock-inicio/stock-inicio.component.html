@@ -4,11 +4,11 @@
     <div class="p-toolbar-group-start">
         <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerProductos()" />
 
-        <!-- <p-button icon="pi pi-upload" [disabled]="true"/> -->
+        
     </div>
     <div class="p-toolbar-group-center"></div>
     <div class="p-toolbar-group-end">
-        <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" [disabled]="true" /> -->
+
         <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input pInputText placeholder="Buscar" [(ngModel)]="searchTerm" (input)="applyFilters()">
@@ -23,7 +23,7 @@
             <div class="contenedor-imagen">
                 <img src="{{ producto.rutaFondo }}" alt="Fondo cerveza" class="fondo-cerveza" />
                 <div class="contenedor-botella">
-                    <img src="{{ producto.imagen }}" alt="Imagen cerveza" class="botella-cerveza" />
+                    <img src="{{ producto.imagen }}" alt="Cerveza" class="botella-cerveza" />
                 </div>
             </div>
             <div class="product-nombre">

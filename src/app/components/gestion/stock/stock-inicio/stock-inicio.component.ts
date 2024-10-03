@@ -1,7 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { IInsumo } from '../../../../interfaces/insumo.interface';
-import { InsumosService } from '../../../../services/insumos/insumos.service';
-import { finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { ProductosService } from '../../../../services/productos/productos.service';

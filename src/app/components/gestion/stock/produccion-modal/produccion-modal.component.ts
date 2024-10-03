@@ -3,8 +3,6 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  ValidatorFn,
-  AbstractControl,
 } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
