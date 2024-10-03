@@ -112,15 +112,20 @@
           <span class="font-medium">Ventas</span>
         </a>
       </li>
+
+      <li>
+        <a pRipple routerLinkActive="active" [routerLink]="['stock']"
+          class="flex align-items-center justify-content-center cursor-pointer p-3 border-round hover:surface-100 transition-duration-150 transition-colors p-ripple nav-link">
+          <i class="pi pi-warehouse mr-2"></i>
+          <span class="font-medium">Stock</span>
+        </a>
+      </li>
     </ul>
   </div>
 
   <div class="mt-8">
     <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-    <a
-      pRipple
-      class="m-3 flex align-items-center flex-column gap-2 border-round p-ripple"
-    >
+    <a pRipple class="m-3 flex align-items-center flex-column gap-2 border-round p-ripple">
       <p-avatar label="{{ inicialesNombre }}" class="avatar-sidebar" />
       <span class="font-bold">{{ nombre }}</span>
     </a>

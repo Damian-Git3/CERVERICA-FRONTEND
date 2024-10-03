@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InsumosTablaComponent } from './insumos-tabla/insumos-tabla.component';
-import { InsumosModalComponent } from './insumos-modal/insumos-modal.component';
+import { StockInicioComponent } from './stock-inicio/stock-inicio.component';
+import { ProduccionModalComponent } from './produccion-modal/produccion-modal.component';
 import { DialogModule } from 'primeng/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,13 +13,18 @@ import { TagModule } from 'primeng/tag';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { PrimeModule } from '../../prime/prime.module';
-import { InsumosRoutes } from './insumos.routing';
+import { StockRoutes } from './stock.routing';
+
+
 
 @NgModule({
-  declarations: [InsumosTablaComponent, InsumosModalComponent],
+  declarations: [
+    StockInicioComponent,
+    ProduccionModalComponent
+  ],
   imports: [
     CommonModule,
-    InsumosRoutes,
+    StockRoutes,
     DialogModule,
     ReactiveFormsModule,
     InputTextModule,
@@ -30,7 +35,7 @@ import { InsumosRoutes } from './insumos.routing';
     TagModule,
     InputTextareaModule,
     DropdownModule,
-    PrimeModule,
-  ],
+    PrimeModule
+  ]
 })
-export class InsumosModule {}
+export class StockModule { }
