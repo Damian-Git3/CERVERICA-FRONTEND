@@ -38,6 +38,12 @@ import { PickListModule } from 'primeng/picklist';
 
 import { ChartModule } from 'primeng/chart';
 
+import { RatingModule } from 'primeng/rating';
+
+import { CardModule } from 'primeng/card';
+
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 @NgModule({
   declarations: [],
   imports: [CommonModule, NgOptimizedImage],
@@ -77,6 +83,9 @@ import { ChartModule } from 'primeng/chart';
     DragDropModule,
     PickListModule,
     ChartModule,
+    RatingModule,
+    CardModule,
+    ProgressSpinnerModule,
   ],
 })
 export class PrimeModule {}

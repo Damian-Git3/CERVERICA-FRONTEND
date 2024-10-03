@@ -7,39 +7,56 @@
     <p>{{ cantidadTotalProductos }} productos</p>
 
     <div class="item" *ngFor="let productoPedido of venta?.productosPedido">
-      <img src="{{ productoPedido.stock?.receta?.imagen }}"
-        alt="Imagen del producto {{ productoPedido.stock?.receta?.nombre }}" />
+      <img
+        src="{{ productoPedido.stock?.receta?.imagen }}"
+        alt="producto {{ productoPedido.stock?.receta?.nombre }}"
+      />
+      <img
+        src="{{ productoPedido.stock?.receta?.imagen }}"
+        alt="producto {{ productoPedido.stock?.receta?.nombre }}"
+      />
       <div class="item-details">
         <span>{{ productoPedido.stock?.receta?.nombre }}</span>
         <span>{{ productoPedido.stock?.receta?.especificaciones }}</span>
         <span>Paquete de {{ productoPedido.pack }}</span>
       </div>
-      <span class="price">{{ productoPedido.costoUnitario | currency: 'MXN' }}
-        c/u</span>
+      <span class="price"
+        >{{ productoPedido.costoUnitario | currency: "MXN" }} c/u</span
+      >
+      <span class="price"
+        >{{ productoPedido.costoUnitario | currency: "MXN" }} c/u</span
+      >
       <div class="quantity">
-        <input type="text" class="disabled" value="{{ productoPedido.cantidad }}" disabled />
+        <input
+          type="text"
+          class="disabled"
+          value="{{ productoPedido.cantidad }}"
+          disabled
+        />
       </div>
       <span class="price">
-        {{ productoPedido.montoVenta | currency : "MXN" }}
+        {{ productoPedido.montoVenta | currency: "MXN" }}
       </span>
     </div>
 
-    <a [routerLink]="['/cerverica/pedidos']" class="back-to-shop">← Regresar pedidos</a>
+    <a [routerLink]="['/cerverica/pedidos']" class="back-to-shop"
+      >← Regresar pedidos</a
+    >
   </div>
 
   <div class="summary">
     <h2>Resumen 💲</h2>
     <div class="summary-item">
       <span class="titulo-summary">Subtotal cervezas</span>
-      <span>{{ totalPrecioCervezas | currency : "MXN" }}</span>
+      <span>{{ totalPrecioCervezas | currency: "MXN" }}</span>
     </div>
     <div class="summary-item">
       <span class="titulo-summary">Envio</span>
 
       <span [ngSwitch]="venta?.metodoEnvio">
-        <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>
-        <ng-container *ngSwitchCase="2">Tarjeta {{ obtenerUltimosCuatroDigitosTarjeta() }}💳</ng-container>
-        <ng-container *ngSwitchDefault>Método pago no reconocido</ng-container>
+        <ng-container *ngSwitchCase="1">Reco. Tienda 🏭</ng-container>
+        <ng-container *ngSwitchCase="2">Envio domicilio 🚚</ng-container>
+        <ng-container *ngSwitchDefault>Método envio no reconocido</ng-container>
       </span>
     </div>
 
@@ -47,8 +64,11 @@
       <span class="titulo-summary">Método pago</span>
 
       <span [ngSwitch]="venta?.metodoPago">
-        <ng-container *ngSwitchCase="1">Reco. Tienda 🏭</ng-container>
-        <ng-container *ngSwitchCase="2">Envio domicilio 🚚</ng-container>
+        <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>
+        <ng-container *ngSwitchCase="2"
+          >Tarjeta {{ obtenerUltimosCuatroDigitosTarjeta() }}💳</ng-container
+        >
+        <ng-container *ngSwitchCase="3">Stripe 💳</ng-container>
         <ng-container *ngSwitchDefault>Método envio no reconocido</ng-container>
       </span>
     </div>
@@ -60,7 +80,9 @@
         <ng-container *ngSwitchCase="1">Recibido ✅</ng-container>
         <ng-container *ngSwitchCase="2">Empaquetando 📦</ng-container>
         <ng-container *ngSwitchCase="3">Listo 🚚</ng-container>
-        <ng-container *ngSwitchDefault>Estatus venta no reconocido</ng-container>
+        <ng-container *ngSwitchDefault
+          >Estatus venta no reconocido</ng-container
+        >
       </span>
     </div>
 
@@ -68,7 +90,7 @@
 
     <div class="summary-item total">
       <span>PRECIO TOTAL</span>
-      <span>{{ totalPrecioCervezas | currency : "MXN" }}</span>
+      <span>{{ totalPrecioCervezas | currency: "MXN" }}</span>
     </div>
   </div>
 </div>

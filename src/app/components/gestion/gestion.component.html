@@ -1,21 +1,29 @@
 <app-menu #menu></app-menu>
 
-<div class="flex flex-column w-full" style=" height: 90vh">
+<div class="flex flex-column w-full" style="height: 90vh">
   <div class="flex-row">
     <div class="grid m-0 p-0">
       <div class="col-1 justify-content-center align-content-center">
         <div class="flex justify-content-center align-content-center">
-          <p-button [outlined]="true" [raised]="true" severity="secondary" icon="pi pi-bars" label="Menu"
-            [class]="'menu.btn'" (click)="menu.display = !menu.display"></p-button>
+          <p-button
+            [outlined]="true"
+            [raised]="true"
+            severity="secondary"
+            icon="pi pi-bars"
+            label="Menu"
+            [class]="'menu.btn'"
+            (click)="menu.display = !menu.display"
+            styleClass="global-hover-effect"
+          ></p-button>
         </div>
       </div>
       <div class="col-11 flex align-items-center justify-content-center">
-        <h1>{{titulo}}</h1>
+        <h1>{{ titulo }}</h1>
       </div>
     </div>
   </div>
   <div class="flex-1 p-2">
-    <p-card styleClass="h-full">
+    <p-card styleClass="h-full ">
       <router-outlet></router-outlet>
     </p-card>
   </div>

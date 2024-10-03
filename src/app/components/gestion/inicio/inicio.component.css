@@ -35,3 +35,12 @@
 h3 {
   text-align: center;
 }
+
+:host ::ng-deep .transparent-png-shadow {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5)); /* Sombra más notoria */
+  transition: transform 0.3s ease-in-out; /* Transición suave */
+}
+
+.transparent-png-shadow:hover {
+  transform: scale(1.1); /* Aumenta el tamaño al 110% */
+}

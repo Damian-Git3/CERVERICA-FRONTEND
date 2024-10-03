@@ -19,7 +19,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { RecetasModalPasosComponent } from './recetas-modal-pasos/recetas-modal-pasos.component';
 
 @NgModule({
-  declarations: [RecetasTablaComponent, RecetasModalComponent, RecetasModalPasosComponent],
+  declarations: [
+    RecetasTablaComponent,
+    RecetasModalComponent,
+    RecetasModalPasosComponent,
+  ],
   imports: [
     CommonModule,
     RecetasRoutes,
@@ -39,8 +43,6 @@ import { RecetasModalPasosComponent } from './recetas-modal-pasos/recetas-modal-
     MultiSelectModule,
     ToolbarModule,
   ],
-  providers: [
-    DatePipe
-  ],
+  providers: [DatePipe],
 })
 export class RecetasModule {}

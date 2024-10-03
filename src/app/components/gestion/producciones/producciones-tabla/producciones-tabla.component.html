@@ -1,11 +1,13 @@
 <p-toolbar>
   <div class="p-toolbar-group-start">
     <p-button
+      styleClass="global-hover-effect"
       icon="fa-solid fa-rotate-right"
       class="mr-2"
       (click)="obtenerProducciones()"
     />
     <p-button
+      styleClass="global-hover-effect"
       *ngIf="usuario.rol == 'Admin'"
       icon="pi pi-plus"
       class="mr-2"
@@ -31,8 +33,7 @@
     subheader="Solicitud {{ produccion.fechaSolicitud | date : 'dd/MM/yyyy' }}"
     [style]="{ 'min-width': '400px', 'min-height': '400px' }"
     styleClass="border-round"
-
-    >
+  >
     <ng-template pTemplate="header"> </ng-template>
     <p><strong>Operador:</strong>{{ produccion.nombreUsuario }}</p>
     <p><strong>Tandas:</strong>{{ produccion.numeroTandas }}</p>
@@ -67,6 +68,7 @@
         *ngIf="usuario.rol == 'Admin'"
       >
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 5 || produccion.estatus == 6"
           label="Reenviar"
           icon="pi pi-send"
@@ -75,6 +77,7 @@
           (onClick)="reenviar(produccion.id)"
         />
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 1"
           label="Eliminar"
           icon="pi pi-trash"
@@ -83,6 +86,7 @@
           (onClick)="eliminar(produccion.id)"
         />
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 3"
           label="Almacenar"
           icon="pi pi-save"
@@ -92,6 +96,7 @@
         />
 
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="
             produccion.estatus == 1 ||
             produccion.estatus == 5 ||
@@ -111,6 +116,7 @@
         *ngIf="usuario.rol == 'Operador'"
       >
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 1"
           label="Aceptar"
           severity="secondary"
@@ -119,6 +125,7 @@
           (onClick)="aceptar(produccion.id)"
         />
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 1"
           label="Rechazar"
           severity="secondary"
@@ -131,6 +138,7 @@
           "
         />
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 1"
           label="Posponer"
           severity="secondary"
@@ -141,9 +149,9 @@
             posponerBtn = true;
             idSeleccionado = produccion.id
           "
-
         />
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 2"
           label="Ver Pasos"
           severity="secondary"
@@ -153,6 +161,7 @@
         ></p-button>
         <!-- AVANZAR PASO -->
         <p-button
+        styleClass="global-hover-effect"
           *ngIf="produccion.estatus == 2"
           label="Avanzar Paso"
           severity="secondary"
@@ -170,7 +179,10 @@
 ></app-producciones-modal>
 
 <app-pasos-modal #modalPasos (reload)="obtenerProducciones()"></app-pasos-modal>
-<app-avanzar-paso-modal #modalAvanzar (reload)="obtenerProducciones()"></app-avanzar-paso-modal>
+<app-avanzar-paso-modal
+  #modalAvanzar
+  (reload)="obtenerProducciones()"
+></app-avanzar-paso-modal>
 
 <p-dialog [(visible)]="displayMensaje" header="Motivo" [modal]="true">
   <textarea
@@ -187,12 +199,14 @@
   <ng-template pTemplate="footer">
     <div class="flex gap-1 justify-content-center">
       <p-button
+      styleClass="global-hover-effect"
         *ngIf="rechazarBtn"
         label="Aceptar"
         icon="pi pi-check"
         (click)="rechazar()"
       />
       <p-button
+      styleClass="global-hover-effect"
         *ngIf="posponerBtn"
         label="Aceptar"
         icon="pi pi-check"
@@ -220,6 +234,7 @@
   <div class="field">
     <label for="idUsuario"> OPERADOR </label>
     <p-dropdown
+    styleClass="global-hover-effect"
       [(ngModel)]="idUsuarioSeleccionado"
       [options]="usuariosOperador"
       optionLabel="nombre"
@@ -232,8 +247,9 @@
   </div>
   <ng-template pTemplate="footer">
     <div class="flex gap-1 justify-content-center">
-      <p-button label="Aceptar" icon="pi pi-check" (click)="asignarUsuario()" />
+      <p-button styleClass="global-hover-effect" label="Aceptar" icon="pi pi-check" (click)="asignarUsuario()" />
       <p-button
+      styleClass="global-hover-effect"
         label="Cancelar"
         icon="pi pi-times"
         (click)="displayAsignarUsuario = false; idSeleccionado = 0"

@@ -3,13 +3,17 @@
     <h2>Carrito de compras 🛒</h2>
     <p>{{ contadorProductosCarrito }} productos</p>
     <ng-container *ngIf="productos.length > 0">
-      <app-receta *ngFor="let productoCarrito of productosCarrito"
-        [producto]="obtenerProductoCorrespondiente(productoCarrito)" [productoCarrito]="productoCarrito">
+      <app-receta
+        *ngFor="let productoCarrito of productosCarrito"
+        [producto]="obtenerProductoCorrespondiente(productoCarrito)"
+        [productoCarrito]="productoCarrito"
+      >
       </app-receta>
     </ng-container>
 
-
-    <a [routerLink]="['/cerverica/productos']" class="back-to-shop">← Regresar a comprar</a>
+    <a [routerLink]="['/cerverica/productos']" class="back-to-shop"
+      >← Regresar a comprar</a
+    >
   </div>
 
   <div class="summary">
@@ -21,9 +25,14 @@
     <div class="summary-item">
       <span class="titulo-summary">Envio</span>
 
-      <p-dropdown [options]="metodosEnvio" (onChange)="validarErroresMetodoEnvio()"
-        [(ngModel)]="metodoEnvioSeleccionado" optionLabel="label" placeholder="Selecciona un método envio"
-        styleClass="dropdown">
+      <p-dropdown
+        [options]="metodosEnvio"
+        (onChange)="validarErroresMetodoEnvio()"
+        [(ngModel)]="metodoEnvioSeleccionado"
+        optionLabel="label"
+        placeholder="Selecciona un método envio"
+        styleClass="dropdown"
+      >
       </p-dropdown>
     </div>
 
@@ -34,15 +43,33 @@
       entrega. Por favor, presente su número de orden al momento de la recogida
     </div>
 
-    <form class="formulario-envio" [formGroup]="formDireccionEnvio" *ngIf="metodoEnvioSeleccionado?.value == '2'">
+    <form
+      class="formulario-envio"
+      [formGroup]="formDireccionEnvio"
+      *ngIf="metodoEnvioSeleccionado?.value == '2'"
+    >
       <div class="grupo-formulario">
         <label for="nombrePersonaRecibe">Nombre persona que recibe</label>
-        <input pInputText id="nombrePersonaRecibe" formControlName="nombrePersonaRecibe" class="input-form" />
-        <div *ngIf="
-              formDireccionEnvio.get('nombrePersonaRecibe')?.touched &&
-              formDireccionEnvio.get('nombrePersonaRecibe')?.invalid
-            " class="mensajes-error">
-          <small *ngIf="formDireccionEnvio.get('nombrePersonaRecibe')?.errors?.['required']">
+        <input
+          pInputText
+          id="nombrePersonaRecibe"
+          formControlName="nombrePersonaRecibe"
+          class="input-form"
+        />
+        <div
+          *ngIf="
+            formDireccionEnvio.get('nombrePersonaRecibe')?.touched &&
+            formDireccionEnvio.get('nombrePersonaRecibe')?.invalid
+          "
+          class="mensajes-error"
+        >
+          <small
+            *ngIf="
+              formDireccionEnvio.get('nombrePersonaRecibe')?.errors?.[
+                'required'
+              ]
+            "
+          >
             El nombre de la persona que recibe es obligatorio.
           </small>
         </div>
@@ -50,11 +77,19 @@
 
       <div class="grupo-formulario">
         <label for="calle">Calle</label>
-        <input pInputText id="calle" formControlName="calle" class="input-form" />
-        <div *ngIf="
-              formDireccionEnvio.get('calle')?.touched &&
-              formDireccionEnvio.get('calle')?.invalid
-            " class="mensajes-error">
+        <input
+          pInputText
+          id="calle"
+          formControlName="calle"
+          class="input-form"
+        />
+        <div
+          *ngIf="
+            formDireccionEnvio.get('calle')?.touched &&
+            formDireccionEnvio.get('calle')?.invalid
+          "
+          class="mensajes-error"
+        >
           <small *ngIf="formDireccionEnvio.get('calle')?.errors?.['required']">
             La calle es obligatorio.
           </small>
@@ -63,12 +98,22 @@
 
       <div class="grupo-formulario">
         <label for="numeroCasa">Número de casa</label>
-        <input pInputText id="numeroCasa" formControlName="numeroCasa" class="input-form" />
-        <div *ngIf="
-              formDireccionEnvio.get('numeroCasa')?.touched &&
-              formDireccionEnvio.get('numeroCasa')?.invalid
-            " class="mensajes-error">
-          <small *ngIf="formDireccionEnvio.get('numeroCasa')?.errors?.['required']">
+        <input
+          pInputText
+          id="numeroCasa"
+          formControlName="numeroCasa"
+          class="input-form"
+        />
+        <div
+          *ngIf="
+            formDireccionEnvio.get('numeroCasa')?.touched &&
+            formDireccionEnvio.get('numeroCasa')?.invalid
+          "
+          class="mensajes-error"
+        >
+          <small
+            *ngIf="formDireccionEnvio.get('numeroCasa')?.errors?.['required']"
+          >
             El número de casa es obligatorio.
           </small>
         </div>
@@ -76,16 +121,30 @@
 
       <div class="grupo-formulario">
         <label for="codigoPostal">Código postal</label>
-        <input pInputText id="codigoPostal" formControlName="codigoPostal" class="input-form" />
+        <input
+          pInputText
+          id="codigoPostal"
+          formControlName="codigoPostal"
+          class="input-form"
+        />
 
-        <div *ngIf="
-              formDireccionEnvio.get('codigoPostal')?.touched &&
-              formDireccionEnvio.get('codigoPostal')?.invalid
-            " class="mensajes-error">
-          <small *ngIf="formDireccionEnvio.get('codigoPostal')?.errors?.['required']">
+        <div
+          *ngIf="
+            formDireccionEnvio.get('codigoPostal')?.touched &&
+            formDireccionEnvio.get('codigoPostal')?.invalid
+          "
+          class="mensajes-error"
+        >
+          <small
+            *ngIf="formDireccionEnvio.get('codigoPostal')?.errors?.['required']"
+          >
             El código postal es obligatorio.
           </small>
-          <small *ngIf="formDireccionEnvio.get('codigoPostal')?.errors?.['maxlength']">
+          <small
+            *ngIf="
+              formDireccionEnvio.get('codigoPostal')?.errors?.['maxlength']
+            "
+          >
             El código postal no puede exceder los 5 caracteres.
           </small>
         </div>
@@ -93,11 +152,19 @@
 
       <div class="grupo-formulario">
         <label for="ciudad">Ciudad</label>
-        <input pInputText id="ciudad" formControlName="ciudad" class="input-form" />
-        <div *ngIf="
-              formDireccionEnvio.get('ciudad')?.touched &&
-              formDireccionEnvio.get('ciudad')?.invalid
-            " class="mensajes-error">
+        <input
+          pInputText
+          id="ciudad"
+          formControlName="ciudad"
+          class="input-form"
+        />
+        <div
+          *ngIf="
+            formDireccionEnvio.get('ciudad')?.touched &&
+            formDireccionEnvio.get('ciudad')?.invalid
+          "
+          class="mensajes-error"
+        >
           <small *ngIf="formDireccionEnvio.get('ciudad')?.errors?.['required']">
             La ciudad es obligatorio.
           </small>
@@ -106,157 +173,25 @@
 
       <div class="grupo-formulario">
         <label for="estado">Estado</label>
-        <input pInputText id="estado" formControlName="estado" class="input-form" />
-        <div *ngIf="
-              formDireccionEnvio.get('estado')?.touched &&
-              formDireccionEnvio.get('estado')?.invalid
-            " class="mensajes-error">
+        <input
+          pInputText
+          id="estado"
+          formControlName="estado"
+          class="input-form"
+        />
+        <div
+          *ngIf="
+            formDireccionEnvio.get('estado')?.touched &&
+            formDireccionEnvio.get('estado')?.invalid
+          "
+          class="mensajes-error"
+        >
           <small *ngIf="formDireccionEnvio.get('estado')?.errors?.['required']">
             El estado es obligatorio.
           </small>
         </div>
       </div>
     </form>
-
-    <div class="summary-item">
-      <span class="titulo-summary">Método pago</span>
-
-      <p-dropdown [options]="metodosPago" [(ngModel)]="metodoPagoSeleccionado" optionLabel="label"
-        placeholder="Selecciona un método de pago" (onChange)="validarMetodoPago($event)" styleClass="dropdown">
-      </p-dropdown>
-    </div>
-
-    <div class="mensajes-error" #mensajesErrorMetodoPago></div>
-
-    <div class="container" *ngIf="metodoPagoSeleccionado?.value == '2'">
-      <div class="card-container">
-        <div class="front">
-          <div class="image">
-            <img src="img/chip.png" alt="" />
-            <img src="img/logo-navbar.png" alt="" />
-          </div>
-          <div class="card-number-box">#### #### #### ####</div>
-          <div class="flexbox">
-            <div class="box">
-              <span>Nombre completo</span>
-              <div class="card-holder-name">Nombre completo</div>
-            </div>
-            <div class="box">
-              <span>Expiración</span>
-              <div class="expiration">
-                <span class="exp-month">MM</span>
-                <span>/</span>
-                <span class="exp-year">YY</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="back">
-          <div class="stripe"></div>
-          <div class="box">
-            <span>CVV</span>
-            <div class="cvv-box"></div>
-            <img src="img/logo-navbar.png" alt="" />
-          </div>
-        </div>
-      </div>
-
-      <form [formGroup]="formTarjeta">
-        <div class="inputBox">
-          <span>Número de tarjeta</span>
-          <input type="text" maxlength="16" class="card-number-input" formControlName="numeroTarjeta" />
-          <div *ngIf="
-              formTarjeta.get('numeroTarjeta')?.touched &&
-              formTarjeta.get('numeroTarjeta')?.invalid
-            " class="mensajes-error">
-            <small *ngIf="formTarjeta.get('numeroTarjeta')?.errors?.['required']">
-              El número de tarjeta es obligatorio.
-            </small>
-          </div>
-        </div>
-        <div class="inputBox">
-          <span>Nombre en tarjeta</span>
-          <input type="text" class="card-holder-input" formControlName="nombrePersonaTarjeta" />
-          <div *ngIf="
-              formTarjeta.get('nombrePersonaTarjeta')?.touched &&
-              formTarjeta.get('nombrePersonaTarjeta')?.invalid
-            " class="mensajes-error">
-            <small *ngIf="formTarjeta.get('nombrePersonaTarjeta')?.errors?.['required']">
-              El nombre en tarjeta es obligatorio.
-            </small>
-          </div>
-        </div>
-        <div class="flexbox">
-          <div class="inputBox">
-            <span>Mes de expiración</span>
-            <select name="" id="" class="month-input" formControlName="mesExpiracion">
-              <option value="month" selected disabled>Mes</option>
-              <option value="01">01</option>
-              <option value="02">02</option>
-              <option value="03">03</option>
-              <option value="04">04</option>
-              <option value="05">05</option>
-              <option value="06">06</option>
-              <option value="07">07</option>
-              <option value="08">08</option>
-              <option value="09">09</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
-            <div *ngIf="
-              formTarjeta.get('mesExpiracion')?.touched &&
-              formTarjeta.get('mesExpiracion')?.invalid
-            " class="mensajes-error">
-              <small *ngIf="formTarjeta.get('mesExpiracion')?.errors?.['required']">
-                El mes de expiracion es obligatorio.
-              </small>
-            </div>
-          </div>
-          <div class="inputBox">
-            <span>Año expiración</span>
-            <select name="" id="" class="year-input" formControlName="anioExpiracion">
-              <option value="year" selected disabled>Año</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-              <option value="2027">2027</option>
-              <option value="2028">2028</option>
-              <option value="2029">2029</option>
-              <option value="2030">2030</option>
-            </select>
-
-            <div *ngIf="
-              formTarjeta.get('anioExpiracion')?.touched &&
-              formTarjeta.get('anioExpiracion')?.invalid
-            " class="mensajes-error">
-              <small *ngIf="formTarjeta.get('anioExpiracion')?.errors?.['required']">
-                El año de expiración es obligatorio.
-              </small>
-            </div>
-          </div>
-          <div class="inputBox">
-            <span>cvv</span>
-            <input type="text" maxlength="4" class="cvv-input" formControlName="cvv" />
-            <div *ngIf="
-              formTarjeta.get('cvv')?.touched &&
-              formTarjeta.get('cvv')?.invalid
-            " class="mensajes-error">
-              <small *ngIf="formTarjeta.get('cvv')?.errors?.['required']">
-                El cvv es obligatorio.
-              </small>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="summary-item" *ngIf="metodoPagoSeleccionado?.value == '1'">
-      El repartidor recogerá el pago en efectivo en el momento de la entrega de
-      su pedido. Por favor, tenga el importe exacto preparado para facilitar la
-      transacción
-    </div>
 
     <div class="summary-item total">
       <span>PRECIO TOTAL</span>
@@ -265,6 +200,26 @@
 
     <p-progressBar mode="indeterminate" *ngIf="creandoVenta" />
 
-    <button class="checkout" (click)="realizarPedido()" [disabled]="this.contadorProductosCarrito == 0">PAGAR</button>
+    <!-- <button class="checkout" (click)="realizarPedido()" [disabled]="this.contadorProductosCarrito == 0">PAGAR</button> -->
+
+    <button
+      class="checkout"
+      (click)="pagarConStripe()"
+      [disabled]="this.contadorProductosCarrito == 0"
+    >
+      PAGAR CON
+      <img src="img/stripe.svg" alt="Stripe Logo" class="stripe-logo" />
+    </button>
   </div>
 </div>
+
+<p-dialog
+  header="¡Estás a punto de completar tu compra! 🍻"
+  [modal]="true"
+  [(visible)]="pagandoCarrito"
+  [style]="{ width: '60%' }"
+  (onHide)="limpiarCheckout()"
+>
+  <p-progressBar mode="indeterminate" *ngIf="creandoVenta" />
+  <div id="checkout"></div>
+</p-dialog>

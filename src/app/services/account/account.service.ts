@@ -48,7 +48,7 @@ export class AccountService {
   cambiarContrasena(changePasswordDTO: ChangePasswordDTO): Observable<any> {
     return this.http.post<any>(
       `${this._baseURL}/change-password`,
-      changePasswordDTO
+      changePasswordDTO,
     );
   }
 
@@ -67,7 +67,7 @@ export class AccountService {
     return this.http.post<SesionDTO>(
       `${this._baseURL}/logout`,
       {},
-      { headers }
+      { headers },
     );
   }
 

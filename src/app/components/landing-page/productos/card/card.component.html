@@ -2,19 +2,30 @@
   <div class="card-producto" [attr.data-badge]="obtenerBadge()">
     <div class="card-header">
       <div class="product-precio">{{ "$" + precioMostrar }}</div>
-      <i [className]="producto.favorito ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="
+      <i
+        [className]="producto.favorito ? 'pi pi-heart-fill' : 'pi pi-heart'"
+        (click)="
           producto.favorito
             ? eliminarFavoritos(producto.id)
             : agregarFavoritos(producto.id)
-        "></i>
+        "
+      ></i>
     </div>
 
-    <div class="card-imagen">
-      <img src="{{ producto.rutaFondo }}" alt="Fondo cerveza" class="fondo-cerveza" />
+    <a class="card-imagen" [routerLink]="['/cerverica/producto', producto.id]">
+      <img
+        src="{{ producto.rutaFondo }}"
+        alt="Fondo cerveza"
+        class="fondo-cerveza"
+      />
       <div class="contenedor-botella">
-        <img src="{{ producto.imagen }}" alt="Imagén cerveza" class="botella-cerveza" />
+        <img
+          src="{{ producto.imagen }}"
+          alt="Imagén cerveza"
+          class="botella-cerveza"
+        />
       </div>
-    </div>
+    </a>
 
     <div class="card-info">
       <div class="product-nombre">
@@ -27,39 +38,70 @@
     </div>
 
     <div class="card-cantidades">
-      <button class="btn-cantidad" [ngClass]="{ seleccionado: paqueteSeleccionado == 1 }"
-        (click)="actualizarPaqueteSeleccionado(1)" [disabled]="!esCantidadDisponible(1)">
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: paqueteSeleccionado == 1 }"
+        (click)="actualizarPaqueteSeleccionado(1)"
+        [disabled]="!esCantidadDisponible(1)"
+      >
         1
       </button>
-      <button class="btn-cantidad" [ngClass]="{ seleccionado: paqueteSeleccionado == 6 }"
-        (click)="actualizarPaqueteSeleccionado(6)" [disabled]="!esCantidadDisponible(6)">
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: paqueteSeleccionado == 6 }"
+        (click)="actualizarPaqueteSeleccionado(6)"
+        [disabled]="!esCantidadDisponible(6)"
+      >
         6
       </button>
-      <button class="btn-cantidad" [ngClass]="{ seleccionado: paqueteSeleccionado == 12 }"
-        (click)="actualizarPaqueteSeleccionado(12)" [disabled]="!esCantidadDisponible(12)">
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: paqueteSeleccionado == 12 }"
+        (click)="actualizarPaqueteSeleccionado(12)"
+        [disabled]="!esCantidadDisponible(12)"
+      >
         12
       </button>
-      <button class="btn-cantidad" [ngClass]="{ seleccionado: paqueteSeleccionado == 24 }"
-        (click)="actualizarPaqueteSeleccionado(24)" [disabled]="!esCantidadDisponible(24)">
+      <button
+        class="btn-cantidad"
+        [ngClass]="{ seleccionado: paqueteSeleccionado == 24 }"
+        (click)="actualizarPaqueteSeleccionado(24)"
+        [disabled]="!esCantidadDisponible(24)"
+      >
         24
       </button>
     </div>
 
     <div class="paquetes-seleccionados">
-      <button (click)="disminuirPaquetes()" [disabled]="!esCantidadDisminuible()" class="boton">
+      <button
+        (click)="disminuirPaquetes()"
+        [disabled]="!esCantidadDisminuible()"
+        class="boton"
+      >
         -
       </button>
       <span class="number" #CantidadElement>{{ cantidadPaquetes }}</span>
-      <button (click)="aumentarPaquetes()" class="boton" [disabled]="!esCantidadAumentable()">
+      <button
+        (click)="aumentarPaquetes()"
+        class="boton"
+        [disabled]="!esCantidadAumentable()"
+      >
         +
       </button>
     </div>
 
-    <span class="cart__button" [ngClass]="{ disabled: !esCantidadDisponible(1) }" (click)="agregarCarrito($event)"
-      role="button" #CartButtonElement>
-      <span class="add__to-cart"><span class="add__to-cart">{{
+    <span
+      class="cart__button"
+      [ngClass]="{ disabled: !esCantidadDisponible(1) }"
+      (click)="agregarCarrito($event)"
+      role="button"
+      #CartButtonElement
+    >
+      <span class="add__to-cart"
+        ><span class="add__to-cart">{{
           productoYaEnCarrito() ? "Actualizar" : "Agregar al carrito"
-          }}</span></span>
+        }}</span></span
+      >
       <i class="pi pi-shopping-cart"></i>
       <i class="pi pi-box"></i>
     </span>

@@ -27,12 +27,10 @@ export class ProveedoresModalComponent implements OnInit {
 
   constructor(
     private proveedoresService: ProveedoresService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   get f() {
     return this.proveedoresForm.controls;
@@ -56,7 +54,6 @@ export class ProveedoresModalComponent implements OnInit {
   ocultar() {
     this.display = false;
     this.proveedoresForm.reset();
-
   }
 
   obtener(id: number) {
@@ -79,7 +76,7 @@ export class ProveedoresModalComponent implements OnInit {
   guardar() {
     this.proveedoresService
       .crear(this.proveedoresForm.value)
-      .pipe(finalize(() => { }))
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Proveedor creado correctamente');
@@ -97,7 +94,7 @@ export class ProveedoresModalComponent implements OnInit {
     console.log(this.proveedoresForm.value);
     this.proveedoresService
       .modificar(this.f['id'].value, this.proveedoresForm.value)
-      .pipe(finalize(() => { }))
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Proveedor modificado correctamente');

@@ -58,7 +58,7 @@ export class LoginComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.intervalId = initializeLoginAnimations(
       this.contenedorLogin,
-      this.carousel
+      this.carousel,
     );
   }
 
@@ -76,51 +76,53 @@ export class LoginComponent implements AfterViewInit {
       password: this.formLogin.value.password,
     };
 
-    this._AccountService.iniciarSesion(usuarioIngresar).pipe(
-      finalize(() => {
-        this.iniciandoSesion = false;
-      })
-    ).subscribe({
-      next: (response) => {
-        if (response.isSuccess == false) {
-          this.mensajesLogin.nativeElement.innerHTML = `<p>${response.message}</p>`;
-        } else {
-          this._MessageService.add({
-            severity: 'success',
-            summary: `Bienvenido ${response.nombre}!`,
-            detail: '¡Qué gusto verte de nuevo!',
-          });
-
-          this._CompartidosService.guardarSesion(response);
-
-          this._AuthService.login();
-
-          if (response.rol == 'Cliente') {
-            this.router.navigateByUrl('/perfil');
+    this._AccountService
+      .iniciarSesion(usuarioIngresar)
+      .pipe(
+        finalize(() => {
+          this.iniciandoSesion = false;
+        }),
+      )
+      .subscribe({
+        next: (response) => {
+          if (response.isSuccess == false) {
+            this.mensajesLogin.nativeElement.innerHTML = `<p>${response.message}</p>`;
           } else {
-            this.router.navigateByUrl('/gestion');
-          }
-        }
-      },
-      error: (error) => {
-        console.log(error);
-        
+            this._MessageService.add({
+              severity: 'success',
+              summary: `Bienvenido ${response.nombre}!`,
+              detail: '¡Qué gusto verte de nuevo!',
+            });
 
-        if (error.error.isSuccess == false) {
-          this.mensajesLogin.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
-        } else {
-          if (error.error.errors) {
-            let errors = this._CompartidosService.extractErrorMessages(
-              error.error.errors
-            );
+            this._CompartidosService.guardarSesion(response);
 
-            this.mensajesLogin.nativeElement.innerHTML = errors
-              .map((error) => `<p>${error}</p>`)
-              .join('');
+            this._AuthService.login();
+
+            if (response.rol == 'Cliente') {
+              this.router.navigateByUrl('/perfil');
+            } else {
+              this.router.navigateByUrl('/gestion');
+            }
           }
-        }
-      },
-    });
+        },
+        error: (error) => {
+          console.log(error);
+
+          if (error.error.isSuccess == false) {
+            this.mensajesLogin.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
+          } else {
+            if (error.error.errors) {
+              let errors = this._CompartidosService.extractErrorMessages(
+                error.error.errors,
+              );
+
+              this.mensajesLogin.nativeElement.innerHTML = errors
+                .map((error) => `<p>${error}</p>`)
+                .join('');
+            }
+          }
+        },
+      });
   }
 
   crearCuenta() {
@@ -138,7 +140,7 @@ export class LoginComponent implements AfterViewInit {
       .pipe(
         finalize(() => {
           this.creandoCuenta = false;
-        })
+        }),
       )
       .subscribe({
         next: (response) => {
@@ -162,7 +164,7 @@ export class LoginComponent implements AfterViewInit {
             this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
 
             let errors = this._CompartidosService.extractErrors(
-              error.error.errors
+              error.error.errors,
             );
 
             this.mensajesCrearCuenta.nativeElement.innerHTML += errors
@@ -171,7 +173,7 @@ export class LoginComponent implements AfterViewInit {
           } else {
             if (error.error) {
               let errors = this._CompartidosService.extractErrorPassword(
-                error.error
+                error.error,
               );
 
               this.mensajesCrearCuenta.nativeElement.innerHTML = errors

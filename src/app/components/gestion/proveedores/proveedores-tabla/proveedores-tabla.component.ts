@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProveedoresService } from '../../../../services/proveedores/proveedores.service';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { finalize } from 'rxjs';
+import { Title } from '@angular/platform-browser';
+import { CompartidoService } from '../../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-proveedores-tabla',
@@ -9,14 +11,17 @@ import { finalize } from 'rxjs';
   styleUrl: './proveedores-tabla.component.css',
 })
 export class ProveedoresTablaComponent implements OnInit {
-
   public proveedores: any[] = [];
   public items: any[] = [];
 
   constructor(
     private proveedoresService: ProveedoresService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
+    private title: Title,
+    private compartidoService: CompartidoService
   ) {
+    this.title.setTitle('Proveedores');
+    this.compartidoService.actualizarTitulo('Proveedores');
     this.items = [
       {
         label: 'Update',
@@ -34,8 +39,9 @@ export class ProveedoresTablaComponent implements OnInit {
   }
 
   obtenerProveedores() {
-    this.proveedoresService.obtener()
-      .pipe(finalize(() => { }))
+    this.proveedoresService
+      .obtener()
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
           this.proveedores = data;
@@ -47,8 +53,9 @@ export class ProveedoresTablaComponent implements OnInit {
   }
 
   activar(id: number) {
-    this.proveedoresService.activar(id)
-      .pipe(finalize(() => { }))
+    this.proveedoresService
+      .activar(id)
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Proveedor activado correctamente');
@@ -61,11 +68,14 @@ export class ProveedoresTablaComponent implements OnInit {
   }
 
   desactivar(id: number) {
-    this.proveedoresService.desactivar(id)
-      .pipe(finalize(() => { }))
+    this.proveedoresService
+      .desactivar(id)
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          this.alertasService.showSuccess('Proveedor desactivado correctamente');
+          this.alertasService.showSuccess(
+            'Proveedor desactivado correctamente'
+          );
           this.obtenerProveedores();
         },
         error: (error: any) => {
@@ -75,8 +85,9 @@ export class ProveedoresTablaComponent implements OnInit {
   }
 
   eliminar(id: number) {
-    this.proveedoresService.eliminar(id)
-      .pipe(finalize(() => { }))
+    this.proveedoresService
+      .eliminar(id)
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
           this.alertasService.showSuccess('Proveedor eliminado correctamente');

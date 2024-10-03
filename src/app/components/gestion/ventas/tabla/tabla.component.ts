@@ -1,5 +1,4 @@
 import { Component, inject, ViewChild } from '@angular/core';
-import { VentaDTO } from '../../../../interfaces/ventas/venta-dto';
 import { Venta } from '../../../../interfaces/ventas/venta';
 import { VentasService } from '../../../../services/ventas/ventas.service';
 import { finalize } from 'rxjs';
@@ -42,7 +41,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener las ventas, intenta nuevamente',
-            'Ocurrió un problema'
+            'Ocurrió un problema',
           );
           console.error(error);
         },
@@ -59,14 +58,14 @@ export class TablaComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'Se retrocedio al paso anterior con éxito!',
-            'Retrocediste un paso'
+            'Retrocediste un paso',
           );
 
           this.obtenerVentas();
         },
         error: (error: any) => {
           this._AlertasService.showError(
-            'Error al retroceder el estatus, intenta nuevamente'
+            'Error al retroceder el estatus, intenta nuevamente',
           );
           console.error(error);
         },
@@ -85,7 +84,7 @@ export class TablaComponent {
         this.obtenerMetodoEnvio(venta.metodoEnvio)
           .toLowerCase()
           .includes(query) ||
-        venta.montoVenta.toString().toLowerCase().includes(query)
+        venta.montoVenta.toString().toLowerCase().includes(query),
     );
   }
 
@@ -103,7 +102,7 @@ export class TablaComponent {
   }
 
   obtenerSeverityEstatusVenta(
-    estatusVenta: number
+    estatusVenta: number,
   ):
     | 'success'
     | 'secondary'

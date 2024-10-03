@@ -13,11 +13,11 @@ import { RouterOutlet } from '@angular/router';
 import { LandingPageComponent } from './landing-page.component';
 import { ProductosService } from '../../services/productos/productos.service';
 import { CarritoComponent } from './carrito/carrito.component';
-import { MessageService } from 'primeng/api';
 import { CuentaComponent } from './cuenta/cuenta.component';
 import { RecetaComponent } from './carrito/receta/receta.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
+import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +34,7 @@ import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.compo
     RecetaComponent,
     PedidosComponent,
     DetallesPedidoComponent,
+    DetallesProductoComponent,
   ],
   imports: [CommonModule, RouterOutlet, LandingPageRouting, PrimeModule],
   exports: [],

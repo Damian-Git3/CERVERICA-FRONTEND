@@ -1,125 +1,132 @@
-<p-toolbar>
-  <div class="p-toolbar-group-start">
-    <p-button
-      icon="fa-solid fa-rotate-right"
-      class="mr-2"
-      (click)="obtenerProveedores()"
-    />
-    <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+<div class="animate__animated animate__backInRight">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button
+        styleClass="global-hover-effect"
+        icon="fa-solid fa-rotate-right"
+        class="mr-2"
+        (click)="obtenerProveedores()"
+      />
+      <p-button styleClass="global-hover-effect" icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
 
-    <!-- <p-button icon="pi pi-upload" [disabled]="true" /> -->
-  </div>
-  <div class="p-toolbar-group-center">
-
-  </div>
-  <div class="p-toolbar-group-end">
-    <!-- <p-splitButton
+      <!-- <p-button icon="pi pi-upload" [disabled]="true" /> -->
+    </div>
+    <div class="p-toolbar-group-center"></div>
+    <div class="p-toolbar-group-end">
+      <!-- <p-splitButton
       label="Save"
       icon="pi pi-check"
       [model]="items"
       [disabled]="true"
     /> -->
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input pInputText placeholder="BUSCAR" />
-    </span>
-  </div>
-</p-toolbar>
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input pInputText placeholder="BUSCAR" />
+      </span>
+    </div>
+  </p-toolbar>
 
-<p-table
-  #dt
-  dataKey="id"
-  [value]="proveedores"
-  [styleClass]="'p-datatable-sm'"
-  [rows]="10"
-  [paginator]="true"
-  [showCurrentPageReport]="true"
-  [selectionMode]="'single'"
-  currentPageReportTemplate="{first} de {last}"
-  [globalFilterFields]="[
-    'id',
-    'empresa',
-    'telefono',
-    'direccion',
-    'email',
-    'nombreContacto',
-    'activo'
-  ]"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="direccion">
-        EMPRESA <p-sortIcon field="direccion" />
-      </th>
-      <th pSortableColumn="telefono">
-        TELEFONO <p-sortIcon field="telefono" />
-      </th>
-      <th pSortableColumn="direccion">
-        DIRECCION <p-sortIcon field="direccion" />
-      </th>
-      <th pSortableColumn="email">CORREO <p-sortIcon field="email" /></th>
-      <th pSortableColumn="nombreContacto">
-        NOMBRE CONTACTO <p-sortIcon field="nombreContacto" />
-      </th>
-      <th pSortableColumn="activo">ACTIVO <p-sortIcon field="activo" /></th>
+  <p-table
+    #dt
+    dataKey="id"
+    [value]="proveedores"
+    [styleClass]="'p-datatable-sm'"
+    [rows]="10"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [selectionMode]="'single'"
+    currentPageReportTemplate="{first} de {last}"
+    [globalFilterFields]="[
+      'id',
+      'empresa',
+      'telefono',
+      'direccion',
+      'email',
+      'nombreContacto',
+      'activo'
+    ]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="direccion">
+          EMPRESA <p-sortIcon field="direccion" />
+        </th>
+        <th pSortableColumn="telefono">
+          TELEFONO <p-sortIcon field="telefono" />
+        </th>
+        <th pSortableColumn="direccion">
+          DIRECCION <p-sortIcon field="direccion" />
+        </th>
+        <th pSortableColumn="email">CORREO <p-sortIcon field="email" /></th>
+        <th pSortableColumn="nombreContacto">
+          NOMBRE CONTACTO <p-sortIcon field="nombreContacto" />
+        </th>
+        <th pSortableColumn="activo">ACTIVO <p-sortIcon field="activo" /></th>
 
-      <th>ACCIONES</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-proveedor>
-    <tr (dblclick)="proveedor.activo ? modal.show(proveedor.id) : null">
-      <td>{{ proveedor.empresa }}</td>
-      <td>{{ proveedor.telefono }}</td>
-      <td>{{ proveedor.direccion }}</td>
-      <td>{{ proveedor.email }}</td>
-      <td>{{ proveedor.nombreContacto }}</td>
-      <td>
-        <p-tag
-          *ngIf="proveedor.activo"
-          severity="success"
-          value="ACTIVO"
-          [rounded]="true"
-        />
-        <p-tag
-          *ngIf="!proveedor.activo"
-          severity="danger"
-          value="INACTIVO"
-          [rounded]="true"
-        />
-      </td>
-      <td>
-        <p-button
-          [disabled]="!proveedor.activo"
-          size="small"
-          icon="pi pi-pencil"
-          class="mr-2"
-          (click)="modal.show(proveedor.id)"
-          [pTooltip]="'Editar'"
-        ></p-button>
-        <p-button
-          size="small"
-          [icon]="
-            proveedor.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
-          "
-          class="mr-2"
-          [pTooltip]="proveedor.activo ? 'Bloquear' : 'Desbloquear'"
-          (onClick)="
-            proveedor.activo ? desactivar(proveedor.id) : activar(proveedor.id)
-          "
-          [severity]="proveedor.activo ? 'success' : 'danger'"
-        ></p-button>
-        <p-button
-          size="small"
-          icon="pi pi-trash"
-          class="mr-2"
-          pTooltip="Eliminar"
-          severity="warning"
-          (onClick)="eliminar(proveedor.id)"
-        ></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+        <th>ACCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-proveedor>
+      <tr (dblclick)="proveedor.activo ? modal.show(proveedor.id) : null">
+        <td>{{ proveedor.empresa }}</td>
+        <td>{{ proveedor.telefono }}</td>
+        <td>{{ proveedor.direccion }}</td>
+        <td>{{ proveedor.email }}</td>
+        <td>{{ proveedor.nombreContacto }}</td>
+        <td>
+          <p-tag
+            *ngIf="proveedor.activo"
+            severity="success"
+            value="ACTIVO"
+            [rounded]="true"
+          />
+          <p-tag
+            *ngIf="!proveedor.activo"
+            severity="danger"
+            value="INACTIVO"
+            [rounded]="true"
+          />
+        </td>
+        <td>
+          <p-button
+          styleClass="global-hover-effect"
+            [disabled]="!proveedor.activo"
+            size="small"
+            icon="pi pi-pencil"
+            class="mr-2"
+            (click)="modal.show(proveedor.id)"
+            [pTooltip]="'Editar'"
+          ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            [icon]="
+              proveedor.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
+            "
+            class="mr-2"
+            [pTooltip]="proveedor.activo ? 'Bloquear' : 'Desbloquear'"
+            (onClick)="
+              proveedor.activo
+                ? desactivar(proveedor.id)
+                : activar(proveedor.id)
+            "
+            [severity]="proveedor.activo ? 'success' : 'danger'"
+          ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            icon="pi pi-trash"
+            class="mr-2"
+            pTooltip="Eliminar"
+            severity="warning"
+            (onClick)="eliminar(proveedor.id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
 <app-proveedores-modal
   #modal
   (reload)="obtenerProveedores()"

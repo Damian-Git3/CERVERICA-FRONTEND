@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
@@ -21,17 +21,17 @@ export class UsuariosService {
   agregarUsuario(nuevoUsuario: CrearUsuarioDTO): Observable<UsuarioDTO> {
     return this._Http.post<UsuarioDTO>(
       `${this._baseURL}/agregar`,
-      nuevoUsuario
+      nuevoUsuario,
     );
   }
 
   editarUsuario(
     id: string,
-    usuarioEditado: EditarUsuarioDTO
+    usuarioEditado: EditarUsuarioDTO,
   ): Observable<void> {
     return this._Http.put<void>(
       `${this._baseURL}/editar/${id}`,
-      usuarioEditado
+      usuarioEditado,
     );
   }
 

@@ -3,11 +3,8 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  ValidatorFn,
-  AbstractControl,
 } from '@angular/forms';
 import { InsumosService } from '../../../../services/insumos/insumos.service';
-import { IInsumo } from '../../../../interfaces/insumo.interface';
 import { catchError, finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 
@@ -38,7 +35,7 @@ export class InsumosModalComponent implements OnInit {
 
   constructor(
     private insumosService: InsumosService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {}
 
   ngOnInit() {}
@@ -110,7 +107,7 @@ export class InsumosModalComponent implements OnInit {
           catchError((error) => {
             console.error(error);
             return error;
-          })
+          }),
         )
         .subscribe({
           next: (data: any) => {
@@ -160,7 +157,7 @@ export class InsumosModalComponent implements OnInit {
       this.mensajesError = this.obtenerErrores();
       this.alertasService.showError(
         'Verifica el formulario',
-        'Tienes campos invalidas, validalos'
+        'Tienes campos invalidas, validalos',
       );
       return;
     }
@@ -189,7 +186,7 @@ export class InsumosModalComponent implements OnInit {
 
       this.alertasService.showError(
         'Verifica el formulario',
-        'Tienes campos invalidas, validalos'
+        'Tienes campos invalidas, validalos',
       );
       return;
     }

@@ -7,8 +7,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor() {}
-
   login() {
     localStorage.setItem('isLoggedIn', 'true');
     this.loggedIn.next(true);

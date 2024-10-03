@@ -30,7 +30,7 @@ export class CompartidoService {
   }
 
   actualizarTitulo(nuevoTitulo: string) {
-    this._TituloModulo.next(nuevoTitulo);
+    this._TituloModulo.next(nuevoTitulo.toUpperCase());
   }
 
   guardarSesion(sesion: SesionDTO) {

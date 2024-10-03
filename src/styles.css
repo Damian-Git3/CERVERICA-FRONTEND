@@ -3,6 +3,8 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import 'animate.css';
+
 
 @font-face {
   font-family: "Futura";
@@ -23,15 +25,22 @@
   padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05);
+  box-shadow:
+    0 0 #0000,
+    0 0 #0000,
+    0 1px 2px 0 rgba(18, 18, 23, 0.05);
   font-family: var(--font-family);
   font-feature-settings: var(--font-feature-settings, normal);
   font-size: 1rem;
   color: #334155;
   background: #ffffff;
   border: 1px solid #cbd5e1;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
-    box-shadow 0.2s, outline-color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    outline-color 0.2s;
   appearance: none;
   border-radius: 6px;
 }
@@ -138,6 +147,10 @@ main {
   margin-right: 1rem;
 }
 
+.p-button {
+  text-align: center;
+}
+
 .p-badge {
   font-size: 0.5rem;
   max-width: 1rem;
@@ -232,4 +245,16 @@ th {
 .img-td {
   width: 25px;
   height: 100px;
+}
+
+.global-hover-effect {
+  transition: transform 0.3s ease-in-out; /* Transición suave */
+}
+
+.global-hover-effect:hover {
+  transform: scale(1.1); /* Aumenta el tamaño al 110% */
+}
+
+.p-rating-icon-active {
+  color: var(--color-principal);
 }

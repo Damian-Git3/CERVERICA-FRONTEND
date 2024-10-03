@@ -14,7 +14,6 @@ export class TablaComponent {
   _LotesInsumoService = inject(LotesInsumoService);
   _AlertasService = inject(AlertasService);
   _CompartidoService = inject(CompartidoService);
-  
 
   lotesInsumo: LoteInsumoDTO[] = [];
   lotesInsumoFiltrados: LoteInsumoDTO[] = [];
@@ -24,7 +23,7 @@ export class TablaComponent {
   ngOnInit(): void {
     this.obtenerLotesInsumo();
 
-    this._CompartidoService.actualizarTitulo('Lotes insumo');
+    this._CompartidoService.actualizarTitulo('Lotes de Insumos');
   }
 
   public obtenerTodosLotesInsumos() {

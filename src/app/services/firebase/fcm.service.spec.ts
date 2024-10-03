@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GraficasService } from './graficas.service';
+import { FcmService } from './fcm.service';
 
-describe('GraficasService', () => {
-  let service: GraficasService;
+describe('FcmService', () => {
+  let service: FcmService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GraficasService);
+    service = TestBed.inject(FcmService);
   });
 
   it('should be created', () => {

@@ -1,104 +1,118 @@
 <p-progressBar mode="indeterminate" *ngIf="cargando" />
-
-<p-toolbar>
-  <div class="p-toolbar-group-start">
-    <p-button
-      icon="fa-solid fa-rotate-right"
-      class="mr-2"
-      (click)="obtenerUsuarios()"
-    />
-    <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
-  </div>
-  <div class="p-toolbar-group-center">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input
-        pInputText
-        placeholder="Buscar"
-        (input)="filtrarUsuarios($event)"
+<div class="animate__animated animate__backInRight">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button
+        styleClass="global-hover-effect"
+        icon="fa-solid fa-rotate-right"
+        class="mr-2"
+        (click)="obtenerUsuarios()"
       />
-    </span>
-  </div>
-</p-toolbar>
+      <p-button
+        styleClass="global-hover-effect"
+        icon="pi pi-plus"
+        class="mr-2"
+        (click)="modal.show()"
+      />
+    </div>
+    <div class="p-toolbar-group-center">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          placeholder="Buscar"
+          (input)="filtrarUsuarios($event)"
+        />
+      </span>
+    </div>
+  </p-toolbar>
 
-<p-table
-  #dt
-  [value]="usuariosFiltrados"
-  [styleClass]="'p-datatable-sm'"
-  [rows]="10"
-  [paginator]="true"
-  [showCurrentPageReport]="true"
-  [selectionMode]="'single'"
-  currentPageReportTemplate="{first} de {last}"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
-      <th pSortableColumn="correo">CORREO <p-sortIcon field="correo" /></th>
-      <th pSortableColumn="rol">ROL <p-sortIcon field="rol" /></th>
-      <th pSortableColumn="activo">ACTIVO <p-sortIcon field="activo" /></th>
-      <th>ACCIONES</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-usuario>
-    <tr
-      (dblclick)="
-        usuario.activo && !unicoAdministrador && usuario.rol === 'Admin'
-          ? modal.show(usuario)
-          : null
-      "
-    >
-      <td>{{ usuario.nombre }}</td>
-      <td>{{ usuario.correo }}</td>
-      <td>{{ usuario.rol }}</td>
-      <td>
-        <p-tag
-          *ngIf="usuario.activo"
-          severity="success"
-          value="ACTIVO"
-          [rounded]="true"
-        />
-        <p-tag
-          *ngIf="!usuario.activo"
-          severity="danger"
-          value="INACTIVO"
-          [rounded]="true"
-        />
-      </td>
-      <td>
-        <p-button
-          [disabled]="
-            !usuario.activo || (unicoAdministrador && usuario.rol === 'Admin')
-          "
-          size="small"
-          icon="pi pi-pencil"
-          class="mr-2"
-          (click)="modal.show(usuario)"
-          [pTooltip]="'Editar'"
-        ></p-button>
-        <p-button
-          size="small"
-          [icon]="usuario.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'"
-          class="mr-2"
-          [pTooltip]="usuario.activo ? 'Bloquear' : 'Desbloquear'"
-          (onClick)="
-            usuario.activo ? desactivar(usuario.id) : activar(usuario.id)
-          "
-          [disabled]="unicoAdministrador && usuario.rol === 'Admin' && usuario.activo"
-          [severity]="usuario.activo ? 'success' : 'danger'"
-        ></p-button>
-        <p-button
-          size="small"
-          icon="pi pi-trash"
-          class="mr-2"
-          pTooltip="Eliminar"
-          severity="warning"
-          [disabled]="unicoAdministrador && usuario.rol === 'Admin'"
-          (onClick)="confirmarEliminar($event, usuario.id)"
-        ></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+  <p-table
+    #dt
+    [value]="usuariosFiltrados"
+    [styleClass]="'p-datatable-sm'"
+    [rows]="10"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [selectionMode]="'single'"
+    currentPageReportTemplate="{first} de {last}"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nombre">NOMBRE <p-sortIcon field="nombre" /></th>
+        <th pSortableColumn="correo">CORREO <p-sortIcon field="correo" /></th>
+        <th pSortableColumn="rol">ROL <p-sortIcon field="rol" /></th>
+        <th pSortableColumn="activo">ESTATUS <p-sortIcon field="activo" /></th>
+        <th>ACCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+      <tr
+        (dblclick)="
+          usuario.activo && !unicoAdministrador && usuario.rol === 'Admin'
+            ? modal.show(usuario)
+            : null
+        "
+      >
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.rol }}</td>
+        <td>
+          <p-tag
+            *ngIf="usuario.activo"
+            severity="success"
+            value="ACTIVO"
+            [rounded]="true"
+          />
+          <p-tag
+            *ngIf="!usuario.activo"
+            severity="danger"
+            value="INACTIVO"
+            [rounded]="true"
+          />
+        </td>
+        <td>
+          <p-button
+            styleClass="global-hover-effect"
+            [disabled]="
+              !usuario.activo || (unicoAdministrador && usuario.rol === 'Admin')
+            "
+            size="small"
+            icon="pi pi-pencil"
+            class="mr-2"
+            (click)="modal.show(usuario)"
+            [pTooltip]="'Editar'"
+          ></p-button>
+          <p-button
+            styleClass="global-hover-effect"
+            size="small"
+            [icon]="
+              usuario.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
+            "
+            class="mr-2"
+            [pTooltip]="usuario.activo ? 'Bloquear' : 'Desbloquear'"
+            (onClick)="
+              usuario.activo ? desactivar(usuario.id) : activar(usuario.id)
+            "
+            [disabled]="
+              unicoAdministrador && usuario.rol === 'Admin' && usuario.activo
+            "
+            [severity]="usuario.activo ? 'success' : 'danger'"
+          ></p-button>
+          <p-button
+            styleClass="global-hover-effect"
+            size="small"
+            icon="pi pi-trash"
+            class="mr-2"
+            pTooltip="Eliminar"
+            severity="warning"
+            [disabled]="unicoAdministrador && usuario.rol === 'Admin'"
+            (onClick)="confirmarEliminar($event, usuario.id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 
 <app-modal #modal (reload)="obtenerUsuarios()"></app-modal>

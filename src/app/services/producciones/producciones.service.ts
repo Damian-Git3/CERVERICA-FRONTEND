@@ -44,7 +44,7 @@ export class ProduccionesService {
   aceptarSolicutud(idSolicitud: number): Observable<any> {
     return this.http.get(
       `${this._baseURL}/aceptar-solicitud/${idSolicitud}`,
-      {}
+      {},
     );
   }
 
@@ -53,7 +53,7 @@ export class ProduccionesService {
     formData.append('mensaje', mensaje);
     return this.http.post(
       `${this._baseURL}/rechazar-solicitud/${idSolicitud}`,
-      formData
+      formData,
     );
   }
 
@@ -62,7 +62,7 @@ export class ProduccionesService {
     formData.append('mensaje', mensaje);
     return this.http.post(
       `${this._baseURL}/posponer-solicitud/${idSolicitud}`,
-      formData
+      formData,
     );
   }
 

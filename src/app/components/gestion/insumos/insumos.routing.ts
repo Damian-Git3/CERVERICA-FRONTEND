@@ -4,7 +4,7 @@ import { InsumosTablaComponent } from './insumos-tabla/insumos-tabla.component';
 const routes: Routes = [
   {
     path: '',
-    component: InsumosTablaComponent
+    component: InsumosTablaComponent,
   },
 ];
 

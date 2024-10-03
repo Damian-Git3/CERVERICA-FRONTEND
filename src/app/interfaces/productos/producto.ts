@@ -6,6 +6,7 @@ export interface Producto {
   precioPaquete6: number;
   precioPaquete12: number;
   precioPaquete24: number;
+  puntuacion: number;
   lotesMinimos: number;
   lotesMaximos: number;
   imagen: string;
@@ -15,4 +16,5 @@ export interface Producto {
   nuevo: boolean;
   cantidadEnStock: number;
   estaEnCarrito: boolean;
+  descripcion: string;
 }

@@ -18,7 +18,7 @@ export class RecetasTablaComponent implements OnInit {
   public valorBuscado: string = '';
   constructor(
     private recetaService: RecetaService,
-    private alertasService: AlertasService
+    private alertasService: AlertasService,
   ) {
     this.items = [
       {
@@ -61,7 +61,7 @@ export class RecetasTablaComponent implements OnInit {
         next: (data: any) => {
           this.alertasService.showSuccess(
             'Se desbloqueo correctamente la receta',
-            'Receta desbloqueada'
+            'Receta desbloqueada',
           );
           this.obtenerRecetas();
         },
@@ -79,7 +79,7 @@ export class RecetasTablaComponent implements OnInit {
         next: (data: any) => {
           this.alertasService.showSuccess(
             'Se bloqueo correctamente la receta',
-            'Receta bloqueada'
+            'Receta bloqueada',
           );
           this.obtenerRecetas();
         },

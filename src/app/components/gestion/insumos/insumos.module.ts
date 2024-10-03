@@ -16,11 +16,7 @@ import { PrimeModule } from '../../prime/prime.module';
 import { InsumosRoutes } from './insumos.routing';
 
 @NgModule({
-  declarations: [
-    InsumosTablaComponent,
-    InsumosModalComponent,
-
-  ],
+  declarations: [InsumosTablaComponent, InsumosModalComponent],
   imports: [
     CommonModule,
     InsumosRoutes,
@@ -34,7 +30,7 @@ import { InsumosRoutes } from './insumos.routing';
     TagModule,
     InputTextareaModule,
     DropdownModule,
-    PrimeModule
-  ]
+    PrimeModule,
+  ],
 })
-export class InsumosModule { }
+export class InsumosModule {}

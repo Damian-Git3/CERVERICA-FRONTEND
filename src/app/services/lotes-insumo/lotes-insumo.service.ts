@@ -32,13 +32,13 @@ export class LotesInsumoService {
   }
   obtenerLoteInsumoPorInsumo(idInsumo: number): Observable<LoteInsumoDTO[]> {
     return this._http.get<LoteInsumoDTO[]>(
-      `${this._baseURL}/insumo/${idInsumo}`
+      `${this._baseURL}/insumo/${idInsumo}`,
     );
   }
 
   obtenerLoteInsumoPorFecha(
     fecha1: Date,
-    fecha2: Date
+    fecha2: Date,
   ): Observable<LoteInsumoDTO[]> {
     let params = new HttpParams()
       .set('fecha1', fecha1.toISOString())
@@ -49,30 +49,30 @@ export class LotesInsumoService {
     });
   }
   crearLoteInsumo(
-    loteInsumo: CrearLoteInsumoDTO
+    loteInsumo: CrearLoteInsumoDTO,
   ): Observable<{ message: string; id: number }> {
     return this._http.post<{ message: string; id: number }>(
       this._baseURL,
-      loteInsumo
+      loteInsumo,
     );
   }
   editarLoteInsumo(
     id: number,
-    loteInsumo: EditarLoteInsumoDTO
+    loteInsumo: EditarLoteInsumoDTO,
   ): Observable<{ message: string }> {
     return this._http.put<{ message: string }>(
       `${this._baseURL}/${id}`,
-      loteInsumo
+      loteInsumo,
     );
   }
 
   editarMermaLoteInsumo(
     id: number,
-    merma: number
+    merma: number,
   ): Observable<{ message: string }> {
     return this._http.post<{ message: string }>(
       `${this._baseURL}/merma/${id}?merma=${merma}`,
-      {}
+      {},
     );
   }
 

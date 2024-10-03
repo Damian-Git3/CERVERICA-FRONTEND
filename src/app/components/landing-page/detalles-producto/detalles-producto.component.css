@@ -1,0 +1,162 @@
+.seccion-cerveza {
+  max-height: 575px;
+  height: 575px;
+  position: relative;
+}
+
+.seccion-cerveza .botella {
+  position: absolute;
+  top: 80%;
+  left: 47%;
+  transform: translate(-50%, -100%);
+  max-height: 450px;
+  z-index: 1;
+}
+
+.imagen-izquierda {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-position: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 47%;
+}
+
+.bg {
+  display: none;
+  width: 100%;
+}
+
+.container {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  height: 100% !important;
+  max-width: 1140px;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.contenedor-detalles {
+  margin-bottom: 0 !important;
+  height: 100% !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.contenedor-comprar {
+  margin-top: 1rem;
+}
+
+.detalles {
+  padding: 0 15px;
+  flex: 0 0 33.3333333333%;
+  max-width: 33.3333333333%;
+  position: relative;
+  width: 100%;
+}
+
+.nombre-botella {
+  font-size: 40px;
+  color: var(--color-principal) !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0 !important;
+  margin-top: 0;
+}
+
+.nombre-botella small {
+  font-size: 20px;
+  color: #1a1a1a !important;
+  display: inline-block !important;
+  font-weight: 400;
+}
+
+.detalles p {
+  margin-top: 1rem;
+  font-size: 15px;
+}
+
+.contenedor-comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.contenido-comentario {
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.encabezado-comentario {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.nombre-usuario {
+  font-weight: bold;
+  font-size: 14px;
+  color: #1a2551;
+}
+
+.puntuacion {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.puntuacion .pi-star {
+  color: #f4c150;
+  font-size: 16px;
+  margin-left: 3px;
+  fill: #f4c150;
+}
+
+.fecha-comentario {
+  color: #a1a0a0;
+}
+
+.usuario-comentario {
+  display: flex;
+  gap: 1rem;
+  font-weight: bold;
+}
+
+.comentario {
+  display: flex;
+  flex-direction: column;
+}
+
+.calificacion-comentario {
+  display: flex;
+  gap: 1rem;
+  font-weight: bold;
+  align-items: center;
+}
+
+.texto-comentario {
+  font-size: 1.2rem;
+}
+
+.ordenar-comentarios {
+  margin-bottom: 10rem;
+  margin-top: 10rem;
+}
+
+.sin-comentarios {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
