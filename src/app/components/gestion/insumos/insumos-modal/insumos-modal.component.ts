@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
-  FormControl,
+  FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -23,20 +23,23 @@ export class InsumosModalComponent implements OnInit {
   public mensajesError: string = '';
   cargando: boolean = false;
 
-  insumoForm: FormGroup = new FormGroup({
-    id: new FormControl({ value: '', disabled: true }),
-    nombre: new FormControl('', [Validators.required]),
-    descripcion: new FormControl('', [Validators.required]),
-    unidadMedida: new FormControl('', [Validators.required]),
-    cantidadMaxima: new FormControl('', [Validators.required]),
-    cantidadMinima: new FormControl('', [Validators.required]),
-    merma: new FormControl('', [Validators.required]),
-  });
+  insumoForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private insumosService: InsumosService,
-    private alertasService: AlertasService,
-  ) {}
+    private alertasService: AlertasService
+  ) {
+    this.insumoForm = this.fb.group({
+      id: [{ value: '', disabled: true }],
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      unidadMedida: ['', Validators.required],
+      cantidadMaxima: ['', Validators.required],
+      cantidadMinima: ['', Validators.required],
+      merma: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {}
 
@@ -107,7 +110,7 @@ export class InsumosModalComponent implements OnInit {
           catchError((error) => {
             console.error(error);
             return error;
-          }),
+          })
         )
         .subscribe({
           next: (data: any) => {
@@ -157,7 +160,7 @@ export class InsumosModalComponent implements OnInit {
       this.mensajesError = this.obtenerErrores();
       this.alertasService.showError(
         'Verifica el formulario',
-        'Tienes campos invalidas, validalos',
+        'Tienes campos invalidas, validalos'
       );
       return;
     }
@@ -186,7 +189,7 @@ export class InsumosModalComponent implements OnInit {
 
       this.alertasService.showError(
         'Verifica el formulario',
-        'Tienes campos invalidas, validalos',
+        'Tienes campos invalidas, validalos'
       );
       return;
     }
@@ -197,6 +200,7 @@ export class InsumosModalComponent implements OnInit {
       .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           this.alertasService.showSuccess('Insumo actualizado correctamente');
           this.ocultar();
         },

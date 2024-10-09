@@ -5,6 +5,7 @@ import { finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { Dialog } from 'primeng/dialog';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tabla',
@@ -17,6 +18,7 @@ export class TablaComponent {
   _VentasService = inject(VentasService);
   _AlertasService = inject(AlertasService);
   _CompartidoService = inject(CompartidoService);
+  _title = inject(Title);
 
   cargando: boolean = false;
   ventas!: Venta[];
@@ -24,6 +26,7 @@ export class TablaComponent {
 
   ngOnInit(): void {
     this._CompartidoService.actualizarTitulo('Ventas');
+    this._title.setTitle('Ventas');
     this.obtenerVentas();
   }
 

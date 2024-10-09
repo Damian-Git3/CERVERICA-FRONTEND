@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [ProveedoresTablaComponent, ProveedoresModalComponent],
@@ -31,6 +32,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
+    InputMaskModule,
   ],
 })
 export class ProveedoresModule {}

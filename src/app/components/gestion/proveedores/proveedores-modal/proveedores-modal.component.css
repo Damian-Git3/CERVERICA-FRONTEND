@@ -1,0 +1,28 @@
+input.ng-valid {
+  border: 2px solid green;
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8em;
+}
+
+:host ::ng-deep p-inputNumber.ng-valid > span > input {
+  border: 2px solid green;
+}
+
+:host ::ng-deep p-inputNumber.ng-invalid.ng-touched > span > input {
+  border: 2px solid red;
+}
+
+:host ::ng-deep p-inputMask.ng-valid > input {
+  border: 2px solid green;
+}
+
+:host ::ng-deep p-inputMask.ng-invalid.ng-touched > input {
+  border: 2px solid red;
+}

@@ -7,11 +7,6 @@
   (onHide)="ocultar()"
 >
   <form [formGroup]="proveedoresForm">
-    <div class="field">
-      <label for="id"> ID </label>
-      <input pInputText formControlName="id" id="id" class="w-full" />
-    </div>
-
     <!-- EMPRESA -->
 
     <div class="field">
@@ -22,6 +17,14 @@
         placeholder="Empresa"
         class="w-full"
       />
+      <div
+        *ngIf="f['empresa'].touched && f['empresa'].invalid"
+        class="error-message"
+      >
+        <div *ngIf="f['empresa'].errors?.['required']">
+          El campo Empresa es requerido.
+        </div>
+      </div>
     </div>
 
     <div class="field">
@@ -33,19 +36,50 @@
         id="nombreContacto"
         class="w-full"
       />
+      <div
+        *ngIf="f['nombreContacto'].touched && f['nombreContacto'].invalid"
+        class="error-message"
+      >
+        <div *ngIf="f['nombreContacto'].errors?.['required']">
+          El campo Nombre de Contacto es requerido.
+        </div>
+      </div>
     </div>
 
     <!-- TELEFONO -->
 
     <div class="field">
       <label for="telefono"> TELEFONO </label>
-      <input
-        pInputText
+      <p-inputMask
         formControlName="telefono"
         placeholder="Telefono"
         id="telefono"
         class="w-full"
+        (onFocus)="obtenerErrores('telefono')"
+        styleClass="w-full"
+        mask="9999999999"
+        placeholder="0000000000"
+        type="text"
+        [maxlength]="10"
+        [minlength]="10"
       />
+      <div
+        *ngIf="f['telefono'].touched && f['telefono'].invalid"
+        class="error-message"
+      >
+        <div *ngIf="f['telefono'].errors?.['required']">
+          El campo Teléfono es requerido.
+        </div>
+        <div *ngIf="f['telefono'].errors?.['minlength']">
+          El número de teléfono debe tener al menos 10 dígitos.
+        </div>
+        <div *ngIf="f['telefono'].errors?.['maxlength']">
+          El número de teléfono no puede tener más de 10 dígitos.
+        </div>
+        <div *ngIf="f['telefono'].errors?.['pattern']">
+          El número de teléfono solo puede contener dígitos.
+        </div>
+      </div>
     </div>
 
     <div class="field">
@@ -57,6 +91,14 @@
         id="direccion"
         class="w-full"
       />
+      <div
+        *ngIf="f['direccion'].touched && f['direccion'].invalid"
+        class="error-message"
+      >
+        <div *ngIf="f['direccion'].errors?.['required']">
+          El campo Dirección es requerido.
+        </div>
+      </div>
     </div>
 
     <div class="field">
@@ -67,7 +109,19 @@
         placeholder="Email"
         id="email"
         class="w-full"
+        (input)="obtenerErrores('email')"
       />
+      <div
+        *ngIf="f['email'].touched && f['email'].invalid"
+        class="error-message"
+      >
+        <div *ngIf="f['email'].errors?.['required']">
+          El campo Email es requerido.
+        </div>
+        <div *ngIf="f['email'].errors?.['email']">
+          El formato del Email es incorrecto.
+        </div>
+      </div>
     </div>
 
     <div class="field flex justify-content-center gap-1">
@@ -75,6 +129,7 @@
         [label]="labelBoton"
         styleClass="w-full"
         icon="fa-solid fa-save"
+        [disabled]="proveedoresForm.invalid || !proveedoresForm.dirty "
         (click)="modificar ? actualizar() : guardar()"
       ></p-button>
       <p-button
