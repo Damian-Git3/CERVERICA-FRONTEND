@@ -1,0 +1,165 @@
+<div class="login" #contenedorLogin>
+  <div class="box">
+    <div class="inner-box">
+      <div class="forms-wrap">
+        <form
+          class="sign-in-form"
+          [formGroup]="formCrearCuenta"
+          (ngSubmit)="crearCuenta()"
+        >
+          <div class="heading">
+            <div class="logo">
+              <img src="./img/logo-completo.png" alt="easyclass" />
+            </div>
+            <div>
+              <h2>Crear cuenta empresarial</h2>
+              <h4>Ya tienes una cuenta?</h4>
+              <button
+                class="toggle"
+                type="button"
+                [routerLink]="['/cerverica/login']"
+              >
+                Iniciar sesión
+              </button>
+            </div>
+          </div>
+
+          <div class="actual-form">
+            <h3>Datos de la Empresa</h3>
+
+            <div class="contenedor-grid">
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  class="input-field"
+                  formControlName="nombreEmpresa"
+                  autocomplete="off"
+                  required
+                />
+                <label>Nombre de la Empresa</label>
+              </div>
+
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  class="input-field"
+                  formControlName="direccionEmpresa"
+                  autocomplete="off"
+                  required
+                />
+                <label>Dirección</label>
+              </div>
+            </div>
+
+            <div class="contenedor-grid">
+              <div class="input-wrap">
+                <input
+                  type="tel"
+                  class="input-field"
+                  formControlName="telefonoEmpresa"
+                  autocomplete="off"
+                  required
+                  minlength="10"
+                  maxlength="10"
+                  inputmode="numeric"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                />
+                <label>Teléfono de la Empresa</label>
+              </div>
+
+              <div class="input-wrap">
+                <input
+                  type="email"
+                  class="input-field"
+                  formControlName="emailEmpresa"
+                  autocomplete="off"
+                  required
+                />
+                <label>Email de la Empresa</label>
+              </div>
+            </div>
+
+            <!-- Información del contacto -->
+            <h3>Datos del Contacto</h3>
+            <div class="contenedor-grid">
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  class="input-field"
+                  formControlName="fullName"
+                  autocomplete="off"
+                  required
+                />
+                <label>Nombre Completo del Contacto</label>
+              </div>
+
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  class="input-field"
+                  formControlName="cargoContacto"
+                  autocomplete="off"
+                />
+                <label>Cargo</label>
+              </div>
+            </div>
+
+            <div class="contenedor-grid">
+              <div class="input-wrap">
+                <input
+                  type="email"
+                  class="input-field"
+                  formControlName="email"
+                  autocomplete="off"
+                  required
+                />
+                <label>Email Personal</label>
+              </div>
+
+              <div class="input-wrap">
+                <input
+                  type="password"
+                  minlength="4"
+                  class="input-field"
+                  autocomplete="off"
+                  formControlName="password"
+                  required
+                />
+                <label>Contraseña</label>
+              </div>
+            </div>
+
+            <div class="contenedor-grid">
+              <div class="input-wrap">
+                <input
+                  type="tel"
+                  class="input-field"
+                  formControlName="telefonoContacto"
+                  autocomplete="off"
+                  required
+                  minlength="10"
+                  maxlength="10"
+                  inputmode="numeric"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                />
+                <label>Teléfono Personal</label>
+              </div>
+            </div>
+
+            <div class="mensajes-error" #mensajesCrearCuenta></div>
+
+            <button
+              type="submit"
+              class="sign-btn"
+              [disabled]="formCrearCuenta.invalid"
+            >
+              Registrar
+            </button>
+
+            <p-progressBar mode="indeterminate" *ngIf="creandoCuenta" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

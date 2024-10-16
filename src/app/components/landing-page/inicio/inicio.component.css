@@ -104,13 +104,38 @@
 }
 
 .leyenda-inicio {
-  margin-top: 5rem;
   text-align: right;
   width: 100%;
 }
 
 .leyenda-inicio {
   color: var(--gris-50-opacidad);
+}
+
+.btn-mayorista {
+  display: inline-block;
+  width: 250px;
+  height: 43px;
+  background-color: var(--color-principal);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.btn-mayorista:hover {
+  transform: scale(1.05);
+  opacity: 0.75;
+}
+
+.contenedor-extra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
