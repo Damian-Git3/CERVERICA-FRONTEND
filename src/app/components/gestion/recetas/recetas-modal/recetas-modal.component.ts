@@ -44,6 +44,7 @@ export class RecetasModalComponent implements OnInit {
     especificaciones: new FormControl({ value: null, disabled: false }),
     nombre: new FormControl(''),
     imagen: new FormControl(''),
+    tiempoVida: new FormControl(0),
     rutaFondo: new FormControl(''),
     precioPaquete1: new FormControl(0),
     precioPaquete6: new FormControl(0),
@@ -137,6 +138,7 @@ export class RecetasModalComponent implements OnInit {
           this.f['especificaciones'].setValue(data.especificaciones);
           this.f['nombre'].setValue(data.nombre);
           this.f['imagen'].setValue(data.imagen);
+          this.f['tiempoVida'].setValue(data.tiempoVida);
           this.f['rutaFondo'].setValue(data.rutaFondo);
           this.f['precioPaquete1'].setValue(data.precioPaquete1);
           this.f['precioPaquete6'].setValue(data.precioPaquete6);

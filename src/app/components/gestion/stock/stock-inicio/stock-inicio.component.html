@@ -39,6 +39,16 @@
                     {{ producto.cantidadEnStock }}
                 </strong>
             </div>
+            <div class="product-fechas">
+                <div class="product-fecha">
+                    <span class="product-fecha-titulo">Fecha Entrada:</span>
+                    <span class="product-fecha-valor">{{ producto.fecha_registrado }}</span>
+                </div>
+                <div class="product-fecha">
+                    <span class="product-fecha-titulo">Fecha de caducidad:</span>
+                    <span class="product-fecha-valor">{{ producto.fechaCaducidad }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>

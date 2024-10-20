@@ -6,6 +6,7 @@ export interface IReceta {
   nombre: string;
   costoProduccion: number;
   imagen: string;
+  tiempoVida: number;
   rutaFondo: string;
   fechaRegistrado: string;
   activo?: boolean;
