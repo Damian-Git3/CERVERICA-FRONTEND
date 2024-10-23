@@ -17,6 +17,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { PasosModalComponent } from './pasos-modal/pasos-modal.component';
 import { AvanzarPasoModalComponent } from './avanzar-paso-modal/avanzar-paso-modal.component';
+import { FormErrorMessagesComponent } from '../../form-error-messages/form-error-messages.component';
+import { InputNumberModule } from 'primeng/inputnumber';
 @NgModule({
   declarations: [
     ProduccionesTablaComponent,
@@ -40,6 +42,8 @@ import { AvanzarPasoModalComponent } from './avanzar-paso-modal/avanzar-paso-mod
     TagModule,
     ConfirmDialogModule,
     InputTextareaModule,
+    FormErrorMessagesComponent,
+    InputNumberModule,
   ],
 })
 export class ProduccionesModule {}

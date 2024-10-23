@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
+import { FormErrorMessagesComponent } from "../../form-error-messages/form-error-messages.component";
 
 @NgModule({
   declarations: [ProveedoresTablaComponent, ProveedoresModalComponent],
@@ -33,6 +34,7 @@ import { InputMaskModule } from 'primeng/inputmask';
     InputTextModule,
     InputNumberModule,
     InputMaskModule,
-  ],
+    FormErrorMessagesComponent
+],
 })
 export class ProveedoresModule {}

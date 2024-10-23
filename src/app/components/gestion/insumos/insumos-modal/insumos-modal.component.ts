@@ -1,9 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InsumosService } from '../../../../services/insumos/insumos.service';
 import { catchError, finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
@@ -127,7 +123,7 @@ export class InsumosModalComponent implements OnInit {
     } else {
       this.modificar = false;
       this.labelBoton = 'Guardar';
-      this.titulo = 'Crear Insumo';
+      this.titulo = 'Nuevo Insumo';
     }
   }
 

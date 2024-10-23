@@ -55,6 +55,14 @@ export class ModalComponent {
     this.obtenerInsumos();
   }
 
+  get f(): { [key: string]: any } {
+    return this.crearForm.controls;
+  }
+
+  get fEditar(): { [key: string]: any } {
+    return this.editarForm.controls;
+  }
+
   crearForm: FormGroup = this._FormBuilder.group({
     proveedor: [null, Validators.required],
     insumo: [null, Validators.required],
@@ -103,7 +111,7 @@ export class ModalComponent {
           montoCompra: this.loteInsumoSeleccionado.montoCompra,
         });
       } else {
-        this.modal.header = 'Crear lote insumo';
+        this.modal.header = 'Nuevo Lote';
         this.nuevo = true;
       }
     } else {
