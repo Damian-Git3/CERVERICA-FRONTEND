@@ -173,7 +173,19 @@ export class ProduccionesTablaComponent implements OnInit {
   }
 
   almacenar(id: number) {
-    this.produccionesService.almacenar(id, {}).subscribe({
+
+    // ESTA EN DURO POR LAS VALIDACIONES QUE HAY EN BACK
+    const almacenado =
+    {
+      "LitrosFinales": 1,
+      "MermaLitros": 0,
+      "TipoEnvase": "Botella",
+      "MedidaEnvase": 355,
+      "Mensaje": "",
+      "CalcularMerma": null,
+      "ProduccionFallida": null
+    }
+    this.produccionesService.almacenar(id, almacenado).subscribe({
       next: (data: any) => {
         console.log('Produccion almacenada');
         this.alertasService.showSuccess('Produccion almacenada');

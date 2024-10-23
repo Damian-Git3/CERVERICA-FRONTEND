@@ -50,7 +50,7 @@ export class ProductosComponent {
     this.productosOriginales.forEach((producto) => {
       producto.favorito = favoritosSet.has(producto.id);
 
-      if (this.esReciente(producto.fecha_registrado)) {
+      if (this.esReciente(producto.fechaRegistrado)) {
         producto.nuevo = true;
       }
     });

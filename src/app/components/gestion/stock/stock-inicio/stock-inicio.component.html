@@ -4,7 +4,7 @@
     <div class="p-toolbar-group-start">
         <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerProductos()" />
 
-        
+
     </div>
     <div class="p-toolbar-group-center"></div>
     <div class="p-toolbar-group-end">
@@ -42,11 +42,11 @@
             <div class="product-fechas">
                 <div class="product-fecha">
                     <span class="product-fecha-titulo">Fecha de registro:</span>
-                    <span class="product-fecha-valor">{{ producto.fecha_registrado }}</span>
+                    <span class="product-fecha-valor">{{ producto.fechaRegistrado | date:'dd/MM/yyyy' }}</span>
                 </div>
                 <div class="product-fecha">
                     <span class="product-fecha-titulo">Tiempo de vida:</span>
-                    <span class="product-fecha-valor">{{ producto.tiempo_vida }}</span>
+                    <span class="product-fecha-valor">{{ producto.tiempoVida }} días</span>
                 </div>
             </div>
         </div>

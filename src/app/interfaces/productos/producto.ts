@@ -11,8 +11,8 @@ export interface Producto {
   lotesMaximos: number;
   imagen: string;
   rutaFondo: string;
-  fecha_registrado: string;
-  tiempo_vida: string;
+  fechaRegistrado: string;
+  tiempoVida: string;
   favorito: boolean;
   nuevo: boolean;
   cantidadEnStock: number;
