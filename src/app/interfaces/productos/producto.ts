@@ -12,7 +12,7 @@ export interface Producto {
   imagen: string;
   rutaFondo: string;
   fecha_registrado: string;
-  fechaCaducidad: string;
+  tiempo_vida: string;
   favorito: boolean;
   nuevo: boolean;
   cantidadEnStock: number;

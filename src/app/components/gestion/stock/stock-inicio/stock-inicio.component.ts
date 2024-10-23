@@ -45,6 +45,7 @@ export class StockInicioComponent implements OnInit {
   public obtenerProductos() {
     this._recetasService.obtenerRecetasLanding().subscribe({
       next: (productosCarouselResponse) => {
+        console.log(productosCarouselResponse);
         this.productosCarousel = productosCarouselResponse;
         this.productosCarouselFiltrados = productosCarouselResponse;
         console.log(this.productosCarousel)
