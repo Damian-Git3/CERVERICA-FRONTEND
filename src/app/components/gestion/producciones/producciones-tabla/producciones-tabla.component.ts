@@ -5,6 +5,7 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
 import { ProduccionesService } from '../../../../services/producciones/producciones.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { SesionDTO } from '../../../../interfaces/usuario/sesion-dto';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-producciones-tabla',
@@ -32,6 +33,7 @@ export class ProduccionesTablaComponent implements OnInit {
     private alertasService: AlertasService,
     private produccionesService: ProduccionesService,
     private compartidoService: CompartidoService,
+    private title: Title
   ) {
     this.items = [
       {
@@ -45,7 +47,7 @@ export class ProduccionesTablaComponent implements OnInit {
     ];
 
     this._CompartidoService.actualizarTitulo('Producciones');
-
+    this.title.setTitle('Producciones');
     this.usuario = this.compartidoService.obtenerSesion();
     console.log('Usuario:', this.usuario);
   }
@@ -78,8 +80,7 @@ export class ProduccionesTablaComponent implements OnInit {
       next: (data: any) => {
         if (this.usuario.rol === 'Operador') {
           this.producciones = data.filter(
-            (produccion: any) =>
-              produccion.idUsuario === this.usuario.idUsuario,
+            (produccion: any) => produccion.idUsuario === this.usuario.idUsuario
           );
         } else {
           this.producciones = data;

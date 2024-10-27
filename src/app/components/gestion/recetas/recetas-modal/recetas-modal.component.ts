@@ -5,12 +5,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { IReceta } from '../../../../interfaces/receta.interface';
 import { RecetaService } from '../../../../services/receta/receta.service';
@@ -56,7 +51,7 @@ export class RecetasModalComponent implements OnInit {
     private recetasService: RecetaService,
     private alertasService: AlertasService,
     private insumosService: InsumosService,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -83,7 +78,7 @@ export class RecetasModalComponent implements OnInit {
       this.modificar = false;
       this.insumosSeleccionados = [];
       this.insumos = [];
-      this.modal.header = 'Crear Receta';
+      this.modal.header = 'Nueva Receta';
     }
   }
 
@@ -100,9 +95,11 @@ export class RecetasModalComponent implements OnInit {
       .pipe(finalize(() => this.ocultar()))
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           this.alertasService.showSuccess('Receta creada correctamente');
         },
         error: (error: any) => {
+          console.error(error);
           this.alertasService.showError('Error al crear la receta');
         },
       });
@@ -163,11 +160,12 @@ export class RecetasModalComponent implements OnInit {
                 nombre: [ingrediente.nombre],
                 cantidad: [ingrediente.cantidad],
                 unidadMedida: [ingrediente.unidadMedida],
-              }),
+              })
             );
           });
         },
         error: (error: any) => {
+          console.error(error);
           this.alertasService.showError('Error al obtener la receta');
         },
       });
@@ -181,7 +179,7 @@ export class RecetasModalComponent implements OnInit {
         nombre: [insumo.nombre],
         unidadMedida: [insumo.unidadMedida],
         cantidad: [''],
-      }),
+      })
     );
   }
 
@@ -220,7 +218,7 @@ export class RecetasModalComponent implements OnInit {
     selected.forEach((insumo: any) => {
       if (
         !current.controls.find(
-          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre,
+          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre
         )
       ) {
         this.agregarIngrediente(insumo);
@@ -232,7 +230,7 @@ export class RecetasModalComponent implements OnInit {
       const ingrediente = current.at(i);
       if (
         !selected.find(
-          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value,
+          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value
         )
       ) {
         current.removeAt(i);

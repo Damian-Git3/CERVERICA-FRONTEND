@@ -5,8 +5,10 @@
   [header]="titulo"
   [modal]="true"
   (onHide)="ocultar()"
+  appendTo="body"
 >
   <form [formGroup]="insumoForm">
+    <!-- NOMBRE -->
     <div class="field">
       <label for="nombre"> NOMBRE </label>
       <input
@@ -16,8 +18,13 @@
         id="nombre"
         class="w-full"
       />
+      <app-form-error-messages
+        [control]="f['nombre']"
+        label="Nombre"
+      ></app-form-error-messages>
     </div>
 
+    <!-- DESCRIPCION -->
     <div class="field">
       <label for="descripcion"> DESCRIPCION </label>
       <textarea
@@ -27,8 +34,13 @@
         formControlName="descripcion"
         class="w-full"
       ></textarea>
+      <app-form-error-messages
+        [control]="f['descripcion']"
+        label="Descripción"
+      ></app-form-error-messages>
     </div>
 
+    <!-- UNIDAD DE MEDIDA -->
     <div class="field">
       <label for="unidadMedida"> UNIDAD DE MEDIDA </label>
       <p-dropdown
@@ -36,50 +48,66 @@
         [options]="unidadesMedida"
         placeholder="Unidad De Medida"
         styleClass="w-full"
-      />
+      ></p-dropdown>
+      <app-form-error-messages
+        [control]="f['unidadMedida']"
+        label="Unidad de Medida"
+      ></app-form-error-messages>
     </div>
 
+    <!-- CANTIDAD MAXIMA -->
     <div class="field flex flex-column">
-      <label for="cantidadMaxima"
-        >CANTIDAD MAXIMA {{ insumoForm.value.unidadMedida }}</label
-      >
+      <label for="cantidadMaxima">
+        CANTIDAD MAXIMA {{ insumoForm.value.unidadMedida }}
+      </label>
       <p-inputNumber
         formControlName="cantidadMaxima"
         inputId="cantidadMaxima"
         [minFractionDigits]="minFractionDigits"
-      />
+      ></p-inputNumber>
+      <app-form-error-messages
+        [control]="f['cantidadMaxima']"
+        label="Cantidad Máxima"
+      ></app-form-error-messages>
     </div>
 
+    <!-- CANTIDAD MINIMA -->
     <div class="field flex flex-column">
       <label for="cantidadMinima">
-        CANTIDAD MINIMA {{ insumoForm.value.unidadMedida }}</label
-      >
+        CANTIDAD MINIMA {{ insumoForm.value.unidadMedida }}
+      </label>
       <p-inputNumber
         formControlName="cantidadMinima"
         inputId="cantidadMinima"
         [minFractionDigits]="minFractionDigits"
-      />
+      ></p-inputNumber>
+      <app-form-error-messages
+        [control]="f['cantidadMinima']"
+        label="Cantidad Mínima"
+      ></app-form-error-messages>
     </div>
 
+    <!-- MERMA -->
     <div class="field flex flex-column">
-      <label for="merma"> MERMA {{ insumoForm.value.unidadMedida }}</label>
+      <label for="merma"> MERMA {{ insumoForm.value.unidadMedida }} </label>
       <p-inputNumber
         formControlName="merma"
         inputId="merma"
         [minFractionDigits]="minFractionDigits"
-      />
+      ></p-inputNumber>
+      <app-form-error-messages
+        [control]="f['merma']"
+        label="Merma"
+      ></app-form-error-messages>
     </div>
 
-    <div class="mensajes-error" *ngIf="mensajesError != ''">
-      <div [innerHTML]="mensajesError"></div>
-    </div>
-
+    <!-- BOTONES -->
     <div class="field flex justify-content-center gap-1">
       <p-button
         [label]="labelBoton"
         styleClass="w-full"
         icon="fa-solid fa-save"
-        [disabled]="insumoForm.invalid"
+        [disabled]="insumoForm.invalid || !insumoForm.dirty"
         [loading]="cargando"
         (click)="modificar ? actualizar() : guardar()"
       ></p-button>

@@ -14,6 +14,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DropdownModule } from 'primeng/dropdown';
 import { PrimeModule } from '../../prime/prime.module';
 import { InsumosRoutes } from './insumos.routing';
+import { FormErrorMessagesComponent } from '../../form-error-messages/form-error-messages.component';
 
 @NgModule({
   declarations: [InsumosTablaComponent, InsumosModalComponent],
@@ -31,6 +32,7 @@ import { InsumosRoutes } from './insumos.routing';
     InputTextareaModule,
     DropdownModule,
     PrimeModule,
+    FormErrorMessagesComponent,
   ],
 })
 export class InsumosModule {}

@@ -4,6 +4,7 @@ import { finalize } from 'rxjs';
 import { MenuItem } from 'primeng/api';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-recetas-tabla',
@@ -19,6 +20,7 @@ export class RecetasTablaComponent implements OnInit {
   constructor(
     private recetaService: RecetaService,
     private alertasService: AlertasService,
+    private title: Title
   ) {
     this.items = [
       {
@@ -34,7 +36,7 @@ export class RecetasTablaComponent implements OnInit {
 
   public ngOnInit(): void {
     this.obtenerRecetas();
-
+    this.title.setTitle('Recetas');
     this._CompartidoService.actualizarTitulo('Recetas');
   }
 
@@ -61,7 +63,7 @@ export class RecetasTablaComponent implements OnInit {
         next: (data: any) => {
           this.alertasService.showSuccess(
             'Se desbloqueo correctamente la receta',
-            'Receta desbloqueada',
+            'Receta desbloqueada'
           );
           this.obtenerRecetas();
         },
@@ -79,7 +81,7 @@ export class RecetasTablaComponent implements OnInit {
         next: (data: any) => {
           this.alertasService.showSuccess(
             'Se bloqueo correctamente la receta',
-            'Receta bloqueada',
+            'Receta bloqueada'
           );
           this.obtenerRecetas();
         },

@@ -1,0 +1,33 @@
+<div *ngIf="control?.touched && control?.invalid" class="error-message">
+  <div *ngIf="control?.errors?.['required']">
+    El campo {{ label }} es requerido.
+  </div>
+  <div *ngIf="control?.errors?.['minlength']">
+    El campo {{ label }} debe tener al menos
+    {{ control?.errors?.['minlength'].requiredLength }} caracteres.
+  </div>
+  <div *ngIf="control?.errors?.['maxlength']">
+    El campo {{ label }} no puede tener más de
+    {{ control?.errors?.['maxlength'].requiredLength }} caracteres.
+  </div>
+  <div *ngIf="control?.errors?.['pattern']">
+    El formato del campo {{ label }} es incorrecto.
+  </div>
+  <div *ngIf="control?.errors?.['email']">
+    El formato del Email es incorrecto.
+  </div>
+  <div *ngIf="control?.errors?.['min']">
+    El campo {{ label }} debe ser mayor o igual a
+    {{ control?.errors?.['min'].min }}.
+  </div>
+  <div *ngIf="control?.errors?.['max']">
+    El campo {{ label }} debe ser menor o igual a
+    {{ control?.errors?.['max'].max }}.
+  </div>
+  <div *ngIf="control?.errors?.['passwordsNotEqual']">
+    Las contraseñas no coinciden.
+  </div>
+  <div *ngIf="control?.errors?.['invalid']">
+    {{ control?.errors?.['invalid'].message }}
+  </div>
+</div>
