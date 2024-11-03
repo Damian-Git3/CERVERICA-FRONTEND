@@ -1,0 +1,73 @@
+<p-dialog
+  [modal]="true"
+  [(visible)]="display"
+  (onHide)="hide()"
+  [style]="{ width: '25rem' }"
+>
+  <form [formGroup]="form">
+    <!-- MENSAJE -->
+    <div class="field">
+      <label for="mensaje">MENSAJE</label>
+      <textarea
+        pInputTextarea
+        formControlName="mensaje"
+        id="mensaje"
+        class="w-full"
+      ></textarea>
+    </div>
+
+    <!-- LITROS FINALES -->
+    <div class="field">
+      <label for="litrosFinales">LITROS FINALES</label>
+      <input
+        type="number"
+        pInputText
+        formControlName="litrosFinales"
+        id="litrosFinales"
+        class="w-full"
+      />
+    </div>
+
+    <!-- MERMA -->
+    <div class="field">
+      <label for="mermaLitros">MERMA (Litros)</label>
+      <input
+        type="number"
+        pInputText
+        formControlName="mermaLitros"
+        id="mermaLitros"
+        class="w-full"
+      />
+    </div>
+
+    <!-- CALCULAR MERMA -->
+    <div class="field">
+      <label for="calcularMerma">CALCULAR MERMA</label>
+      <input
+        type="checkbox"
+        formControlName="calcularMerma"
+        id="calcularMerma"
+      />
+    </div>
+
+    <!-- PRODUCCIÓN FALLIDA -->
+    <div class="field">
+      <label for="produccionFallida">PRODUCCIÓN FALLIDA</label>
+      <input
+        type="checkbox"
+        formControlName="produccionFallida"
+        id="produccionFallida"
+      />
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <!-- BOTÓN DE ALMACENAR -->
+    <p-button
+      label="Almacenar"
+      icon="pi pi-save"
+      (click)="almacenar()"
+      class="w-full"
+    />
+  </ng-template>
+</p-dialog>
