@@ -37,6 +37,7 @@ export class RecetasModalComponent implements OnInit {
     litrosEstimados: new FormControl(0),
     descripcion: new FormControl(''),
     especificaciones: new FormControl({ value: null, disabled: false }),
+    tiempoVida: new FormControl(0),
     nombre: new FormControl(''),
     imagen: new FormControl(''),
     rutaFondo: new FormControl(''),
@@ -139,6 +140,8 @@ export class RecetasModalComponent implements OnInit {
           this.f['precioPaquete6'].setValue(data.precioPaquete6);
           this.f['precioPaquete12'].setValue(data.precioPaquete12);
           this.f['precioPaquete24'].setValue(data.precioPaquete24);
+          this.f['tiempoVida'].setValue(data.tiempoVida);
+
 
           this.insumosSeleccionados = [];
           data.ingredientesReceta.forEach((ingrediente: any) => {
