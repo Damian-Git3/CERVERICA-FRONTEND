@@ -23,7 +23,7 @@ export const carritoGuard: CanActivateFn = (route, state) => {
             productosCarrito.forEach((productoCarrito) => {
               const idReceta = productoCarrito.idReceta;
               const cantidadTotal =
-                productoCarrito.cantidadLote * productoCarrito.cantidad;
+                productoCarrito.cantidadPaquete * productoCarrito.cantidad;
 
               if (recetasAgrupadas[idReceta]) {
                 recetasAgrupadas[idReceta].cantidadTotalCervezas +=

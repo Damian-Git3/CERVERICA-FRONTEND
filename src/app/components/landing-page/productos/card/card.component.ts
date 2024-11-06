@@ -89,7 +89,7 @@ export class CardComponent {
     );
 
     if (productoCarrito) {
-      return productoCarrito.cantidadLote;
+      return productoCarrito.cantidadPaquete;
     }
 
     return 1;
@@ -329,7 +329,7 @@ export class CardComponent {
     return this.productosCarrito.some(
       (productoCarrito) =>
         productoCarrito.idReceta === this.producto.id &&
-        productoCarrito.cantidadLote === this.paqueteSeleccionado,
+        productoCarrito.cantidadPaquete === this.paqueteSeleccionado,
     );
   }
 
@@ -337,7 +337,7 @@ export class CardComponent {
     const productoCarrito = this.productosCarrito.find(
       (p) =>
         p.idReceta === this.producto.id &&
-        p.cantidadLote === this.paqueteSeleccionado,
+        p.cantidadPaquete === this.paqueteSeleccionado,
     );
 
     this.cantidadPaquetes = productoCarrito ? productoCarrito.cantidad : 1;
