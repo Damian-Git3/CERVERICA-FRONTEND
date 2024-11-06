@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductoCarrito } from '../../interfaces/carrito/producto-carrito';
 import { AgregarProductoCarritoDTO } from '../../interfaces/carrito/agregar-producto-carrito-dto';
 import { ActualizarProductoCarritoDTO } from '../../interfaces/carrito/actualizar-producto-carrito-dto';

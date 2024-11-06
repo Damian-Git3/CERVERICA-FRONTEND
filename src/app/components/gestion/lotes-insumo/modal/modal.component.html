@@ -5,6 +5,7 @@
   [maximizable]="false"
   [modal]="true"
   (onHide)="hide()"
+  appendTo="body"
 >
   <form [formGroup]="crearForm" *ngIf="nuevo && !mostrarModalMerma">
     <div class="field">
@@ -21,6 +22,10 @@
         placeholder="Selecciona un proveedor"
       >
       </p-dropdown>
+      <app-form-error-messages
+          [control]="f['proveedor']"
+          label="Proveedor"
+        ></app-form-error-messages>
     </div>
 
     <div class="field">
@@ -37,6 +42,11 @@
         placeholder="Selecciona un insumo"
       >
       </p-dropdown>
+
+      <app-form-error-messages
+        [control]="f['insumo']"
+        label="Insumo"
+      ></app-form-error-messages>
     </div>
 
     <div class="field flex flex-column">
@@ -50,6 +60,10 @@
         [minDate]="minDate"
       >
       </p-calendar>
+      <app-form-error-messages
+        [control]="f['fechaCaducidad']"
+        label="Fecha de Caducidad"
+      ></app-form-error-messages>
     </div>
 
     <div class="field flex flex-column">
@@ -61,6 +75,12 @@
         inputId="cantidad"
         [minFractionDigits]="minFractionDigits"
       />
+
+      <app-form-error-messages
+        [control]="f['cantidad']"
+        label="Cantidad"
+      ></app-form-error-messages>
+
     </div>
 
     <div class="field flex flex-column">
@@ -72,6 +92,12 @@
         currency="MXN"
         [minFractionDigits]="2"
       ></p-inputNumber>
+
+      <app-form-error-messages
+        [control]="f['montoCompra']"
+        label="Monto de Compra"
+      ></app-form-error-messages>
+
     </div>
 
     <div class="mensajes-error" *ngIf="mensajesError != ''">
@@ -114,6 +140,12 @@
         placeholder="Selecciona un proveedor"
       >
       </p-dropdown>
+
+      <app-form-error-messages
+        [control]="fEditar['proveedor']"
+        label="Proveedor"
+      ></app-form-error-messages>
+
     </div>
 
     <div class="field">
@@ -130,6 +162,12 @@
         placeholder="Selecciona un insumo"
       >
       </p-dropdown>
+
+      <app-form-error-messages
+        [control]="fEditar['insumo']"
+        label="Insumo"
+      ></app-form-error-messages>
+
     </div>
 
     <div class="field flex flex-column">
@@ -143,6 +181,12 @@
         [minDate]="minDate"
       >
       </p-calendar>
+
+      <app-form-error-messages
+        [control]="fEditar['fechaCaducidad']"
+        label="Fecha de Caducidad"
+      > </app-form-error-messages>
+
     </div>
 
     <div class="field flex flex-column">
@@ -154,6 +198,12 @@
         inputId="cantidad"
         [minFractionDigits]="minFractionDigits"
       />
+
+      <app-form-error-messages
+        [control]="fEditar['cantidad']"
+        label="Cantidad"
+      ></app-form-error-messages>
+
     </div>
 
     <div class="field flex flex-column">
@@ -165,6 +215,12 @@
         currency="MXN"
         [minFractionDigits]="2"
       ></p-inputNumber>
+
+      <app-form-error-messages
+        [control]="fEditar['montoCompra']"
+        label="Monto de Compra"
+      ></app-form-error-messages>
+
     </div>
 
     <div class="mensajes-error" *ngIf="mensajesError != ''">

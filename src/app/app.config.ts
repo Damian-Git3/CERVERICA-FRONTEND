@@ -2,7 +2,10 @@ import { ApplicationConfig, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 import {
   provideAnimations,
   BrowserAnimationsModule,
@@ -25,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     BrowserAnimationsModule,
     provideAnimations(),
     provideHttpClient(withInterceptors([authInterceptor])),
+    provideClientHydration(),
     MessageService,
     ConfirmationService,
     { provide: LOCALE_ID, useValue: 'es' },

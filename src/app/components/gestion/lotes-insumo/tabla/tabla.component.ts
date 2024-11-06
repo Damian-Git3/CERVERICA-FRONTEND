@@ -4,6 +4,7 @@ import { LotesInsumoService } from '../../../../services/lotes-insumo/lotes-insu
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { LoteInsumoDTO } from '../../../../interfaces/lotes-insumo/lote-insumo-dto';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tabla',
@@ -14,6 +15,7 @@ export class TablaComponent {
   _LotesInsumoService = inject(LotesInsumoService);
   _AlertasService = inject(AlertasService);
   _CompartidoService = inject(CompartidoService);
+  _title = inject(Title);
 
   lotesInsumo: LoteInsumoDTO[] = [];
   lotesInsumoFiltrados: LoteInsumoDTO[] = [];
@@ -22,8 +24,8 @@ export class TablaComponent {
 
   ngOnInit(): void {
     this.obtenerLotesInsumo();
-
-    this._CompartidoService.actualizarTitulo('Lotes insumo');
+    this._title.setTitle("Lotes de Insumos");
+    this._CompartidoService.actualizarTitulo('Lotes de Insumos');
   }
 
   public obtenerTodosLotesInsumos() {
@@ -41,7 +43,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los lotes insumo, intenta nuevamente',
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
@@ -65,7 +67,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los lotes insumo, intenta nuevamente',
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
@@ -87,7 +89,7 @@ export class TablaComponent {
         loteInsumo.fechaCompra.toString().toLowerCase().includes(query) ||
         loteInsumo.caducado.toString().toLowerCase().includes(query) ||
         loteInsumo.precioUnidad.toString().toLowerCase().includes(query) ||
-        loteInsumo.montoCompra.toString().toLowerCase().includes(query),
+        loteInsumo.montoCompra.toString().toLowerCase().includes(query)
     );
   }
 
@@ -101,14 +103,14 @@ export class TablaComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'Lote insumo eliminado correctamente',
-            'Éxito',
+            'Éxito'
           );
           this.obtenerLotesInsumo();
         },
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo eliminar el lote insumo, intenta nuevamente',
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProveedoresService } from '../../../../services/proveedores/proveedores.service';
 import { finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
@@ -12,15 +12,9 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
 export class ProveedoresModalComponent implements OnInit {
   @Output() reload: EventEmitter<any> = new EventEmitter<any>();
   display: boolean = false;
-  proveedoresForm: FormGroup = new FormGroup({
-    id: new FormControl({ value: '', disabled: true }),
-    empresa: new FormControl(''),
-    direccion: new FormControl(''),
-    telefono: new FormControl(''),
-    email: new FormControl(''),
-    nombreContacto: new FormControl(''),
-    activo: new FormControl(''),
-  });
+
+  proveedoresForm: FormGroup;
+
   public titulo: string = '';
   public labelBoton: string = '';
   public modificar: boolean = false;
@@ -28,7 +22,35 @@ export class ProveedoresModalComponent implements OnInit {
   constructor(
     private proveedoresService: ProveedoresService,
     private alertasService: AlertasService,
-  ) {}
+    private fb: FormBuilder
+  ) {
+    this.proveedoresForm = this.fb.group({
+      id: [null],
+      empresa: [null, [Validators.required]],
+      direccion: [null, [Validators.required]],
+      telefono: [
+        null,
+        [
+          Validators.required,
+            Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
+      email: [
+        null,
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(
+            '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(com|mx|net|org|edu)$'
+          ),
+        ],
+      ],
+      nombreContacto: [null, [Validators.required]],
+      activo: [null],
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -46,8 +68,8 @@ export class ProveedoresModalComponent implements OnInit {
       this.obtener(id);
     } else {
       this.modificar = false;
-      this.titulo = 'Crear Proveedor';
-      this.labelBoton = 'Crear';
+      this.titulo = 'Nuevo Proveedor';
+      this.labelBoton = 'Guardar';
     }
   }
 
@@ -79,6 +101,7 @@ export class ProveedoresModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           this.alertasService.showSuccess('Proveedor creado correctamente');
           this.reload.emit();
           this.ocultar();
@@ -97,6 +120,7 @@ export class ProveedoresModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           this.alertasService.showSuccess('Proveedor modificado correctamente');
           this.reload.emit();
           this.ocultar();
@@ -106,5 +130,12 @@ export class ProveedoresModalComponent implements OnInit {
           console.log(error);
         },
       });
+  }
+
+  obtenerErrores(control: string) {
+    /* MOSTRAMOS LAS VALIDACIONES QUE NECESITA EL CAMPO EN CONSOLA */
+
+    /* MOSTRAMOS LOS ERRORES EN CONSOLA */
+    console.log('ERRORES', this.proveedoresForm.get(control)?.errors);
   }
 }

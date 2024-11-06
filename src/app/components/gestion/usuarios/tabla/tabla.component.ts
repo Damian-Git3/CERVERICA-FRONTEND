@@ -4,6 +4,7 @@ import { finalize } from 'rxjs';
 import { UsuarioDTO } from '../../../../interfaces/usuarios/usuario-dto';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tabla',
@@ -20,9 +21,12 @@ export class TablaComponent {
   unicoAdministrador: boolean = false;
   cargando: boolean = false;
 
+  constructor(private title: Title) {}
+
   ngOnInit(): void {
     this.obtenerUsuarios();
     this._CompartidoService.actualizarTitulo('Usuarios');
+    this.title.setTitle('Usuarios');
   }
 
   public obtenerUsuarios() {
@@ -41,7 +45,7 @@ export class TablaComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los usuarios, intenta nuevamente',
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
@@ -50,7 +54,7 @@ export class TablaComponent {
 
   private verificarUnicoAdministradorActivo() {
     const administradores = this.usuarios.filter(
-      (user) => user.rol === 'Admin' && user.activo === true,
+      (user) => user.rol === 'Admin' && user.activo === true
     );
 
     this.unicoAdministrador = administradores.length === 1;
@@ -58,7 +62,7 @@ export class TablaComponent {
 
   private verificarUnicoAdministrador() {
     const administradores = this.usuarios.filter(
-      (user) => user.rol === 'Admin' && user.activo === true,
+      (user) => user.rol === 'Admin' && user.activo === true
     );
     this.unicoAdministrador = administradores.length === 1;
   }
@@ -69,7 +73,7 @@ export class TablaComponent {
       (usuario) =>
         usuario.nombre.toLowerCase().includes(query) ||
         usuario.correo.toLowerCase().includes(query) ||
-        usuario.rol.toLowerCase().includes(query),
+        usuario.rol.toLowerCase().includes(query)
     );
   }
 
@@ -84,7 +88,7 @@ export class TablaComponent {
           this._AlertasService.showSuccess(
             'Usuario desactivado correctamente',
 
-            'Éxito',
+            'Éxito'
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
         },
@@ -92,7 +96,7 @@ export class TablaComponent {
           this._AlertasService.showError(
             'No se pudo desactivar el usuario, intenta nuevamente',
 
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
@@ -110,7 +114,7 @@ export class TablaComponent {
           this._AlertasService.showSuccess(
             'Usuario activado correctamente',
 
-            'Éxito',
+            'Éxito'
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
         },
@@ -118,7 +122,7 @@ export class TablaComponent {
           this._AlertasService.showError(
             'No se pudo activar el usuario, intenta nuevamente',
 
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
@@ -143,7 +147,7 @@ export class TablaComponent {
           this._AlertasService.showSuccess(
             'Usuario eliminado correctamente',
 
-            'Éxito',
+            'Éxito'
           );
           this.obtenerUsuarios(); // Refrescar la lista de usuarios
         },
@@ -151,7 +155,7 @@ export class TablaComponent {
           this._AlertasService.showError(
             'No se pudo eliminar el usuario, intenta nuevamente',
 
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },

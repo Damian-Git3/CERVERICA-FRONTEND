@@ -29,7 +29,7 @@ export class RolesModalComponent implements OnInit {
 
   constructor(
     private rolesService: RolesService,
-    private alertasService: AlertasService,
+    private alertasService: AlertasService
   ) {}
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class RolesModalComponent implements OnInit {
       this.f['roleName'].setValue(role.name);
       this.f['roleName'].disable();
     } else {
-      this.modal.header = 'Crear Rol';
+      this.modal.header = 'Nuevo Rol';
       this.ver = true;
       this.f['id'].setValue('');
       this.f['roleName'].setValue('');

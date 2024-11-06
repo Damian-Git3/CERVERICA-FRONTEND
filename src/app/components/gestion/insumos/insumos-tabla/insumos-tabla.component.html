@@ -1,114 +1,117 @@
 <p-progressBar mode="indeterminate" *ngIf="cargando" />
+<div class="animate__animated animate__backInRight">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button
+      styleClass="global-hover-effect"
+        icon="fa-solid fa-rotate-right"
+        class="mr-2"
+        (click)="obtenerInsumos()"
+      />
+      <p-button styleClass="global-hover-effect" icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+    </div>
+    <div class="p-toolbar-group-center"></div>
+    <div class="p-toolbar-group-end">
 
-<p-toolbar>
-  <div class="p-toolbar-group-start">
-    <p-button
-      icon="fa-solid fa-rotate-right"
-      class="mr-2"
-      (click)="obtenerInsumos()"
-    />
-    <p-button icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input pInputText placeholder="Buscar" />
+      </span>
+    </div>
+  </p-toolbar>
+  <p-table
+    #dt
+    [value]="insumos"
+    [styleClass]="'p-datatable-sm'"
+    [rows]="10"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [selectionMode]="'single'"
+    currentPageReportTemplate="{first} de {last}"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nombre">
+          NOMBRE
+          <p-sortIcon field="nombre" />
+        </th>
 
-    <!-- <p-button icon="pi pi-upload" [disabled]="true"/> -->
-  </div>
-  <div class="p-toolbar-group-center"></div>
-  <div class="p-toolbar-group-end">
-    <!-- <p-splitButton label="Save" icon="pi pi-check" [model]="items" [disabled]="true" /> -->
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input pInputText placeholder="Buscar" />
-    </span>
-  </div>
-</p-toolbar>
-<p-table
-  #dt
-  [value]="insumos"
-  [styleClass]="'p-datatable-sm'"
-  [rows]="10"
-  [paginator]="true"
-  [showCurrentPageReport]="true"
-  [selectionMode]="'single'"
-  currentPageReportTemplate="{first} de {last}"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th pSortableColumn="nombre">
-        NOMBRE
-        <p-sortIcon field="nombre" />
-      </th>
+        <th pSortableColumn="inventario">
+          INVENTARIO <p-sortIcon field="inventario" />
+        </th>
 
-      <th pSortableColumn="inventario">
-        INVENTARIO <p-sortIcon field="inventario" />
-      </th>
+        <th pSortableColumn="cantidadMaxima">
+          MAXIMO <p-sortIcon field="cantidadMaxima" />
+        </th>
+        <th pSortableColumn="cantidadMinima">
+          MINIMO <p-sortIcon field="cantidadMinima" />
+        </th>
+        <th pSortableColumn="costoUnitario">
+          COSTO UNITARIO <p-sortIcon field="costoUnitario" />
+        </th>
+        <th pSortableColumn="merma">MERMA <p-sortIcon field="merma" /></th>
+        <th pSortableColumn="activo">ESTATUS <p-sortIcon field="activo" /></th>
+        <th>ACCIONES</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-producto>
+      <tr (dblclick)="producto.activo ? modal.show(producto.id) : null">
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.cantidadTotalLotes }} {{ producto.unidadMedida }}</td>
 
-      <th pSortableColumn="cantidadMaxima">
-        MAXIMO <p-sortIcon field="cantidadMaxima" />
-      </th>
-      <th pSortableColumn="cantidadMinima">
-        MINIMO <p-sortIcon field="cantidadMinima" />
-      </th>
-      <th pSortableColumn="costoUnitario">
-        COSTO UNITARIO <p-sortIcon field="costoUnitario" />
-      </th>
-      <th pSortableColumn="merma">MERMA <p-sortIcon field="merma" /></th>
-      <th pSortableColumn="activo">ESTATUS <p-sortIcon field="activo" /></th>
-      <th>ACCIONES</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-producto>
-    <tr (dblclick)="producto.activo ? modal.show(producto.id) : null">
-      <td>{{ producto.nombre }}</td>
-      <td>{{ producto.cantidadTotalLotes }} {{ producto.unidadMedida }}</td>
-
-      <td>{{ producto.cantidadMaxima }} {{ producto.unidadMedida }}</td>
-      <td>{{ producto.cantidadMinima }} {{ producto.unidadMedida }}</td>
-      <td>{{ producto.costoUnitario | currency: "MXN" }}</td>
-      <td>{{ producto.merma }} {{ producto.unidadMedida }}</td>
-      <td>
-        <p-tag
-          *ngIf="producto.activo"
-          severity="success"
-          value="ACTIVO"
-          [rounded]="true"
-        />
-        <p-tag
-          *ngIf="!producto.activo"
-          severity="danger"
-          value="INACTIVO"
-          [rounded]="true"
-        />
-      </td>
-      <td>
-        <p-button
-          [disabled]="!producto.activo"
-          size="small"
-          icon="pi pi-pencil"
-          class="mr-2"
-          (click)="modal.show(producto.id)"
-          [pTooltip]="'Editar'"
-        ></p-button>
-        <p-button
-          size="small"
-          [icon]="
-            producto.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
-          "
-          class="mr-2"
-          [pTooltip]="producto.activo ? 'Bloquear' : 'Desbloquear'"
-          (onClick)="
-            producto.activo ? desactivar(producto.id) : activar(producto.id)
-          "
-          [severity]="producto.activo ? 'success' : 'danger'"
-        ></p-button>
-        <p-button
-          size="small"
-          icon="pi pi-trash"
-          class="mr-2"
-          pTooltip="Eliminar"
-          severity="warning"
-          (onClick)="confirmarEliminar($event, producto.id)"
-        ></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+        <td>{{ producto.cantidadMaxima }} {{ producto.unidadMedida }}</td>
+        <td>{{ producto.cantidadMinima }} {{ producto.unidadMedida }}</td>
+        <td>{{ producto.costoUnitario | currency : "MXN" }}</td>
+        <td>{{ producto.merma }} {{ producto.unidadMedida }}</td>
+        <td>
+          <p-tag
+            *ngIf="producto.activo"
+            severity="success"
+            value="ACTIVO"
+            [rounded]="true"
+          />
+          <p-tag
+            *ngIf="!producto.activo"
+            severity="danger"
+            value="INACTIVO"
+            [rounded]="true"
+          />
+        </td>
+        <td>
+          <p-button
+          styleClass="global-hover-effect"
+            [disabled]="!producto.activo"
+            size="small"
+            icon="pi pi-pencil"
+            class="mr-2"
+            (click)="modal.show(producto.id)"
+            [pTooltip]="'Editar'"
+          ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            [icon]="
+              producto.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
+            "
+            class="mr-2"
+            [pTooltip]="producto.activo ? 'Bloquear' : 'Desbloquear'"
+            (onClick)="
+              producto.activo ? desactivar(producto.id) : activar(producto.id)
+            "
+            [severity]="producto.activo ? 'success' : 'danger'"
+          ></p-button>
+          <p-button
+          styleClass="global-hover-effect"
+            size="small"
+            icon="pi pi-trash"
+            class="mr-2"
+            pTooltip="Eliminar"
+            severity="warning"
+            (onClick)="confirmarEliminar($event, producto.id)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 <app-insumos-modal #modal (reload)="obtenerInsumos()"></app-insumos-modal>

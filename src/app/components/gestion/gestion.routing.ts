@@ -3,12 +3,12 @@ import { GestionComponent } from './gestion.component';
 import { ProduccionesModule } from './producciones/producciones.module';
 import { InsumosModule } from './insumos/insumos.module';
 import { RecetasModule } from './recetas/recetas.module';
-import { RolesModule } from './roles/roles.module';
 import { ProveedoresModule } from './proveedores/proveedores.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { InicioComponent } from './inicio/inicio.component';
 import { LotesInsumoModule } from './lotes-insumo/lotes-insumo.module';
 import { VentasModule } from './ventas/ventas.module';
+import { StockModule } from './stock/stock.module';
 
 const routes: Routes = [
   {
@@ -36,10 +36,6 @@ const routes: Routes = [
         loadChildren: () => RecetasModule,
       },
       {
-        path: 'roles',
-        loadChildren: () => RolesModule,
-      },
-      {
         path: 'proveedores',
         loadChildren: () => ProveedoresModule,
       },
@@ -50,6 +46,10 @@ const routes: Routes = [
       {
         path: 'ventas',
         loadChildren: () => VentasModule,
+      },
+      {
+        path: 'stock',
+        loadChildren: () => StockModule,
       },
       {
         path: '**',

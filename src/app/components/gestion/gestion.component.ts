@@ -17,9 +17,6 @@ export class GestionComponent implements OnInit {
   ngOnInit() {
     this._CompartidoService.TituloModulo.subscribe((tituloModulo) => {
       this.titulo = tituloModulo;
-
-      console.log(this.titulo);
-
       this._ChangeDetectorRef.detectChanges();
     });
   }

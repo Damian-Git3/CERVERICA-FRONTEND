@@ -3,6 +3,7 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 @import "@fortawesome/fontawesome-free/css/all.css";
+@import "animate.css";
 
 @font-face {
   font-family: "Futura";
@@ -23,22 +24,15 @@
   padding-right: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  box-shadow:
-    0 0 #0000,
-    0 0 #0000,
-    0 1px 2px 0 rgba(18, 18, 23, 0.05);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 1px 2px 0 rgba(18, 18, 23, 0.05);
   font-family: var(--font-family);
   font-feature-settings: var(--font-feature-settings, normal);
   font-size: 1rem;
   color: #334155;
   background: #ffffff;
   border: 1px solid #cbd5e1;
-  transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s,
-    box-shadow 0.2s,
-    outline-color 0.2s;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s, outline-color 0.2s;
   appearance: none;
   border-radius: 6px;
 }
@@ -245,6 +239,107 @@ th {
   height: 100px;
 }
 
+.global-hover-effect {
+  transition: transform 0.3s ease-in-out; /* Transición suave */
+}
+
+.global-hover-effect:hover {
+  transform: scale(1.1); /* Aumenta el tamaño al 110% */
+}
+
 .p-rating-icon-active {
   color: var(--color-principal);
+}
+
+input.ng-valid {
+  border: 2px solid green;
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8em;
+}
+
+p-inputNumber.ng-valid > span > input {
+  border: 2px solid green;
+}
+
+p-inputNumber.ng-invalid.ng-touched > span > input {
+  border: 2px solid red;
+}
+
+p-inputMask.ng-valid > input {
+  border: 2px solid green;
+}
+
+p-inputMask.ng-invalid.ng-touched > input {
+  border: 2px solid red;
+}
+
+textarea.ng-valid {
+  border: 2px solid green;
+}
+
+textarea.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+p-calendar.ng-valid > span > input {
+  border: 2px solid green;
+}
+
+p-calendar.ng-invalid.ng-touched > span > input {
+  border: 2px solid red;
+}
+
+p-dropdown.ng-valid > div {
+  border: 2px solid green;
+}
+
+p-dropdown.ng-invalid.ng-touched > div {
+  border: 2px solid red;
+}
+
+p-password.ng-valid > div > input {
+  border: 2px solid green;
+}
+
+p-password.ng-invalid.ng-touched > div > input {
+  border: 2px solid red;
+}
+
+p-multiSelect.ng-valid > span > div > div > ul {
+  border: 2px solid green;
+}
+
+p-multiSelect.ng-invalid.ng-touched > span > div > div > ul {
+  border: 2px solid red;
+}
+
+p-chips.ng-valid > span > ul {
+  border: 2px solid green;
+}
+
+p-chips.ng-invalid.ng-touched > span > ul {
+  border: 2px solid red;
+}
+
+p-dropdown.ng-valid > span > select {
+  border: 2px solid green;
+}
+
+p-dropdown.ng-invalid.ng-touched > span > select {
+  border: 2px solid red;
+}
+
+p-inputSwitch.ng-valid > span > div {
+  border: 2px solid green;
+}
+
+p-inputSwitch.ng-invalid.ng-touched > span > div {
+  border: 2px solid red;
 }
