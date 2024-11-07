@@ -77,6 +77,7 @@ export class CarritoComponent implements OnInit {
   }
 
   async pagarConStripe() {
+
     this.limpiarCheckout();
 
     let crearVenta: CrearVentaDTO = {};
@@ -228,7 +229,7 @@ export class CarritoComponent implements OnInit {
       const decodedJson = decodeURIComponent(ventaQP);
 
       let crearVentaDTO = JSON.parse(decodedJson);
-
+      
       this.realizarPedido(crearVentaDTO);
     }
   }
