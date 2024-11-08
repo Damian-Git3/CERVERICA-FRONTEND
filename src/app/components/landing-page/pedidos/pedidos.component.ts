@@ -20,8 +20,6 @@ export class PedidosComponent {
     this._VentasService.obtenerPedidosUsuario().subscribe({
       next: (pedidosUsuario) => {
         this.pedidosUsuario = pedidosUsuario;
-
-        console.log(this.pedidosUsuario);
       },
       error: (e) => {
         console.log(e);
