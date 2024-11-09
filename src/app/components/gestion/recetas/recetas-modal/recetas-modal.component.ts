@@ -101,7 +101,7 @@ export class RecetasModalComponent implements OnInit {
         },
         error: (error: any) => {
           console.error(error);
-          this.alertasService.showError('Error al crear la receta');
+          this.alertasService.showError('Error al crear la receta: ' + error.error.message);
         },
       });
   }
@@ -117,7 +117,7 @@ export class RecetasModalComponent implements OnInit {
           this.ocultar();
         },
         error: (error: any) => {
-          this.alertasService.showError('Error al actualizar la receta');
+          this.alertasService.showError('Error al actualizar la receta: '+ error.error.message);
           console.error(error);
         },
       });
