@@ -77,6 +77,7 @@ export class CarritoComponent implements OnInit {
   }
 
   async pagarConStripe() {
+
     this.limpiarCheckout();
 
     let crearVenta: CrearVentaDTO = {};
@@ -104,8 +105,9 @@ export class CarritoComponent implements OnInit {
         let nuevoDetalleVenta: DetalleVentaDTO = {
           idReceta: productoCarrito.idReceta,
           cantidad: productoCarrito.cantidad,
-          pack: productoCarrito.cantidadLote,
+          pack: productoCarrito.cantidadPaquete,
         };
+        
         detallesVenta.push(nuevoDetalleVenta);
       });
 
@@ -197,7 +199,7 @@ export class CarritoComponent implements OnInit {
       productosCarrito.forEach((productoCarrito) => {
         let precioPaquete;
         // Selecciona el precio correspondiente según la cantidadLote
-        switch (productoCarrito.cantidadLote) {
+        switch (productoCarrito.cantidadPaquete) {
           case 1:
             precioPaquete = productoCarrito.receta.precioPaquete1;
             break;
@@ -227,7 +229,7 @@ export class CarritoComponent implements OnInit {
       const decodedJson = decodeURIComponent(ventaQP);
 
       let crearVentaDTO = JSON.parse(decodedJson);
-
+      
       this.realizarPedido(crearVentaDTO);
     }
   }
