@@ -6,6 +6,7 @@
   [modal]="true"
   (onHide)="hide()"
   appendTo="body"
+  [style]="{ width: '50%' }"
 >
   <form [formGroup]="crearForm" *ngIf="nuevo && !mostrarModalMerma">
     <div class="field">
@@ -23,9 +24,9 @@
       >
       </p-dropdown>
       <app-form-error-messages
-          [control]="f['proveedor']"
-          label="Proveedor"
-        ></app-form-error-messages>
+        [control]="f['proveedor']"
+        label="Proveedor"
+      ></app-form-error-messages>
     </div>
 
     <div class="field">
@@ -80,7 +81,6 @@
         [control]="f['cantidad']"
         label="Cantidad"
       ></app-form-error-messages>
-
     </div>
 
     <div class="field flex flex-column">
@@ -97,31 +97,10 @@
         [control]="f['montoCompra']"
         label="Monto de Compra"
       ></app-form-error-messages>
-
     </div>
 
     <div class="mensajes-error" *ngIf="mensajesError != ''">
       <div [innerHTML]="mensajesError"></div>
-    </div>
-
-    <div class="field flex justify-content-center gap-1">
-      <p-button
-        #btnGuardar
-        label="Guardar"
-        styleClass="w-full"
-        icon="fa-solid fa-save"
-        [loading]="cargando"
-        [disabled]="crearForm.invalid"
-        (click)="registrar()"
-        [disabled]="crearForm.invalid"
-      ></p-button>
-      <p-button
-        #btnCancelar
-        label="Cancelar"
-        styleClass="w-full"
-        icon="fa-solid fa-times"
-        (click)="mostrarModal = false"
-      ></p-button>
     </div>
   </form>
 
@@ -145,7 +124,6 @@
         [control]="fEditar['proveedor']"
         label="Proveedor"
       ></app-form-error-messages>
-
     </div>
 
     <div class="field">
@@ -167,7 +145,6 @@
         [control]="fEditar['insumo']"
         label="Insumo"
       ></app-form-error-messages>
-
     </div>
 
     <div class="field flex flex-column">
@@ -185,8 +162,8 @@
       <app-form-error-messages
         [control]="fEditar['fechaCaducidad']"
         label="Fecha de Caducidad"
-      > </app-form-error-messages>
-
+      >
+      </app-form-error-messages>
     </div>
 
     <div class="field flex flex-column">
@@ -203,7 +180,6 @@
         [control]="fEditar['cantidad']"
         label="Cantidad"
       ></app-form-error-messages>
-
     </div>
 
     <div class="field flex flex-column">
@@ -220,30 +196,10 @@
         [control]="fEditar['montoCompra']"
         label="Monto de Compra"
       ></app-form-error-messages>
-
     </div>
 
     <div class="mensajes-error" *ngIf="mensajesError != ''">
       <div [innerHTML]="mensajesError"></div>
-    </div>
-
-    <div class="field flex justify-content-center gap-1">
-      <p-button
-        #btnGuardar
-        label="Editar"
-        styleClass="w-full"
-        icon="fa-solid fa-pencil"
-        [loading]="cargando"
-        [disabled]="editarForm.invalid"
-        (click)="editar()"
-      ></p-button>
-      <p-button
-        #btnCancelar
-        label="Cancelar"
-        styleClass="w-full"
-        icon="fa-solid fa-times"
-        (click)="mostrarModal = false"
-      ></p-button>
     </div>
   </form>
 
@@ -262,8 +218,64 @@
     <div class="mensajes-error" *ngIf="mensajesError != ''">
       <div [innerHTML]="mensajesError"></div>
     </div>
+  </form>
 
-    <div class="field flex justify-content-center gap-1">
+  <div class="font-bold text-2xl">
+    Precio Por Unidad: ${{ calcularPrecioPorUnidad() }}
+  </div>
+
+  <p-progressBar mode="indeterminate" *ngIf="cargando" />
+
+  <ng-template pTemplate="footer">
+    <div
+      class="field flex justify-content-center gap-1"
+      *ngIf="nuevo && !mostrarModalMerma"
+    >
+      <p-button
+        #btnGuardar
+        label="Guardar"
+        styleClass="w-full"
+        icon="fa-solid fa-save"
+        [loading]="cargando"
+        [disabled]="crearForm.invalid"
+        (click)="registrar()"
+        [disabled]="crearForm.invalid"
+      ></p-button>
+
+      <p-button
+        #btnCancelar
+        label="Cancelar"
+        styleClass="w-full"
+        icon="fa-solid fa-times"
+        (click)="mostrarModal = false"
+      ></p-button>
+    </div>
+
+    <div
+      class="field flex justify-content-center gap-1"
+      *ngIf="!nuevo && !mostrarModalMerma"
+    >
+      <p-button
+        #btnGuardar
+        label="Editar"
+        styleClass="w-full"
+        icon="fa-solid fa-pencil"
+        [loading]="cargando"
+        [disabled]="editarForm.invalid"
+        (click)="editar()"
+      ></p-button>
+      <p-button
+        #btnCancelar
+        label="Cancelar"
+        styleClass="w-full"
+        icon="fa-solid fa-times"
+        (click)="mostrarModal = false"
+      ></p-button>
+    </div>
+    <div
+      class="field flex justify-content-center gap-1"
+      *ngIf="mostrarModalMerma && !nuevo"
+    >
       <p-button
         label="Editar"
         styleClass="w-full"
@@ -279,7 +291,5 @@
         (click)="mostrarModal = false"
       ></p-button>
     </div>
-  </form>
-
-  <p-progressBar mode="indeterminate" *ngIf="cargando" />
+  </ng-template>
 </p-dialog>

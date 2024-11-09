@@ -10,11 +10,7 @@ import { Dialog } from 'primeng/dialog';
 import { LotesInsumoService } from '../../../../services/lotes-insumo/lotes-insumo.service';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CrearLoteInsumoDTO } from '../../../../interfaces/lotes-insumo/crear-lote-insumo-dto';
 import { finalize } from 'rxjs';
 import { EditarLoteInsumoDTO } from '../../../../interfaces/lotes-insumo/editar-lote-insumo-dto';
@@ -95,12 +91,12 @@ export class ModalComponent {
 
         const proveedorSeleccionado = this.loteInsumoSeleccionado.proveedor;
         const proveedorEnLista = this.proveedores.find(
-          (p) => p.nombreContacto === proveedorSeleccionado.nombreContacto,
+          (p) => p.nombreContacto === proveedorSeleccionado.nombreContacto
         );
 
         const insumoSeleccionado = this.loteInsumoSeleccionado.insumo;
         const insumoEnLista = this.insumos.find(
-          (i) => i.nombre === insumoSeleccionado.nombre,
+          (i) => i.nombre === insumoSeleccionado.nombre
         );
 
         this.editarForm.patchValue({
@@ -142,7 +138,7 @@ export class ModalComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'EL lote insumo fue guardado exitosamente',
-            'Lote insumo guardado',
+            'Lote insumo guardado'
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -151,7 +147,7 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
 
             this.mensajesError =
@@ -159,7 +155,7 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el lote insumo vuelve a intentarlo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
           }
           console.error(error);
@@ -189,7 +185,7 @@ export class ModalComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'EL lote insumo fue editado exitosamente',
-            'Lote insumo editado',
+            'Lote insumo editado'
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -198,7 +194,7 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
 
             this.mensajesError =
@@ -206,7 +202,7 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el lote insumo vuelve a intentarlo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
           }
           console.error(error);
@@ -220,14 +216,14 @@ export class ModalComponent {
     this._LotesInsumoService
       .editarMermaLoteInsumo(
         this.loteInsumoSeleccionado.id,
-        this.mermaForm.value.cantidad,
+        this.mermaForm.value.cantidad
       )
       .pipe(finalize(() => (this.cargando = false)))
       .subscribe({
         next: () => {
           this._AlertasService.showSuccess(
             'La merma fue agregada exitosamente',
-            'Merma agregada',
+            'Merma agregada'
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -236,7 +232,7 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
 
             this.mensajesError =
@@ -244,7 +240,7 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar la merma vuelve a intentarlo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
           }
           console.error(error);
@@ -269,7 +265,7 @@ export class ModalComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los proveedores, intenta nuevamente',
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
@@ -289,10 +285,19 @@ export class ModalComponent {
         error: (error: any) => {
           this._AlertasService.showError(
             'No se pudo obtener los insumos, intenta nuevamente',
-            'Ocurrió un problema',
+            'Ocurrió un problema'
           );
           console.error(error);
         },
       });
+  }
+
+  calcularPrecioPorUnidad() {
+    if (this.crearForm.value.cantidad && this.crearForm.value.montoCompra) {
+      const precioPorUnidad =
+        this.crearForm.value.montoCompra / this.crearForm.value.cantidad;
+      return precioPorUnidad.toFixed(2);
+    }
+    return 0;
   }
 }

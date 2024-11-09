@@ -5,7 +5,13 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { finalize } from 'rxjs';
 import { IReceta } from '../../../../interfaces/receta.interface';
 import { RecetaService } from '../../../../services/receta/receta.service';
@@ -29,30 +35,29 @@ export class RecetasModalComponent implements OnInit {
   public labelBoton: string = '';
   public modificar: boolean = false;
   public insumos: any[] = [];
-
   public insumosSeleccionados: any[] = [];
 
   public recetaForm: FormGroup = this.fb.group({
-    id: new FormControl({ value: '', disabled: true }),
-    litrosEstimados: new FormControl(0),
-    descripcion: new FormControl(''),
-    especificaciones: new FormControl({ value: null, disabled: false }),
-    tiempoVida: new FormControl(0),
-    nombre: new FormControl(''),
-    imagen: new FormControl(''),
-    rutaFondo: new FormControl(''),
-    precioPaquete1: new FormControl(0),
-    precioPaquete6: new FormControl(0),
-    precioPaquete12: new FormControl(0),
-    precioPaquete24: new FormControl(0),
-    ingredientesReceta: this.fb.array([]),
+    id: new FormControl(null),
+    litrosEstimados: new FormControl(0, [Validators.required]),
+    descripcion: new FormControl(null),
+    especificaciones: new FormControl(null),
+    tiempoVida: new FormControl(0, [Validators.required]),
+    nombre: new FormControl(null, [Validators.required]),
+    imagen: new FormControl(null, [Validators.required]),
+    rutaFondo: new FormControl(null, [Validators.required]),
+    precioPaquete1: new FormControl(0, [Validators.required]),
+    precioPaquete6: new FormControl(0, [Validators.required]),
+    precioPaquete12: new FormControl(0, [Validators.required]),
+    precioPaquete24: new FormControl(0, [Validators.required]),
+    ingredientesReceta: new FormArray([], [Validators.required]),
   });
 
   constructor(
-    private recetasService: RecetaService,
-    private alertasService: AlertasService,
-    private insumosService: InsumosService,
-    private fb: FormBuilder
+    private readonly recetasService: RecetaService,
+    private readonly alertasService: AlertasService,
+    private readonly insumosService: InsumosService,
+    private readonly fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -93,11 +98,12 @@ export class RecetasModalComponent implements OnInit {
   public guardar() {
     this.recetasService
       .crear(this.recetaForm.value)
-      .pipe(finalize(() => this.ocultar()))
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
           console.log(data);
           this.alertasService.showSuccess('Receta creada correctamente');
+          this.ocultar();
         },
         error: (error: any) => {
           console.error(error);
@@ -129,43 +135,7 @@ export class RecetasModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          this.f['id'].setValue(data.id);
-          this.f['litrosEstimados'].setValue(data.litrosEstimados);
-          this.f['descripcion'].setValue(data.descripcion);
-          this.f['especificaciones'].setValue(data.especificaciones);
-          this.f['nombre'].setValue(data.nombre);
-          this.f['imagen'].setValue(data.imagen);
-          this.f['rutaFondo'].setValue(data.rutaFondo);
-          this.f['precioPaquete1'].setValue(data.precioPaquete1);
-          this.f['precioPaquete6'].setValue(data.precioPaquete6);
-          this.f['precioPaquete12'].setValue(data.precioPaquete12);
-          this.f['precioPaquete24'].setValue(data.precioPaquete24);
-          this.f['tiempoVida'].setValue(data.tiempoVida);
-
-
-          this.insumosSeleccionados = [];
-          data.ingredientesReceta.forEach((ingrediente: any) => {
-            let insumo = {
-              id: ingrediente.id,
-              nombre: ingrediente.nombre,
-              cantidad: ingrediente.cantidad,
-              unidadMedida: ingrediente.unidadMedida,
-            };
-            this.insumosSeleccionados.push(insumo);
-          });
-
-          /* CARGAMOS LOS INGREDIENTES DE LA RECETA */
-          this.ingredientesReceta.clear();
-          data.ingredientesReceta.forEach((ingrediente: any) => {
-            this.ingredientesReceta.push(
-              this.fb.group({
-                id: [ingrediente.id],
-                nombre: [ingrediente.nombre],
-                cantidad: [ingrediente.cantidad],
-                unidadMedida: [ingrediente.unidadMedida],
-              })
-            );
-          });
+          this.recetaForm.patchValue(data);
         },
         error: (error: any) => {
           console.error(error);
@@ -178,10 +148,10 @@ export class RecetasModalComponent implements OnInit {
   agregarIngrediente(insumo: any) {
     this.ingredientesReceta.push(
       this.fb.group({
-        id: [insumo.id],
-        nombre: [insumo.nombre],
-        unidadMedida: [insumo.unidadMedida],
-        cantidad: [''],
+        id: insumo.id,
+        nombre: insumo.nombre,
+        unidadMedida: insumo.unidadMedida,
+        cantidad: 0,
       })
     );
   }
@@ -204,6 +174,7 @@ export class RecetasModalComponent implements OnInit {
               id: insumo.id,
               nombre: insumo.nombre,
               unidadMedida: insumo.unidadMedida,
+              cantidad: 0,
             }));
         },
         error: (error: any) => {
@@ -239,5 +210,13 @@ export class RecetasModalComponent implements OnInit {
         current.removeAt(i);
       }
     }
+  }
+
+  calcularPrecios() {
+    const precioPaquete1 = this.f['precioPaquete1'].value;
+
+    this.f['precioPaquete6'].setValue(precioPaquete1 * 6);
+    this.f['precioPaquete12'].setValue(precioPaquete1 * 12);
+    this.f['precioPaquete24'].setValue(precioPaquete1 * 24);
   }
 }

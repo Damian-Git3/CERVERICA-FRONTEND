@@ -17,7 +17,7 @@ export class RecetasModalPasosComponent implements OnInit {
   constructor(
     private recetasService: RecetaService,
     private alertasService: AlertasService,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {
     this.form = this.fb.group({
       pasos: this.fb.array([]),
@@ -49,9 +49,9 @@ export class RecetasModalPasosComponent implements OnInit {
             this.fb.group({
               id: paso.id,
               descripcion: paso.descripcion,
-              orden: { value: paso.orden, disabled: false },
+              orden: { value: paso.orden, disabled: true },
               tiempo: paso.tiempo,
-            }),
+            })
           );
         });
       },
@@ -59,7 +59,7 @@ export class RecetasModalPasosComponent implements OnInit {
         console.log(e);
 
         this.alertasService.showError(
-          'Ocurrió un error al obtener los pasos de la receta',
+          'Ocurrió un error al obtener los pasos de la receta'
         );
       },
     });
@@ -69,7 +69,7 @@ export class RecetasModalPasosComponent implements OnInit {
     this.recetasService.crearPasos(this.idReceta, this.pasos.value).subscribe({
       next: (response: any) => {
         this.alertasService.showSuccess(
-          'Pasos de la receta creados correctamente',
+          'Pasos de la receta creados correctamente'
         );
         console.log(response);
       },
@@ -77,7 +77,7 @@ export class RecetasModalPasosComponent implements OnInit {
         console.log(e);
 
         this.alertasService.showError(
-          'Ocurrió un error al crear los pasos de la receta',
+          'Ocurrió un error al crear los pasos de la receta'
         );
       },
     });
@@ -97,7 +97,7 @@ export class RecetasModalPasosComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.alertasService.showSuccess(
-            'Pasos de la receta modificados correctamente',
+            'Pasos de la receta modificados correctamente'
           );
           this.hide();
           console.log(response);
@@ -106,7 +106,7 @@ export class RecetasModalPasosComponent implements OnInit {
           console.log(e);
 
           this.alertasService.showError(
-            'Ocurrió un error al modificar los pasos de la receta',
+            'Ocurrió un error al modificar los pasos de la receta'
           );
         },
       });
@@ -118,7 +118,7 @@ export class RecetasModalPasosComponent implements OnInit {
         descripcion: '',
         orden: this.pasos.length + 1,
         tiempo: 0,
-      }),
+      })
     );
   }
 
