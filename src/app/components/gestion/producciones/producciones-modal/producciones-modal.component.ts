@@ -87,7 +87,7 @@ export class ProduccionesModalComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-        this.alertasService.showError(error.error);
+        this.alertasService.showError(error.error.message);
         console.error('Error al crear la produccion');
       },
     });
