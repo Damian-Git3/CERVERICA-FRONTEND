@@ -8,18 +8,6 @@
   (onHide)="ocultar()"
 >
   <form [formGroup]="recetaForm">
-    <!-- ID -->
-    <div class="field">
-      <label for="id"> ID </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="id"
-        id="id"
-        class="w-full"
-      />
-    </div>
-
     <div class="field" *ngIf="modificar">
       <!-- PASOS -->
 
@@ -41,6 +29,10 @@
         id="nombre"
         class="w-full"
       />
+      <app-form-error-messages
+        [control]="f['nombre']"
+        label="Nombre"
+      ></app-form-error-messages>
     </div>
 
     <div class="field">
@@ -54,6 +46,10 @@
         styleClass="w-full"
         class="w-full"
       />
+      <app-form-error-messages
+        [control]="f['litrosEstimados']"
+        label="Litros Estimados"
+      ></app-form-error-messages>
     </div>
 
     <div class="field">
@@ -69,7 +65,13 @@
             currency="MXN"
             styleClass="w-full"
             class="w-full"
+            (onInput)="calcularPrecios()"
           />
+
+          <app-form-error-messages
+            [control]="f['precioPaquete1']"
+            label="Precio Paquete 1"
+          ></app-form-error-messages>
         </div>
 
         <!-- PRECIO PAQUETE 6 -->
@@ -84,6 +86,10 @@
             styleClass="w-full"
             class="w-full"
           />
+          <app-form-error-messages
+            [control]="f['precioPaquete6']"
+            label="Precio Paquete 6"
+          ></app-form-error-messages>
         </div>
 
         <!-- PRECIO PAQUETE 12 -->
@@ -98,6 +104,10 @@
             styleClass="w-full"
             class="w-full"
           />
+          <app-form-error-messages
+            [control]="f['precioPaquete12']"
+            label="Precio Paquete 12"
+          ></app-form-error-messages>
         </div>
 
         <!-- PRECIO PAQUETE 12 -->
@@ -112,6 +122,10 @@
             styleClass="w-full"
             class="w-full"
           />
+          <app-form-error-messages
+            [control]="f['precioPaquete24']"
+            label="Precio Paquete 24"
+          ></app-form-error-messages>
         </div>
       </p-card>
     </div>
@@ -122,12 +136,17 @@
       <label for="descripcion"> DESCRIPCION </label>
       <textarea
         rows="5"
-        cols="30"
         pInputTextarea
-        [autoResize]="true"
+        [autoResize]="false"
         formControlName="descripcion"
         class="w-full"
+        styleClass="w-full"
       ></textarea>
+
+      <app-form-error-messages
+        [control]="f['descripcion']"
+        label="Descripción"
+      ></app-form-error-messages>
     </div>
 
     <!-- ESPECIFICACIONES -->
@@ -135,13 +154,17 @@
     <div class="field">
       <label for="especificaciones"> ESPECIFICACIONES </label>
       <textarea
-        rows="5"
-        cols="30"
         pInputTextarea
-        [autoResize]="true"
+        rows="5"
+        [autoResize]="false"
         formControlName="especificaciones"
         class="w-full"
+        styleClass="w-full"
       ></textarea>
+      <app-form-error-messages
+        [control]="f['especificaciones']"
+        label="Especificaciones"
+      ></app-form-error-messages>
     </div>
 
     <!-- TIEMPO VIDA -->
@@ -157,6 +180,10 @@
         styleClass="w-full"
         class="w-full"
       />
+      <app-form-error-messages
+        [control]="f['tiempoVida']"
+        label="Tiempo Vida"
+      ></app-form-error-messages>
     </div>
 
     <!-- IMAGEN -->
@@ -170,6 +197,10 @@
         id="imagen"
         class="w-full"
       />
+      <app-form-error-messages
+        [control]="f['imagen']"
+        label="Imagen"
+      ></app-form-error-messages>
     </div>
 
     <!-- RUTA FONDO -->
@@ -183,6 +214,10 @@
         id="rutaFondo"
         class="w-full"
       />
+      <app-form-error-messages
+        [control]="f['rutaFondo']"
+        label="Ruta Fondo"
+      ></app-form-error-messages>
     </div>
 
     <!-- INGREDIENTES -->
@@ -190,19 +225,23 @@
     <div class="field">
       <label for=""> INGREDIENTES </label>
       <p-multiSelect
-        [options]="insumos"
         optionLabel="nombre"
+        optionValue="id"
         placeholder="Ingredientes"
         class="w-full"
         styleClass="w-full"
-        [showClear]="true"
-        [filter]="true"
         display="chip"
         [appendTo]="'body'"
-        [(ngModel)]="insumosSeleccionados"
+        [showClear]="true"
+        [filter]="true"
+        formControlName="ingredientesReceta"
+        [options]="insumos"
         (onChange)="onInsumosChange($event)"
-        [ngModelOptions]="{ standalone: true }"
       />
+      <app-form-error-messages
+        [control]="f['ingredientes']"
+        label="Ingredientes"
+      ></app-form-error-messages>
     </div>
 
     <!-- INGREDIENTES SELECCIONADOS -->
@@ -212,9 +251,9 @@
         *ngFor="let ingrediente of ingredientesReceta.controls; let i = index"
         [formGroupName]="i"
       >
-        <label for="cantidad-{{ i }}">{{
-          ingrediente.get("nombre")!.value
-        }}</label>
+        <label for="cantidad-{{ i }}">
+          {{ ingrediente.get("nombre")!.value }}
+        </label>
         <p-inputNumber
           formControlName="cantidad"
           id="cantidad-{{ i }}"
@@ -224,9 +263,15 @@
           styleClass="w-full"
           class="w-full"
         />
+        <app-form-error-messages
+          [control]="ingrediente.get('cantidad')"
+          label="Cantidad"
+        ></app-form-error-messages>
       </div>
     </div>
+  </form>
 
+  <ng-template pTemplate="footer">
     <div class="field flex justify-content-center gap-1">
       <p-button
         #btnGuardar
@@ -234,6 +279,7 @@
         styleClass="w-full"
         icon="fa-solid fa-save"
         (click)="modificar ? actualizar() : guardar()"
+        [disabled]="recetaForm.invalid"
       ></p-button>
       <p-button
         #btnCancelar
@@ -243,7 +289,7 @@
         (click)="display = false"
       ></p-button>
     </div>
-  </form>
+  </ng-template>
 </p-dialog>
 
 <app-recetas-modal-pasos #pasosDialog></app-recetas-modal-pasos>

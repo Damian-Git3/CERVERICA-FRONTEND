@@ -17,6 +17,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { TooltipModule } from 'primeng/tooltip';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { RecetasModalPasosComponent } from './recetas-modal-pasos/recetas-modal-pasos.component';
+import { FormErrorMessagesComponent } from '../../form-error-messages/form-error-messages.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { RecetasModalPasosComponent } from './recetas-modal-pasos/recetas-modal-
     FormsModule,
     MultiSelectModule,
     ToolbarModule,
+    FormErrorMessagesComponent,
   ],
   providers: [DatePipe],
 })
