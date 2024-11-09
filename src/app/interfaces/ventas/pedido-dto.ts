@@ -2,8 +2,8 @@ export interface PedidoDTO {
   id: number;
   fechaVenta: string;
   totalCervezas: number;
+  total: number;
   metodoPago: number;
-  montoVenta: number;
   metodoEnvio: number;
   estatusVenta: number;
 }

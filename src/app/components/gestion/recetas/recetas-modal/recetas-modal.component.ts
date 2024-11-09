@@ -29,6 +29,7 @@ export class RecetasModalComponent implements OnInit {
   public labelBoton: string = '';
   public modificar: boolean = false;
   public insumos: any[] = [];
+  public insumosFijos: any[] = [];
 
   public insumosSeleccionados: any[] = [];
 
@@ -71,6 +72,7 @@ export class RecetasModalComponent implements OnInit {
     this.recetaForm.reset();
     this.display = true;
     this.obtenerInsumos();
+
     if (id) {
       this.modal.header = 'Editar Receta';
       this.modificar = true;
@@ -101,7 +103,9 @@ export class RecetasModalComponent implements OnInit {
         },
         error: (error: any) => {
           console.error(error);
-          this.alertasService.showError('Error al crear la receta: ' + error.error.message);
+          this.alertasService.showError(
+            'Error al crear la receta: ' + error.error.message
+          );
         },
       });
   }
@@ -117,7 +121,9 @@ export class RecetasModalComponent implements OnInit {
           this.ocultar();
         },
         error: (error: any) => {
-          this.alertasService.showError('Error al actualizar la receta: '+ error.error.message);
+          this.alertasService.showError(
+            'Error al actualizar la receta: ' + error.error.message
+          );
           console.error(error);
         },
       });
@@ -142,29 +148,47 @@ export class RecetasModalComponent implements OnInit {
           this.f['precioPaquete24'].setValue(data.precioPaquete24);
           this.f['tiempoVida'].setValue(data.tiempoVida);
 
-
           this.insumosSeleccionados = [];
+
           data.ingredientesReceta.forEach((ingrediente: any) => {
-            let insumo = {
-              id: ingrediente.id,
-              nombre: ingrediente.nombre,
-              cantidad: ingrediente.cantidad,
-              unidadMedida: ingrediente.unidadMedida,
-            };
-            this.insumosSeleccionados.push(insumo);
+            if (!ingrediente.fijo) {
+              let insumo = {
+                id: ingrediente.id,
+                nombre: ingrediente.nombre,
+                cantidad: ingrediente.cantidad,
+                unidadMedida: ingrediente.unidadMedida,
+                fijo: ingrediente.fijo,
+              };
+
+              this.insumosSeleccionados.push(insumo);
+            }
           });
 
           /* CARGAMOS LOS INGREDIENTES DE LA RECETA */
           this.ingredientesReceta.clear();
+
           data.ingredientesReceta.forEach((ingrediente: any) => {
-            this.ingredientesReceta.push(
-              this.fb.group({
-                id: [ingrediente.id],
-                nombre: [ingrediente.nombre],
-                cantidad: [ingrediente.cantidad],
-                unidadMedida: [ingrediente.unidadMedida],
-              })
-            );
+            if (!ingrediente.fijo) {
+              this.ingredientesReceta.push(
+                this.fb.group({
+                  id: [ingrediente.id],
+                  nombre: [ingrediente.nombre],
+                  cantidad: [ingrediente.cantidad],
+                  unidadMedida: [ingrediente.unidadMedida],
+                  fijo: [ingrediente.fijo],
+                })
+              );
+            } else {
+              this.ingredientesReceta.push(
+                this.fb.group({
+                  id: [ingrediente.id],
+                  nombre: [ingrediente.nombre],
+                  cantidad: [ingrediente.cantidad],
+                  unidadMedida: [ingrediente.unidadMedida],
+                  fijo: [ingrediente.fijo],
+                })
+              );
+            }
           });
         },
         error: (error: any) => {
@@ -182,6 +206,7 @@ export class RecetasModalComponent implements OnInit {
         nombre: [insumo.nombre],
         unidadMedida: [insumo.unidadMedida],
         cantidad: [''],
+        fijo: [insumo.fijo],
       })
     );
   }
@@ -196,15 +221,20 @@ export class RecetasModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          /* FILTRAMOS SOLO LOS INSUMOS ACTIVOS */
+          this.insumosFijos = data.filter((insumo: any) => insumo.fijo);
 
           this.insumos = data
-            .filter((insumo: any) => insumo.activo)
+            .filter((insumo: any) => insumo.activo && !insumo.fijo)
             .map((insumo: any) => ({
               id: insumo.id,
               nombre: insumo.nombre,
               unidadMedida: insumo.unidadMedida,
+              fijo: insumo.fijo,
             }));
+
+          this.insumosFijos.forEach((insumo: any) => {
+            this.agregarIngrediente(insumo);
+          });
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener los insumos');
@@ -217,7 +247,7 @@ export class RecetasModalComponent implements OnInit {
     const selected = event.value;
     const current = this.recetaForm.get('ingredientesReceta') as FormArray;
 
-    // Agregar nuevos insumos seleccionados
+    // Añadir los insumos seleccionados que aún no estén en el FormArray
     selected.forEach((insumo: any) => {
       if (
         !current.controls.find(
@@ -228,15 +258,21 @@ export class RecetasModalComponent implements OnInit {
       }
     });
 
-    // Eliminar insumos deseleccionados
+    // Eliminar los insumos que no estén seleccionados, pero dejar los fijos
     for (let i = current.length - 1; i >= 0; i--) {
       const ingrediente = current.at(i);
-      if (
-        !selected.find(
-          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value
-        )
-      ) {
-        current.removeAt(i);
+
+      // Revisar si el ingrediente es fijo
+      const esFijo = ingrediente.get('fijo')!.value;
+      if (!esFijo) {
+        // Si no es fijo, eliminarlo si no está en los insumos seleccionados
+        if (
+          !selected.find(
+            (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value
+          )
+        ) {
+          current.removeAt(i);
+        }
       }
     }
   }

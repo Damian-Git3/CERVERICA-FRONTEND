@@ -1,58 +1,26 @@
-<p-dialog
-  [(visible)]="display"
-  [draggable]="false"
-  [maximizable]="false"
-  [header]="titulo"
-  [modal]="true"
-  (onHide)="ocultar()"
-  appendTo="body"
->
+<p-dialog [(visible)]="display" [draggable]="false" [maximizable]="false" [header]="titulo" [modal]="true"
+  (onHide)="ocultar()" appendTo="body">
   <form [formGroup]="insumoForm">
     <!-- NOMBRE -->
     <div class="field">
       <label for="nombre"> NOMBRE </label>
-      <input
-        type="text"
-        pInputText
-        formControlName="nombre"
-        id="nombre"
-        class="w-full"
-      />
-      <app-form-error-messages
-        [control]="f['nombre']"
-        label="Nombre"
-      ></app-form-error-messages>
+      <input type="text" pInputText formControlName="nombre" id="nombre" class="w-full" />
+      <app-form-error-messages [control]="f['nombre']" label="Nombre"></app-form-error-messages>
     </div>
 
     <!-- DESCRIPCION -->
     <div class="field">
       <label for="descripcion"> DESCRIPCION </label>
-      <textarea
-        rows="5"
-        cols="30"
-        pInputTextarea
-        formControlName="descripcion"
-        class="w-full"
-      ></textarea>
-      <app-form-error-messages
-        [control]="f['descripcion']"
-        label="Descripción"
-      ></app-form-error-messages>
+      <textarea rows="5" cols="30" pInputTextarea formControlName="descripcion" class="w-full"></textarea>
+      <app-form-error-messages [control]="f['descripcion']" label="Descripción"></app-form-error-messages>
     </div>
 
     <!-- UNIDAD DE MEDIDA -->
     <div class="field">
       <label for="unidadMedida"> UNIDAD DE MEDIDA </label>
-      <p-dropdown
-        formControlName="unidadMedida"
-        [options]="unidadesMedida"
-        placeholder="Unidad De Medida"
-        styleClass="w-full"
-      ></p-dropdown>
-      <app-form-error-messages
-        [control]="f['unidadMedida']"
-        label="Unidad de Medida"
-      ></app-form-error-messages>
+      <p-dropdown formControlName="unidadMedida" [options]="unidadesMedida" placeholder="Unidad De Medida"
+        styleClass="w-full"></p-dropdown>
+      <app-form-error-messages [control]="f['unidadMedida']" label="Unidad de Medida"></app-form-error-messages>
     </div>
 
     <!-- CANTIDAD MAXIMA -->
@@ -60,15 +28,9 @@
       <label for="cantidadMaxima">
         CANTIDAD MAXIMA {{ insumoForm.value.unidadMedida }}
       </label>
-      <p-inputNumber
-        formControlName="cantidadMaxima"
-        inputId="cantidadMaxima"
-        [minFractionDigits]="minFractionDigits"
-      ></p-inputNumber>
-      <app-form-error-messages
-        [control]="f['cantidadMaxima']"
-        label="Cantidad Máxima"
-      ></app-form-error-messages>
+      <p-inputNumber formControlName="cantidadMaxima" inputId="cantidadMaxima"
+        [minFractionDigits]="minFractionDigits"></p-inputNumber>
+      <app-form-error-messages [control]="f['cantidadMaxima']" label="Cantidad Máxima"></app-form-error-messages>
     </div>
 
     <!-- CANTIDAD MINIMA -->
@@ -76,47 +38,31 @@
       <label for="cantidadMinima">
         CANTIDAD MINIMA {{ insumoForm.value.unidadMedida }}
       </label>
-      <p-inputNumber
-        formControlName="cantidadMinima"
-        inputId="cantidadMinima"
-        [minFractionDigits]="minFractionDigits"
-      ></p-inputNumber>
-      <app-form-error-messages
-        [control]="f['cantidadMinima']"
-        label="Cantidad Mínima"
-      ></app-form-error-messages>
+      <p-inputNumber formControlName="cantidadMinima" inputId="cantidadMinima"
+        [minFractionDigits]="minFractionDigits"></p-inputNumber>
+      <app-form-error-messages [control]="f['cantidadMinima']" label="Cantidad Mínima"></app-form-error-messages>
     </div>
 
     <!-- MERMA -->
     <div class="field flex flex-column">
       <label for="merma"> MERMA {{ insumoForm.value.unidadMedida }} </label>
-      <p-inputNumber
-        formControlName="merma"
-        inputId="merma"
-        [minFractionDigits]="minFractionDigits"
-      ></p-inputNumber>
-      <app-form-error-messages
-        [control]="f['merma']"
-        label="Merma"
-      ></app-form-error-messages>
+      <p-inputNumber formControlName="merma" inputId="merma" [minFractionDigits]="minFractionDigits"></p-inputNumber>
+      <app-form-error-messages [control]="f['merma']" label="Merma"></app-form-error-messages>
+    </div>
+
+    <!-- fijo -->
+    <div class="field flex flex-column">
+      <label for="merma"> Fijo </label>
+      <p-inputSwitch formControlName="fijo" inputId="merma" />
+      <app-form-error-messages [control]="f['fijo']" label="Fijo"></app-form-error-messages>
     </div>
 
     <!-- BOTONES -->
     <div class="field flex justify-content-center gap-1">
-      <p-button
-        [label]="labelBoton"
-        styleClass="w-full"
-        icon="fa-solid fa-save"
-        [disabled]="insumoForm.invalid || !insumoForm.dirty"
-        [loading]="cargando"
-        (click)="modificar ? actualizar() : guardar()"
-      ></p-button>
-      <p-button
-        label="Cancelar"
-        styleClass="w-full"
-        icon="fa-solid fa-times"
-        (click)="display = false"
-      ></p-button>
+      <p-button [label]="labelBoton" styleClass="w-full" icon="fa-solid fa-save"
+        [disabled]="insumoForm.invalid || !insumoForm.dirty" [loading]="cargando"
+        (click)="modificar ? actualizar() : guardar()"></p-button>
+      <p-button label="Cancelar" styleClass="w-full" icon="fa-solid fa-times" (click)="display = false"></p-button>
     </div>
   </form>
 

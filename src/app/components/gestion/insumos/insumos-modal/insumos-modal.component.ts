@@ -34,6 +34,7 @@ export class InsumosModalComponent implements OnInit {
       cantidadMaxima: ['', Validators.required],
       cantidadMinima: ['', Validators.required],
       merma: ['', Validators.required],
+      fijo: [false, Validators.required],
     });
   }
 
