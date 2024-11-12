@@ -3,7 +3,7 @@ export interface PedidoDTO {
   fechaVenta: string;
   totalCervezas: number;
   metodoPago: number;
-  montoVenta: number;
+  total: number;
   metodoEnvio: number;
   estatusVenta: number;
 }
