@@ -18,12 +18,16 @@
         </div>
       </div>
       <div class="col-11 flex align-items-center justify-content-center">
-        <h1>{{ titulo }}</h1>
+        <span
+          class="font-bold text-6xl"
+          style="font-family: 'Arial', sans-serif; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); color: #ed9224;"
+          >{{ titulo }}</span
+        >
       </div>
     </div>
   </div>
   <div class="flex-1 p-2">
-    <p-card styleClass="h-full ">
+    <p-card styleClass="h-full shadow-5">
       <router-outlet></router-outlet>
     </p-card>
   </div>

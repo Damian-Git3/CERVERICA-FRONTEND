@@ -1,46 +1,73 @@
 <p-progressBar mode="indeterminate" *ngIf="cargando" />
 
 <p-toolbar>
-    <div class="p-toolbar-group-start">
-        <p-button icon="fa-solid fa-rotate-right" class="mr-2" (click)="obtenerProductos()" />
-
-        
-    </div>
-    <div class="p-toolbar-group-center"></div>
-    <div class="p-toolbar-group-end">
-
-        <span class="p-input-icon-left">
-            <i class="pi pi-search"></i>
-            <input pInputText placeholder="Buscar" [(ngModel)]="searchTerm" (input)="applyFilters()">
-        </span>
-    </div>
+  <div class="p-toolbar-group-start">
+    <p-button
+      icon="fa-solid fa-rotate-right"
+      class="mr-2"
+      (click)="obtenerProductos()"
+    />
+  </div>
+  <div class="p-toolbar-group-center"></div>
+  <div class="p-toolbar-group-end">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        placeholder="Buscar"        
+        [(ngModel)]="searchTerm"
+        (input)="applyFilters()"
+      />
+    </span>
+  </div>
 </p-toolbar>
 
 <!-- Lista de productos -->
 <div *ngIf="productosCarousel" class="grid-productos">
-    <div *ngFor="let producto of productosCarouselFiltrados" class="card-producto" (click)="modal.show(producto)">
-        <div class="card-carousel">
-            <div class="contenedor-imagen">
-                <img src="{{ producto.rutaFondo }}" alt="Fondo cerveza" class="fondo-cerveza" />
-                <div class="contenedor-botella">
-                    <img src="{{ producto.imagen }}" alt="Cerveza" class="botella-cerveza" />
-                </div>
-            </div>
-            <div class="product-nombre">
-                {{ producto.nombre }}
-            </div>
-            <div class="product-especificaciones">
-                Cantidad en stock:
-                <strong [ngClass]="{
-                    'rojo': producto.cantidadEnStock < producto.lotesMinimos || producto.cantidadEnStock === 0,
-                    'amarillo': producto.cantidadEnStock >= producto.lotesMinimos && producto.cantidadEnStock <= (producto.lotesMaximos / 2),
-                    'verde': producto.cantidadEnStock > (producto.lotesMaximos / 2)
-                }">
-                    {{ producto.cantidadEnStock }}
-                </strong>
-            </div>
+  <div
+    *ngFor="let producto of productosCarouselFiltrados"
+    class="card-producto"
+    (click)="modal.show(producto)"
+  >
+    <div class="card-carousel">
+      <div class="contenedor-imagen">
+        <img
+          src="{{ producto.rutaFondo }}"
+          alt="Fondo cerveza"
+          class="fondo-cerveza"
+        />
+        <div class="contenedor-botella">
+          <img
+            src="{{ producto.imagen }}"
+            alt="Cerveza"
+            class="botella-cerveza"
+          />
         </div>
+      </div>
+      <div class="product-nombre">
+        {{ producto.nombre }}
+      </div>
+      <div class="product-especificaciones">
+        Cantidad en stock:
+        <strong
+          [ngClass]="{
+            rojo:
+              producto.cantidadEnStock < producto.lotesMinimos ||
+              producto.cantidadEnStock === 0,
+            amarillo:
+              producto.cantidadEnStock >= producto.lotesMinimos &&
+              producto.cantidadEnStock <= producto.lotesMaximos / 2,
+            verde: producto.cantidadEnStock > producto.lotesMaximos / 2
+          }"
+        >
+          {{ producto.cantidadEnStock }}
+        </strong>
+      </div>
     </div>
+  </div>
 </div>
 
-<app-produccion-modal #modal (reload)="obtenerProductos()"></app-produccion-modal>
+<app-produccion-modal
+  #modal
+  (reload)="obtenerProductos()"
+></app-produccion-modal>

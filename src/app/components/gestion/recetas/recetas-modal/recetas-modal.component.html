@@ -53,7 +53,7 @@
     </div>
 
     <div class="field">
-      <p-card header="PRECIOS">
+      <p-card header="PRECIOS" styleClass="shadow-5">
         <!-- PRECIO PAQUETE 1 -->
 
         <div class="field">
@@ -225,8 +225,8 @@
     <div class="field">
       <label for=""> INGREDIENTES </label>
       <p-multiSelect
+        [options]="insumos"
         optionLabel="nombre"
-        optionValue="id"
         placeholder="Ingredientes"
         class="w-full"
         styleClass="w-full"
@@ -234,8 +234,8 @@
         [appendTo]="'body'"
         [showClear]="true"
         [filter]="true"
-        formControlName="ingredientesReceta"
-        [options]="insumos"
+        [(ngModel)]="insumosSeleccionados"
+        [ngModelOptions]="{ standalone: true }"
         (onChange)="onInsumosChange($event)"
       />
       <app-form-error-messages
