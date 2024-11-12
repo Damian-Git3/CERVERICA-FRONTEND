@@ -93,7 +93,7 @@ export class RecetasModalPasosComponent implements OnInit {
   modicarPasos() {
     console.log(this.pasos.value);
     this.recetasService
-      .modificarPasos(this.idReceta, this.pasos.value)
+      .modificarPasos(this.idReceta, this.pasos.getRawValue())
       .subscribe({
         next: (response: any) => {
           this.alertasService.showSuccess(
@@ -116,7 +116,7 @@ export class RecetasModalPasosComponent implements OnInit {
     this.pasos.push(
       this.fb.group({
         descripcion: '',
-        orden: this.pasos.length + 1,
+        orden: { value: this.pasos.length + 1, disabled: true },
         tiempo: 0,
       })
     );

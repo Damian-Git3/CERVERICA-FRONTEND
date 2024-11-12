@@ -92,6 +92,7 @@ export class RecetasModalComponent implements OnInit {
     this.display = false;
     this.recetaForm.reset();
     this.receta = undefined;
+    this.ingredientesReceta.clear();
     this.reload.emit();
   }
 
@@ -107,7 +108,9 @@ export class RecetasModalComponent implements OnInit {
         },
         error: (error: any) => {
           console.error(error);
-          this.alertasService.showError('Error al crear la receta: ' + error.error.message);
+          this.alertasService.showError(
+            'Error al crear la receta: ' + error.error.message
+          );
         },
       });
   }
@@ -123,7 +126,9 @@ export class RecetasModalComponent implements OnInit {
           this.ocultar();
         },
         error: (error: any) => {
-          this.alertasService.showError('Error al actualizar la receta: '+ error.error.message);
+          this.alertasService.showError(
+            'Error al actualizar la receta: ' + error.error.message
+          );
           console.error(error);
         },
       });
@@ -135,7 +140,23 @@ export class RecetasModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
+          console.log('RECETA', data);
           this.recetaForm.patchValue(data);
+
+          data.ingredientesReceta.forEach((ingrediente: any) => {
+            this.ingredientesReceta.push(
+              this.fb.group({
+                id: ingrediente.id,
+                nombre: ingrediente.nombre,
+                unidadMedida: ingrediente.unidadMedida,
+                cantidad: ingrediente.cantidad,
+              })
+            );
+          });
+          this.asignarIngredientes(data.ingredientesReceta);
+
+          console.log('INGREDIENTES SELECCIONADOS', this.insumosSeleccionados);
+          console.log('INGREDIENTES RECETA', this.ingredientesReceta.value);
         },
         error: (error: any) => {
           console.error(error);
@@ -174,8 +195,9 @@ export class RecetasModalComponent implements OnInit {
               id: insumo.id,
               nombre: insumo.nombre,
               unidadMedida: insumo.unidadMedida,
-              cantidad: 0,
             }));
+
+          console.log('INSUMOS BD', this.insumos);
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener los insumos');
@@ -188,12 +210,16 @@ export class RecetasModalComponent implements OnInit {
     const selected = event.value;
     const current = this.recetaForm.get('ingredientesReceta') as FormArray;
 
+    // Asegúrate de que el FormArray tenga controles antes de realizar cualquier operación
+    if (!current) {
+      setTimeout(() => this.onInsumosChange(event), 0);
+      return;
+    }
+
     // Agregar nuevos insumos seleccionados
     selected.forEach((insumo: any) => {
       if (
-        !current.controls.find(
-          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre
-        )
+        !current.controls.find((ctrl) => ctrl.get('id')!.value === insumo.id)
       ) {
         this.agregarIngrediente(insumo);
       }
@@ -204,7 +230,7 @@ export class RecetasModalComponent implements OnInit {
       const ingrediente = current.at(i);
       if (
         !selected.find(
-          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value
+          (insumo: any) => insumo.id === ingrediente.get('id')!.value
         )
       ) {
         current.removeAt(i);
@@ -218,5 +244,13 @@ export class RecetasModalComponent implements OnInit {
     this.f['precioPaquete6'].setValue(precioPaquete1 * 6);
     this.f['precioPaquete12'].setValue(precioPaquete1 * 12);
     this.f['precioPaquete24'].setValue(precioPaquete1 * 24);
+  }
+
+  asignarIngredientes(ingredientes: any) {
+    this.insumosSeleccionados = ingredientes.map((ingrediente: any) => ({
+      id: ingrediente.id,
+      nombre: ingrediente.nombre,
+      unidadMedida: ingrediente.unidadMedida,
+    }));
   }
 }

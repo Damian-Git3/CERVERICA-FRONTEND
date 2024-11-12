@@ -44,6 +44,7 @@ import { FormErrorMessagesComponent } from '../../form-error-messages/form-error
     MultiSelectModule,
     ToolbarModule,
     FormErrorMessagesComponent,
+    InputTextareaModule,
   ],
   providers: [DatePipe],
 })

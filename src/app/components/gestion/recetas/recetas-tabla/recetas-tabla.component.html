@@ -1,13 +1,18 @@
-<div class="animate__animated animate__backInRight">
+<div class="animate__animated animate__backInRight shadow-5">
   <p-toolbar>
     <div class="p-toolbar-group-start">
       <p-button
-      styleClass="global-hover-effect"
+        styleClass="global-hover-effect"
         icon="fa-solid fa-rotate-right"
         class="mr-2"
         (click)="obtenerRecetas()"
       />
-      <p-button styleClass="global-hover-effect" icon="pi pi-plus" class="mr-2" (click)="modal.show()" />
+      <p-button
+        styleClass="global-hover-effect"
+        icon="pi pi-plus"
+        class="mr-2"
+        (click)="modal.show()"
+      />
 
       <!-- <p-button icon="pi pi-upload" [disabled]="true"/> -->
     </div>
@@ -95,7 +100,7 @@
         </td>
         <td>
           <p-button
-          styleClass="global-hover-effect"
+            styleClass="global-hover-effect"
             [disabled]="!receta.activo"
             size="small"
             icon="pi pi-pencil"
@@ -104,7 +109,7 @@
             [pTooltip]="'Editar'"
           ></p-button>
           <p-button
-          styleClass="global-hover-effect"
+            styleClass="global-hover-effect"
             size="small"
             [icon]="
               receta.activo ? 'fa-solid fa-lock-open' : 'fa-solid fa-lock'
@@ -117,7 +122,7 @@
             [severity]="receta.activo ? 'success' : 'danger'"
           ></p-button>
           <p-button
-          styleClass="global-hover-effect"
+            styleClass="global-hover-effect"
             size="small"
             icon="pi pi-trash"
             class="mr-2"
