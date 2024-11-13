@@ -1,35 +1,19 @@
 <p-toolbar>
   <div class="p-toolbar-group-start">
-    <p-button
-      styleClass="global-hover-effect"
-      icon="fa-solid fa-rotate-right"
-      class="mr-2"
-      (click)="obtenerProducciones()"
-    />
-    <p-button
-      styleClass="global-hover-effect"
-      *ngIf="usuario.rol == 'Admin'"
-      icon="pi pi-plus"
-      class="mr-2"
-      label="Nueva Solicitud"
-      (click)="modal.display = !modal.display"
-    />
+    <p-button styleClass="global-hover-effect" icon="fa-solid fa-rotate-right" class="mr-2"
+      (click)="obtenerProducciones()" />
+    <p-button styleClass="global-hover-effect" *ngIf="usuario.rol == 'Admin'" icon="pi pi-plus" class="mr-2"
+      label="Nueva Solicitud" (click)="modal.display = !modal.display" />
   </div>
   <div class="p-toolbar-group-center"></div>
   <div class="p-toolbar-group-end"></div>
 </p-toolbar>
 
 <div class="flex align-content-around flex-wrap justify-content-around">
-  <p-card
-    *ngFor="let produccion of producciones"
-    styleClass="min-w-card border-round mx-2 my-3 fadein animation-duration-1000 shadow-5"
-  >
+  <p-card *ngFor="let produccion of producciones"
+    styleClass="min-w-card border-round mx-2 my-3 fadein animation-duration-1000 shadow-5">
     <ng-template pTemplate="header">
-      <img
-        src="{{ produccion.receta.imagen }}"
-        alt="{{ produccion.receta.nombre }}"
-        class="produccion-imagen"
-      />
+      <img src="{{ produccion.receta.imagen }}" alt="{{ produccion.receta.nombre }}" class="produccion-imagen" />
     </ng-template>
     <ng-template pTemplate="title">
       <div class="w-full text-center text-3xl font-bold">
@@ -51,241 +35,103 @@
       <p class="uppercase">
         <strong>Estado: </strong>
         <p-tag value="PENDIENTE" *ngIf="produccion.estatus == 1" />
-        <p-tag
-          severity="success"
-          value="ACEPTADA"
-          *ngIf="produccion.estatus == 2"
-        />
+        <p-tag severity="success" value="ACEPTADA" *ngIf="produccion.estatus == 2" />
         <p-tag severity="info" value="LISTO" *ngIf="produccion.estatus == 3" />
-        <p-tag
-          severity="warning"
-          value="FINALIZADA"
-          *ngIf="produccion.estatus == 4"
-        />
-        <p-tag
-          severity="danger"
-          value="RECHAZADA"
-          *ngIf="produccion.estatus == 5"
-        />
-        <p-tag
-          severity="secondary"
-          value="POSPUESTA"
-          *ngIf="produccion.estatus == 6"
-        />
+        <p-tag severity="warning" value="FINALIZADA" *ngIf="produccion.estatus == 4" />
+        <p-tag severity="danger" value="RECHAZADA" *ngIf="produccion.estatus == 5" />
+        <p-tag severity="secondary" value="POSPUESTA" *ngIf="produccion.estatus == 6" />
+
+        <p-tag value="PEDIDO MAYORISTA PENDIENTE" *ngIf="produccion.estatus == 10" />
       </p>
     </ng-template>
 
     <ng-template pTemplate="footer">
-      <div
-        class="grid gap-1 justify-content-center"
-        *ngIf="usuario.rol == 'Admin'"
-      >
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 5 || produccion.estatus == 6"
-          label="Reenviar"
-          icon="pi pi-send"
-          severity="info"
-          size="small"
-          (onClick)="reenviar(produccion.id)"
-        />
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 1"
-          label="Eliminar"
-          icon="pi pi-trash"
-          severity="danger"
-          size="small"
-          (onClick)="eliminar(produccion.id)"
-        />
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 3"
-          label="Almacenar"
-          icon="pi pi-save"
-          severity="success"
-          size="small"
-          (onClick)="modalAlmacenar.show(produccion.id)"
-        />
+      <div class="grid gap-1 justify-content-center" *ngIf="usuario.rol == 'Admin'">
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 5 || produccion.estatus == 6"
+          label="Reenviar" icon="pi pi-send" severity="info" size="small" (onClick)="reenviar(produccion.id)" />
 
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 1" label="Eliminar" icon="pi pi-trash"
+          severity="danger" size="small" (onClick)="eliminar(produccion.id)" />
+
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 3" label="Almacenar" icon="pi pi-save"
+          severity="success" size="small" (onClick)="modalAlmacenar.show(produccion.id)" />
+
+        <p-button styleClass="global-hover-effect" *ngIf="
             produccion.estatus == 1 ||
             produccion.estatus == 5 ||
-            produccion.estatus == 6
-          "
-          label="Reenviar"
-          icon="pi pi-user"
-          severity="warning"
-          size="small"
-          (onClick)="
+            produccion.estatus == 6 
+          " label="Reenviar" icon="pi pi-user" severity="warning" size="small" (onClick)="
             displayAsignarUsuario = true; idSeleccionado = produccion.id
-          "
-        />
+          " />
+
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 10" label="Comenzar producción"
+          icon="pi pi-save" severity="success" size="small" (onClick)="comenzarProduccionMayorista(produccion.id)" />
       </div>
-      <div
-        class="flex gap-1 justify-content-center"
-        *ngIf="usuario.rol == 'Operador'"
-      >
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 1"
-          label="Aceptar"
-          severity="success"
-          icon="pi pi-check"
-          size="small"
-          (onClick)="aceptar(produccion.id)"
-        />
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 1"
-          label="Rechazar"
-          severity="danger"
-          icon="pi pi-times"
-          size="small"
-          (onClick)="
+
+      <div class="flex gap-1 justify-content-center" *ngIf="usuario.rol == 'Operador'">
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 1" label="Aceptar" severity="success"
+          icon="pi pi-check" size="small" (onClick)="aceptar(produccion.id)" />
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 1" label="Rechazar" severity="danger"
+          icon="pi pi-times" size="small" (onClick)="
             displayMensaje = true;
             rechazarBtn = true;
             idSeleccionado = produccion.id
-          "
-        />
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 1"
-          label="Posponer"
-          severity="warning"
-          icon="pi pi-calendar"
-          size="small"
-          (onClick)="
+          " />
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 1" label="Posponer" severity="warning"
+          icon="pi pi-calendar" size="small" (onClick)="
             displayMensaje = true;
             posponerBtn = true;
             idSeleccionado = produccion.id
-          "
-        />
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 2"
-          label="Ver Pasos"
-          severity="info"
-          icon="pi pi-eye"
-          size="small"
-          (onClick)="modalPasos.show(produccion.id)"
-        ></p-button>
+          " />
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 2" label="Ver Pasos" severity="info"
+          icon="pi pi-eye" size="small" (onClick)="modalPasos.show(produccion.id)"></p-button>
         <!-- AVANZAR PASO -->
-        <p-button
-          styleClass="global-hover-effect"
-          *ngIf="produccion.estatus == 2"
-          label="Avanzar Paso"
-          severity="info"
-          icon="pi pi-arrow-right"
-          size="small"
-          (onClick)="modalAvanzar.show(produccion.id)"
-        />
+        <p-button styleClass="global-hover-effect" *ngIf="produccion.estatus == 2" label="Avanzar Paso" severity="info"
+          icon="pi pi-arrow-right" size="small" (onClick)="modalAvanzar.show(produccion.id)" />
       </div>
     </ng-template>
   </p-card>
 </div>
 
-<app-producciones-modal
-  #modal
-  (reload)="obtenerProducciones()"
-></app-producciones-modal>
+<app-producciones-modal #modal (reload)="obtenerProducciones()"></app-producciones-modal>
 
 <app-pasos-modal #modalPasos (reload)="obtenerProducciones()"></app-pasos-modal>
-<app-avanzar-paso-modal
-  #modalAvanzar
-  (reload)="obtenerProducciones()"
-></app-avanzar-paso-modal>
+<app-avanzar-paso-modal #modalAvanzar (reload)="obtenerProducciones()"></app-avanzar-paso-modal>
 
-<p-dialog
-  [(visible)]="displayMensaje"
-  header="Motivo"
-  [modal]="true"
-  [style]="{ width: '50%' }"
->
-  <textarea
-    pInputTextarea
-    rows="5"
-    pInputTextarea
-    [autoResize]="false"
-    placeholder="Motivo"
-    class="w-full"
-    styleClass="global-hover-effect"
-    [(ngModel)]="motivo"
-  ></textarea>
+<p-dialog [(visible)]="displayMensaje" header="Motivo" [modal]="true" [style]="{ width: '50%' }">
+  <textarea pInputTextarea rows="5" pInputTextarea [autoResize]="false" placeholder="Motivo" class="w-full"
+    styleClass="global-hover-effect" [(ngModel)]="motivo"></textarea>
 
   <ng-template pTemplate="footer">
     <div class="flex gap-1 justify-content-center">
-      <p-button
-        styleClass="global-hover-effect"
-        *ngIf="rechazarBtn"
-        label="Rechazar"
-        severity="danger"
-        icon="pi pi-check"
-        (click)="rechazar()"
-      />
-      <p-button
-        styleClass="global-hover-effect"
-        *ngIf="posponerBtn"
-        label="Posponer"
-        severity="warning"
-        icon="pi pi-check"
-        (click)="posponer()"
-      />
-      <p-button
-        label="Cancelar"
-        icon="pi pi-times"
-        severity="danger"
-        (click)="
+      <p-button styleClass="global-hover-effect" *ngIf="rechazarBtn" label="Rechazar" severity="danger"
+        icon="pi pi-check" (click)="rechazar()" />
+      <p-button styleClass="global-hover-effect" *ngIf="posponerBtn" label="Posponer" severity="warning"
+        icon="pi pi-check" (click)="posponer()" />
+      <p-button label="Cancelar" icon="pi pi-times" severity="danger" (click)="
           displayMensaje = false;
           rechazarBtn = false;
           posponerBtn = false;
           idSeleccionado = 0
-        "
-      />
+        " />
     </div>
   </ng-template>
 </p-dialog>
 
-<p-dialog
-  [(visible)]="displayAsignarUsuario"
-  [modal]="true"
-  header="Reasignar Operador"
->
+<p-dialog [(visible)]="displayAsignarUsuario" [modal]="true" header="Reasignar Operador">
   <div class="field">
     <label for="idUsuario"> OPERADOR </label>
-    <p-dropdown
-      styleClass="global-hover-effect"
-      [(ngModel)]="idUsuarioSeleccionado"
-      [options]="usuariosOperador"
-      optionLabel="nombre"
-      placeholder="Receta"
-      optionValue="idUsuario"
-      placeholder="Asignar Operador"
-      styleClass="w-full"
-      appendTo="body"
-    />
+    <p-dropdown styleClass="global-hover-effect" [(ngModel)]="idUsuarioSeleccionado" [options]="usuariosOperador"
+      optionLabel="nombre" placeholder="Receta" optionValue="idUsuario" placeholder="Asignar Operador"
+      styleClass="w-full" appendTo="body" />
   </div>
   <ng-template pTemplate="footer">
     <div class="flex gap-1 justify-content-center">
-      <p-button
-        styleClass="global-hover-effect"
-        label="Aceptar"
-        icon="pi pi-check"
-        (click)="asignarUsuario()"
-      />
-      <p-button
-        styleClass="global-hover-effect"
-        label="Cancelar"
-        icon="pi pi-times"
-        (click)="displayAsignarUsuario = false; idSeleccionado = 0"
-      />
+      <p-button styleClass="global-hover-effect" label="Aceptar" icon="pi pi-check" (click)="asignarUsuario()" />
+      <p-button styleClass="global-hover-effect" label="Cancelar" icon="pi pi-times"
+        (click)="displayAsignarUsuario = false; idSeleccionado = 0" />
     </div>
   </ng-template>
 </p-dialog>
 
-<app-almacenar-modal
-  #modalAlmacenar
-  (reload)="obtenerProducciones()"
-></app-almacenar-modal>
+<app-almacenar-modal #modalAlmacenar (reload)="obtenerProducciones()"></app-almacenar-modal>
