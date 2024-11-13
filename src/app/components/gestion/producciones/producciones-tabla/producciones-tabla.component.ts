@@ -6,7 +6,7 @@ import { ProduccionesService } from '../../../../services/producciones/produccio
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { SesionDTO } from '../../../../interfaces/usuario/sesion-dto';
 import { Title } from '@angular/platform-browser';
-import {  } from '@angular/animations';
+import {} from '@angular/animations';
 @Component({
   selector: 'app-producciones-tabla',
   templateUrl: './producciones-tabla.component.html',
@@ -73,6 +73,22 @@ export class ProduccionesTablaComponent implements OnInit {
         console.error('Error al obtener los operadores', error);
       },
     });
+  }
+
+  comenzarProduccionMayorista(idProduccion: number) {
+    this.produccionesService
+      .comenzarProduccionMayorista(idProduccion)
+      .subscribe({
+        next: (res: any) => {
+          this.alertasService.showSuccess(res.message);
+          this.obtenerProducciones();
+        },
+        error: (error: any) => {
+          if (error.status === 400) {
+            this.alertasService.showError(error.error.message);
+          }
+        },
+      });
   }
 
   obtenerProducciones() {
