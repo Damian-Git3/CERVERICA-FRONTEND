@@ -6,96 +6,64 @@
   <div class="mt-5">
     <ul class="list-none p-0 m-0 overflow-hidden">
       <li>
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['inicio']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['inicio']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round p-ripple nav-link">
           <i class="pi pi-home mr-2"></i>
           <span class="font-medium">Inicio</span>
         </a>
       </li>
 
       <li *ngIf="rol == 'Admin'">
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['usuarios']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['usuarios']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="pi pi-user mr-2"></i>
           <span class="font-medium">Usuarios</span>
         </a>
       </li>
 
       <li>
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['producciones']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['producciones']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="fa-solid fa-wine-bottle mr-2"></i>
           <span class="font-medium">Producciones</span>
         </a>
       </li>
 
       <li *ngIf="rol == 'Admin'">
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['insumos']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['insumos']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="pi pi-truck mr-2"></i>
           <span class="font-medium">Insumos</span>
         </a>
       </li>
 
       <li *ngIf="rol == 'Admin'">
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['lotes-insumo']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['lotes-insumo']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="fa-solid fa-boxes-stacked mr-2"></i>
           <span class="font-medium">Lotes de Insumos</span>
         </a>
       </li>
 
       <li *ngIf="rol == 'Admin'">
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['recetas']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['recetas']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="pi pi-book mr-2"></i>
           <span class="font-medium">Recetas</span>
         </a>
       </li>
 
       <li *ngIf="rol == 'Admin'">
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['proveedores']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['proveedores']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center  cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="fa-solid fa-truck-ramp-box mr-2"></i>
           <span class="font-medium">Proveedores</span>
         </a>
       </li>
 
       <li>
-        <a
-          pRipple
-          routerLinkActive="active"
-          [routerLink]="['ventas']"
-          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple routerLinkActive="active" [routerLink]="['ventas']"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="fa-solid fa-boxes-packing mr-2"></i>
           <span class="font-medium">Ventas</span>
         </a>
@@ -106,6 +74,14 @@
           class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center cursor-pointer p-3 border-round p-ripple nav-link">
           <i class="pi pi-warehouse mr-2"></i>
           <span class="font-medium">Stock</span>
+        </a>
+      </li>
+
+      <li>
+        <a pRipple (click)="redirigirCRM()"
+          class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center cursor-pointer p-3 border-round p-ripple nav-link">
+          <i class="pi pi-wave-pulse mr-2"></i>
+          <span class="font-medium">CRM</span>
         </a>
       </li>
     </ul>
@@ -120,11 +96,8 @@
 
     <ul class="list-none p-0 m-0 overflow-hidden">
       <li>
-        <a
-          pRipple
-          (click)="cerrarSesion()"
-          class="global-hover-effect flex align-items-center justify-content-center cursor-pointer p-3 border-round  p-ripple nav-link"
-        >
+        <a pRipple (click)="cerrarSesion()"
+          class="global-hover-effect flex align-items-center justify-content-center cursor-pointer p-3 border-round  p-ripple nav-link">
           <i class="pi pi-sign-out mr-2"></i>
           <span class="font-medium">Cerrar sesión</span>
         </a>
