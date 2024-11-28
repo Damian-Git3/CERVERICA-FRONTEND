@@ -10,6 +10,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  Validators,
 } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { IReceta } from '../../../../interfaces/receta.interface';
@@ -34,29 +35,29 @@ export class RecetasModalComponent implements OnInit {
   public labelBoton: string = '';
   public modificar: boolean = false;
   public insumos: any[] = [];
-
   public insumosSeleccionados: any[] = [];
 
   public recetaForm: FormGroup = this.fb.group({
-    id: new FormControl({ value: '', disabled: true }),
-    litrosEstimados: new FormControl(0),
-    descripcion: new FormControl(''),
-    especificaciones: new FormControl({ value: null, disabled: false }),
-    nombre: new FormControl(''),
-    imagen: new FormControl(''),
-    rutaFondo: new FormControl(''),
-    precioPaquete1: new FormControl(0),
-    precioPaquete6: new FormControl(0),
-    precioPaquete12: new FormControl(0),
-    precioPaquete24: new FormControl(0),
-    ingredientesReceta: this.fb.array([]),
+    id: new FormControl(null),
+    litrosEstimados: new FormControl(0, [Validators.required]),
+    descripcion: new FormControl(null),
+    especificaciones: new FormControl(null),
+    tiempoVida: new FormControl(0, [Validators.required]),
+    nombre: new FormControl(null, [Validators.required]),
+    imagen: new FormControl(null, [Validators.required]),
+    rutaFondo: new FormControl(null, [Validators.required]),
+    precioPaquete1: new FormControl(0, [Validators.required]),
+    precioPaquete6: new FormControl(0, [Validators.required]),
+    precioPaquete12: new FormControl(0, [Validators.required]),
+    precioPaquete24: new FormControl(0, [Validators.required]),
+    ingredientesReceta: new FormArray([], [Validators.required]),
   });
 
   constructor(
-    private recetasService: RecetaService,
-    private alertasService: AlertasService,
-    private insumosService: InsumosService,
-    private fb: FormBuilder,
+    private readonly recetasService: RecetaService,
+    private readonly alertasService: AlertasService,
+    private readonly insumosService: InsumosService,
+    private readonly fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class RecetasModalComponent implements OnInit {
       this.modificar = false;
       this.insumosSeleccionados = [];
       this.insumos = [];
-      this.modal.header = 'Crear Receta';
+      this.modal.header = 'Nueva Receta';
     }
   }
 
@@ -91,19 +92,25 @@ export class RecetasModalComponent implements OnInit {
     this.display = false;
     this.recetaForm.reset();
     this.receta = undefined;
+    this.ingredientesReceta.clear();
     this.reload.emit();
   }
 
   public guardar() {
     this.recetasService
       .crear(this.recetaForm.value)
-      .pipe(finalize(() => this.ocultar()))
+      .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           this.alertasService.showSuccess('Receta creada correctamente');
+          this.ocultar();
         },
         error: (error: any) => {
-          this.alertasService.showError('Error al crear la receta');
+          console.error(error);
+          this.alertasService.showError(
+            'Error al crear la receta: ' + error.error.message
+          );
         },
       });
   }
@@ -119,7 +126,9 @@ export class RecetasModalComponent implements OnInit {
           this.ocultar();
         },
         error: (error: any) => {
-          this.alertasService.showError('Error al actualizar la receta');
+          this.alertasService.showError(
+            'Error al actualizar la receta: ' + error.error.message
+          );
           console.error(error);
         },
       });
@@ -131,43 +140,26 @@ export class RecetasModalComponent implements OnInit {
       .pipe(finalize(() => {}))
       .subscribe({
         next: (data: any) => {
-          this.f['id'].setValue(data.id);
-          this.f['litrosEstimados'].setValue(data.litrosEstimados);
-          this.f['descripcion'].setValue(data.descripcion);
-          this.f['especificaciones'].setValue(data.especificaciones);
-          this.f['nombre'].setValue(data.nombre);
-          this.f['imagen'].setValue(data.imagen);
-          this.f['rutaFondo'].setValue(data.rutaFondo);
-          this.f['precioPaquete1'].setValue(data.precioPaquete1);
-          this.f['precioPaquete6'].setValue(data.precioPaquete6);
-          this.f['precioPaquete12'].setValue(data.precioPaquete12);
-          this.f['precioPaquete24'].setValue(data.precioPaquete24);
+          console.log('RECETA', data);
+          this.recetaForm.patchValue(data);
 
-          this.insumosSeleccionados = [];
-          data.ingredientesReceta.forEach((ingrediente: any) => {
-            let insumo = {
-              id: ingrediente.id,
-              nombre: ingrediente.nombre,
-              cantidad: ingrediente.cantidad,
-              unidadMedida: ingrediente.unidadMedida,
-            };
-            this.insumosSeleccionados.push(insumo);
-          });
-
-          /* CARGAMOS LOS INGREDIENTES DE LA RECETA */
-          this.ingredientesReceta.clear();
           data.ingredientesReceta.forEach((ingrediente: any) => {
             this.ingredientesReceta.push(
               this.fb.group({
-                id: [ingrediente.id],
-                nombre: [ingrediente.nombre],
-                cantidad: [ingrediente.cantidad],
-                unidadMedida: [ingrediente.unidadMedida],
-              }),
+                id: ingrediente.id,
+                nombre: ingrediente.nombre,
+                unidadMedida: ingrediente.unidadMedida,
+                cantidad: ingrediente.cantidad,
+              })
             );
           });
+          this.asignarIngredientes(data.ingredientesReceta);
+
+          console.log('INGREDIENTES SELECCIONADOS', this.insumosSeleccionados);
+          console.log('INGREDIENTES RECETA', this.ingredientesReceta.value);
         },
         error: (error: any) => {
+          console.error(error);
           this.alertasService.showError('Error al obtener la receta');
         },
       });
@@ -177,11 +169,11 @@ export class RecetasModalComponent implements OnInit {
   agregarIngrediente(insumo: any) {
     this.ingredientesReceta.push(
       this.fb.group({
-        id: [insumo.id],
-        nombre: [insumo.nombre],
-        unidadMedida: [insumo.unidadMedida],
-        cantidad: [''],
-      }),
+        id: insumo.id,
+        nombre: insumo.nombre,
+        unidadMedida: insumo.unidadMedida,
+        cantidad: 0,
+      })
     );
   }
 
@@ -204,6 +196,8 @@ export class RecetasModalComponent implements OnInit {
               nombre: insumo.nombre,
               unidadMedida: insumo.unidadMedida,
             }));
+
+          console.log('INSUMOS BD', this.insumos);
         },
         error: (error: any) => {
           this.alertasService.showError('Error al obtener los insumos');
@@ -216,12 +210,16 @@ export class RecetasModalComponent implements OnInit {
     const selected = event.value;
     const current = this.recetaForm.get('ingredientesReceta') as FormArray;
 
+    // Asegúrate de que el FormArray tenga controles antes de realizar cualquier operación
+    if (!current) {
+      setTimeout(() => this.onInsumosChange(event), 0);
+      return;
+    }
+
     // Agregar nuevos insumos seleccionados
     selected.forEach((insumo: any) => {
       if (
-        !current.controls.find(
-          (ctrl) => ctrl.get('nombre')!.value === insumo.nombre,
-        )
+        !current.controls.find((ctrl) => ctrl.get('id')!.value === insumo.id)
       ) {
         this.agregarIngrediente(insumo);
       }
@@ -232,11 +230,27 @@ export class RecetasModalComponent implements OnInit {
       const ingrediente = current.at(i);
       if (
         !selected.find(
-          (insumo: any) => insumo.nombre === ingrediente.get('nombre')!.value,
+          (insumo: any) => insumo.id === ingrediente.get('id')!.value
         )
       ) {
         current.removeAt(i);
       }
     }
+  }
+
+  calcularPrecios() {
+    const precioPaquete1 = this.f['precioPaquete1'].value;
+
+    this.f['precioPaquete6'].setValue(precioPaquete1 * 6);
+    this.f['precioPaquete12'].setValue(precioPaquete1 * 12);
+    this.f['precioPaquete24'].setValue(precioPaquete1 * 24);
+  }
+
+  asignarIngredientes(ingredientes: any) {
+    this.insumosSeleccionados = ingredientes.map((ingrediente: any) => ({
+      id: ingrediente.id,
+      nombre: ingrediente.nombre,
+      unidadMedida: ingrediente.unidadMedida,
+    }));
   }
 }

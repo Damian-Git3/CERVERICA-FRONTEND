@@ -5,11 +5,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-} from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
 import { UsuarioDTO } from '../../../../interfaces/usuarios/usuario-dto';
 import { UsuariosService } from '../../../../services/usuarios/usuarios.service';
@@ -40,13 +36,13 @@ export class ModalComponent {
   roles: string[] = ['Cliente', 'Operador', 'Admin'];
 
   public form: FormGroup = new FormGroup({
-    nombre: new FormControl(''),
-    correo: new FormControl(''),
-    rol: new FormControl(''),
-    contrasenia: new FormControl(''),
+    nombre: new FormControl('', [Validators.required]),
+    correo: new FormControl('', [Validators.required, Validators.email]),
+    rol: new FormControl('', [Validators.required]),
+    contrasenia: new FormControl('', [Validators.required]),
   });
 
-  get campo(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
 
@@ -59,7 +55,7 @@ export class ModalComponent {
       this.form.patchValue(usuario);
       this.idUsuario = usuario.id;
     } else {
-      this.modal.header = 'Crear Usuario';
+      this.modal.header = 'Nuevo Usuario';
       this.nuevo = true;
     }
   }
@@ -80,7 +76,7 @@ export class ModalComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'EL usuario fue guardado exitosamente',
-            'Usuario guardado',
+            'Usuario guardado'
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -89,7 +85,7 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
 
             this.mensajesError =
@@ -97,7 +93,7 @@ export class ModalComponent {
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el usuario vuelve a intentarlo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
           }
           console.error(error);
@@ -122,7 +118,7 @@ export class ModalComponent {
         next: () => {
           this._AlertasService.showSuccess(
             'EL usuario fue editado exitosamente',
-            'Usuario editado',
+            'Usuario editado'
           );
           this.reload.emit();
           this.mostrarModal = false;
@@ -131,15 +127,12 @@ export class ModalComponent {
           if (error.status == 400) {
             this._AlertasService.showInfo(
               'Verifica los mensajes e intenta de nuevo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
-
-            this.mensajesError =
-              this._CompartidoService.extraerMensajesCodigo400(error.error);
           } else {
             this._AlertasService.showError(
               'No se pudo guardar el usuario vuelve a intentarlo',
-              'Ocurrió un problema',
+              'Ocurrió un problema'
             );
           }
           console.error(error);

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsuariosService } from '../../../../services/usuarios/usuarios.service';
 import { RecetaService } from '../../../../services/receta/receta.service';
 import { ProduccionesService } from '../../../../services/producciones/producciones.service';
@@ -16,21 +16,25 @@ export class ProduccionesModalComponent implements OnInit {
   public usuariosOperador: any[] = [];
   public recetas: any[] = [];
   public form: FormGroup = new FormGroup({
-    idReceta: new FormControl(''),
-    numeroTandas: new FormControl(''),
-    idUsuario: new FormControl(''),
+    idReceta: new FormControl('', [Validators.required]),
+    numeroTandas: new FormControl(1, [Validators.required]),
+    idUsuario: new FormControl('', Validators.required),
   });
 
   constructor(
     private usuariosService: UsuariosService,
     private recetasService: RecetaService,
     private produccionesService: ProduccionesService,
-    private alertasService: AlertasService,
+    private alertasService: AlertasService
   ) {}
 
   ngOnInit() {
     this.obtenerUsuariosOperador();
     this.obtenerRecetas();
+  }
+
+  get f() {
+    return this.form.controls;
   }
 
   obtenerUsuariosOperador() {
@@ -48,6 +52,7 @@ export class ProduccionesModalComponent implements OnInit {
           });
       },
       error: (error: any) => {
+        console.error(error);
         console.error('Error al obtener los usuarios operador');
       },
     });
@@ -64,6 +69,7 @@ export class ProduccionesModalComponent implements OnInit {
         });
       },
       error: (error: any) => {
+        console.error(error);
         console.error('Error al obtener las recetas');
       },
     });
@@ -73,6 +79,7 @@ export class ProduccionesModalComponent implements OnInit {
     console.log(this.form.value);
     this.produccionesService.crear(this.form.value).subscribe({
       next: (data: any) => {
+        console.log(data);
         this.alertasService.showInfo('Produccion creada correctamente');
         console.log('Produccion creada correctamente');
         this.reload.emit();
@@ -80,7 +87,7 @@ export class ProduccionesModalComponent implements OnInit {
       },
       error: (error: any) => {
         console.log(error);
-        this.alertasService.showError(error.error);
+        this.alertasService.showError(error.error.message);
         console.error('Error al crear la produccion');
       },
     });

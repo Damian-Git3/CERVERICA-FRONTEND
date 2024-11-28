@@ -19,6 +19,8 @@
     [(ngModel)]="filtroBusqueda"
     placeholder="Busqueda..."
     (ngModelChange)="actualizarProductos()"
+    [required]="false"
+    
   />
 
   <p-dropdown

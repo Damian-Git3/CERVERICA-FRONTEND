@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Producto } from '../../../interfaces/productos/producto';
 import { ProductosService } from '../../../services/productos/productos.service';
+import { ActivatedRoute } from '@angular/router';
+import { CompartidoService } from '../../../services/compartido/compartido.service';
 
 @Component({
   selector: 'app-inicio',
@@ -12,9 +14,19 @@ export class InicioComponent implements OnInit {
 
   responsiveOptions: any[] | undefined;
 
-  constructor(private _productosService: ProductosService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private _productosService: ProductosService,
+    private _CompartidoService: CompartidoService
+  ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['cerrarsesion'] === '1') {
+        this._CompartidoService.cerrarSesion();
+      }
+    });
+
     this._productosService.obtenerProductosCarousel().subscribe({
       next: (productosCarouselResponse) => {
         this.productosCarousel = productosCarouselResponse;

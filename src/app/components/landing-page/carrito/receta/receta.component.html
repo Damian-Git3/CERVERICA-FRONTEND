@@ -5,7 +5,7 @@
     <div class="item-details">
       <span>{{ productoCarrito.receta.nombre }}</span>
       <span>{{ productoCarrito.receta.especificaciones }}</span>
-      <span>Paquete de {{ productoCarrito.cantidadLote }}</span>
+      <span>Paquete de {{ productoCarrito.cantidadPaquete }}</span>
     </div>
     <span class="price"
       >{{ productoCarrito.precioPaquete | currency: "MXN" }} c/u</span
@@ -24,7 +24,7 @@
     </div>
     <span class="price">
       {{
-        productoCarrito.cantidadLote * productoCarrito.cantidad
+        productoCarrito.cantidadPaquete * productoCarrito.cantidad
           | currency: "MXN"
       }}
     </span>

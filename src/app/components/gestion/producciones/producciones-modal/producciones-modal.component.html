@@ -1,4 +1,10 @@
-<p-dialog [(visible)]="display" [modal]="true">
+<p-dialog
+  [(visible)]="display"
+  [modal]="true"
+  appendTo="body"
+  header="Nueva Solicitud de Produccion"
+  [style]="{ width: '600px' }"
+>
   <form [formGroup]="form">
     <div class="field">
       <label for="idUsuario"> OPERADOR </label>
@@ -12,6 +18,10 @@
         styleClass="w-full"
         appendTo="body"
       />
+      <app-form-error-messages
+        [control]="f['idUsuario']"
+        label="Operador"
+      ></app-form-error-messages>
     </div>
     <div class="field">
       <label for="idReceta"> RECETA </label>
@@ -25,17 +35,27 @@
         styleClass="w-full"
         appendTo="body"
       />
+
+      <app-form-error-messages
+        [control]="f['idReceta']"
+        label="Receta"
+      ></app-form-error-messages>
     </div>
     <div class="field">
       <label for="numeroTandas">CANTIDAD</label>
-      <input
+      <p-inputNumber
         type="text"
-        pInputText
         formControlName="numeroTandas"
         label="CANTIDAD"
         id="numeroTandas"
         class="w-full"
+        [min]="1"
+        [allowEmpty]="false"
       />
+      <app-form-error-messages
+        [control]="f['numeroTandas']"
+        label="Cantidad"
+      ></app-form-error-messages>
     </div>
     <div class="field text-center">
       <p-button

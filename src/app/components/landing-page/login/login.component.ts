@@ -58,7 +58,7 @@ export class LoginComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.intervalId = initializeLoginAnimations(
       this.contenedorLogin,
-      this.carousel,
+      this.carousel
     );
   }
 
@@ -81,7 +81,7 @@ export class LoginComponent implements AfterViewInit {
       .pipe(
         finalize(() => {
           this.iniciandoSesion = false;
-        }),
+        })
       )
       .subscribe({
         next: (response) => {
@@ -113,7 +113,7 @@ export class LoginComponent implements AfterViewInit {
           } else {
             if (error.error.errors) {
               let errors = this._CompartidosService.extractErrorMessages(
-                error.error.errors,
+                error.error.errors
               );
 
               this.mensajesLogin.nativeElement.innerHTML = errors
@@ -140,7 +140,7 @@ export class LoginComponent implements AfterViewInit {
       .pipe(
         finalize(() => {
           this.creandoCuenta = false;
-        }),
+        })
       )
       .subscribe({
         next: (response) => {
@@ -164,7 +164,7 @@ export class LoginComponent implements AfterViewInit {
             this.mensajesCrearCuenta.nativeElement.innerHTML = `<p>${error.error.message}</p>`;
 
             let errors = this._CompartidosService.extractErrors(
-              error.error.errors,
+              error.error.errors
             );
 
             this.mensajesCrearCuenta.nativeElement.innerHTML += errors
@@ -173,7 +173,7 @@ export class LoginComponent implements AfterViewInit {
           } else {
             if (error.error) {
               let errors = this._CompartidosService.extractErrorPassword(
-                error.error,
+                error.error
               );
 
               this.mensajesCrearCuenta.nativeElement.innerHTML = errors
