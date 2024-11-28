@@ -5,9 +5,9 @@ import {
   inject,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegistrarDTO, RegistrarMayoristaDTO } from '../../../interfaces/usuario/registrar-dto';
+import { RegistrarMayoristaDTO } from '../../../interfaces/usuario/registrar-dto';
 import { AccountService } from '../../../services/account/account.service';
 import { CompartidoService } from '../../../services/compartido/compartido.service';
 import { MessageService } from 'primeng/api';
@@ -52,6 +52,7 @@ export class RegistrarMayoristaComponent implements AfterViewInit {
       direccionEmpresa: ['', Validators.required],
       telefonoEmpresa: ['', Validators.required],
       emailEmpresa: ['', [Validators.required, Validators.email]],
+      rfcEmpresa: ['', [Validators.required, this.rfcEmpresaValidator()]],
 
       // DATOS DEL CONTACTO
       cargoContacto: [''],
@@ -72,19 +73,37 @@ export class RegistrarMayoristaComponent implements AfterViewInit {
     }
   }
 
+  rfcEmpresaValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+  
+      // Expresión regular para validar RFC de empresa (persona moral)
+      // 4 letras, 6 dígitos, 3 caracteres alfanuméricos
+      const rfcPattern = /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/;
+  
+      // Validar el RFC con la expresión regular
+      if (value && !rfcPattern.test(value)) {
+        return { invalidRfcEmpresa: true };  // Si el RFC no es válido, retorna un error
+      }
+  
+      return null;  // Si el RFC es válido, retorna null
+    };
+  }
+
   crearCuenta() {
     this.creandoCuenta = true;
 
     let usuarioRegistrar: RegistrarMayoristaDTO = {
       // Datos de usuario
       password: this.formCrearCuenta.value.password,
-      rol: 'mayorista',
+      rol: 'Mayorista',
     
       // Datos de la empresa
       nombreEmpresa: this.formCrearCuenta.value.nombreEmpresa,
       direccionEmpresa: this.formCrearCuenta.value.direccionEmpresa,
       telefonoEmpresa: this.formCrearCuenta.value.telefonoEmpresa,
       emailEmpresa: this.formCrearCuenta.value.emailEmpresa,
+      rfcEmpresa: this.formCrearCuenta.value.rfcEmpresa,
     
       // Datos de contacto
       nombreContacto: this.formCrearCuenta.value.fullName,

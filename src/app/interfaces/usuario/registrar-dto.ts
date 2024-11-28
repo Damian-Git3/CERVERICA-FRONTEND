@@ -15,6 +15,7 @@ export interface RegistrarMayoristaDTO {
   direccionEmpresa: string;
   telefonoEmpresa: string;
   emailEmpresa: string;
+  rfcEmpresa: string;
 
   // Datos de contacto
   
