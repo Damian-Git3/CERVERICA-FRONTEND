@@ -259,7 +259,9 @@
           id="cantidad-{{ i }}"
           mode="decimal"
           [suffix]="ingrediente.get('unidadMedida')!.value"
-          [min]="1"
+          [minFractionDigits]="2"
+          [maxFractionDigits]="3"
+          [min]="0.01"
           styleClass="w-full"
           class="w-full"
         />
