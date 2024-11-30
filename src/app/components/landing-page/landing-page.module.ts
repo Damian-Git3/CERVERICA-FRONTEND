@@ -18,6 +18,7 @@ import { RecetaComponent } from './carrito/receta/receta.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
 import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
+import { RegistrarMayoristaComponent } from './registrar-mayorista/registrar-mayorista.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DetallesProductoComponent } from './detalles-producto/detalles-producto
     PedidosComponent,
     DetallesPedidoComponent,
     DetallesProductoComponent,
+    RegistrarMayoristaComponent,
   ],
   imports: [CommonModule, RouterOutlet, LandingPageRouting, PrimeModule],
   exports: [],

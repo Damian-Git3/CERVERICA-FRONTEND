@@ -13,6 +13,7 @@ import { CuentaComponent } from './cuenta/cuenta.component';
 import { PedidosComponent } from './pedidos/pedidos.component';
 import { DetallesPedidoComponent } from './detalles-pedido/detalles-pedido.component';
 import { DetallesProductoComponent } from './detalles-producto/detalles-producto.component';
+import { RegistrarMayoristaComponent } from './registrar-mayorista/registrar-mayorista.component';
 
 const routes: Routes = [
   {
@@ -50,10 +51,16 @@ const routes: Routes = [
         canActivate: [carritoGuard],
       },
       {
-        path: 'cuenta',
+        path: 'login',
         pathMatch: 'full',
-        component: CuentaComponent,
-        canActivate: [carritoGuard, authGuard],
+        component: LoginComponent,
+        canActivate: [carritoGuard],
+      },
+      {
+        path: 'registrar-mayorista',
+        pathMatch: 'full',
+        component: RegistrarMayoristaComponent,
+        canActivate: [carritoGuard],
       },
       {
         path: 'carrito',
