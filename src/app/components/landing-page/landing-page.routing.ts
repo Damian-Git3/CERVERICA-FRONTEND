@@ -51,10 +51,10 @@ const routes: Routes = [
         canActivate: [carritoGuard],
       },
       {
-        path: 'login',
+        path: 'cuenta',
         pathMatch: 'full',
-        component: LoginComponent,
-        canActivate: [carritoGuard],
+        component: CuentaComponent,
+        canActivate: [authGuard,carritoGuard],
       },
       {
         path: 'registrar-mayorista',

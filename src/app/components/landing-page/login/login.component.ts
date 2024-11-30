@@ -100,6 +100,8 @@ export class LoginComponent implements AfterViewInit {
 
             if (response.rol == 'Cliente') {
               this.router.navigateByUrl('/perfil');
+            } else if (response.rol == 'Mayorista') {
+              this.router.navigateByUrl('/perfil');
             } else {
               this.router.navigateByUrl('/gestion');
             }
