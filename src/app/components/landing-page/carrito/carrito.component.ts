@@ -77,7 +77,6 @@ export class CarritoComponent implements OnInit {
   }
 
   async pagarConStripe() {
-
     this.limpiarCheckout();
 
     let crearVenta: CrearVentaDTO = {};
@@ -107,7 +106,7 @@ export class CarritoComponent implements OnInit {
           cantidad: productoCarrito.cantidad,
           pack: productoCarrito.cantidadPaquete,
         };
-        
+
         detallesVenta.push(nuevoDetalleVenta);
       });
 
@@ -229,7 +228,7 @@ export class CarritoComponent implements OnInit {
       const decodedJson = decodeURIComponent(ventaQP);
 
       let crearVentaDTO = JSON.parse(decodedJson);
-      
+
       this.realizarPedido(crearVentaDTO);
     }
   }
@@ -249,5 +248,14 @@ export class CarritoComponent implements OnInit {
         console.log(e);
       },
     });
+  }
+
+  cupon: string = '';
+
+  aplicarCupon() {
+    if (this.cupon) {
+      console.log('Aplicar cupón:', this.cupon);
+      // Lógica para aplicar el cupón
+    }
   }
 }

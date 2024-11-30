@@ -139,6 +139,8 @@ export class RegistrarMayoristaComponent implements AfterViewInit {
           });
 
           this.formCrearCuenta.reset();
+
+          this.router.navigateByUrl('/cerverica')
         },
         error: (error) => {
           if (error.error.isSuccess == false) {
