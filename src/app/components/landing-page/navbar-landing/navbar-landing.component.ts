@@ -44,4 +44,9 @@ export class NavbarLandingComponent {
   logout() {
     this._CompartidoService.cerrarSesion();
   }
+
+  redirigirCRM() {
+    let token = this._CompartidoService.obtenerSesion().token;
+    window.location.href = `http://localhost:5173?token=${token}`;
+  }
 }
