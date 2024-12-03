@@ -4,6 +4,7 @@ import { LotesInsumoService } from '../../../../services/lotes-insumo/lotes-insu
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { LoteInsumoDTO } from '../../../../interfaces/lotes-insumo/lote-insumo-dto';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tabla',
@@ -14,6 +15,7 @@ export class TablaComponent {
   _LotesInsumoService = inject(LotesInsumoService);
   _AlertasService = inject(AlertasService);
   _CompartidoService = inject(CompartidoService);
+  _title = inject(Title);
 
   lotesInsumo: LoteInsumoDTO[] = [];
   lotesInsumoFiltrados: LoteInsumoDTO[] = [];
@@ -22,7 +24,7 @@ export class TablaComponent {
 
   ngOnInit(): void {
     this.obtenerLotesInsumo();
-
+    this._title.setTitle("Lotes de Insumos");
     this._CompartidoService.actualizarTitulo('Lotes de Insumos');
   }
 

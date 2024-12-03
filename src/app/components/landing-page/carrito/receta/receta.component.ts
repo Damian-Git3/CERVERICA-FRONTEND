@@ -54,7 +54,7 @@ export class RecetaComponent {
 
     let productoCarritoEliminar: EliminarProductoCarritoDTO = {
       idReceta: this.productoCarrito.idReceta,
-      cantidadLote: this.productoCarrito.cantidadLote,
+      cantidadLote: this.productoCarrito.cantidadPaquete,
     };
 
     this._CarritoService
@@ -87,7 +87,7 @@ export class RecetaComponent {
   disminuirCantidad() {
     if (this.esCantidadDisminuible()) {
       this.cantidadCervezasReceta.cantidadTotalCervezas -=
-        this.productoCarrito.cantidadLote;
+        this.productoCarrito.cantidadPaquete;
       this.productoCarrito.cantidad--;
       this._CarritoService.actualizarCantidadTotalCervezasCarrito(
         this.cantidadCervezasReceta,
@@ -99,7 +99,7 @@ export class RecetaComponent {
   aumentarCantidad() {
     if (this.esCantidadAumentable()) {
       this.cantidadCervezasReceta.cantidadTotalCervezas +=
-        this.productoCarrito.cantidadLote;
+        this.productoCarrito.cantidadPaquete;
       this.productoCarrito.cantidad++;
       this._CarritoService.actualizarCantidadTotalCervezasCarrito(
         this.cantidadCervezasReceta,
@@ -112,7 +112,7 @@ export class RecetaComponent {
     return (
       this.productoCarrito.cantidad != 1 &&
       this.cantidadCervezasReceta.cantidadTotalCervezas -
-        this.productoCarrito.cantidadLote <=
+        this.productoCarrito.cantidadPaquete <=
         this.producto.cantidadEnStock
     );
   }
@@ -120,7 +120,7 @@ export class RecetaComponent {
   esCantidadAumentable(): boolean {
     return (
       this.cantidadCervezasReceta.cantidadTotalCervezas +
-        this.productoCarrito.cantidadLote <=
+        this.productoCarrito.cantidadPaquete <=
       this.producto.cantidadEnStock
     );
   }
@@ -138,7 +138,7 @@ export class RecetaComponent {
   actualizarProductoCarrito() {
     let productoCarritoActualizar: ActualizarProductoCarritoDTO = {
       idReceta: this.productoCarrito.receta.id,
-      cantidadLote: this.productoCarrito.cantidadLote,
+      cantidadLote: this.productoCarrito.cantidadPaquete,
       cantidad: this.productoCarrito.cantidad,
     };
 

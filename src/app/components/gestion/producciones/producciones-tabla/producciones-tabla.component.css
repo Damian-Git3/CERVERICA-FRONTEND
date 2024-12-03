@@ -1,0 +1,13 @@
+.produccion-imagen {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+:host ::ng-deep .min-w-card {
+  min-width: 430px;
+  min-height: 522px;
+}

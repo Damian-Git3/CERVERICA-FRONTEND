@@ -12,7 +12,7 @@
       </p>
       <p class="titulo-cabezal">
         Total: <br /><span>{{
-          pedido.montoVenta | currency: "MXN" : "symbol"
+          pedido.total | currency: "MXN" : "symbol"
         }}</span>
       </p>
       <p class="titulo-cabezal">
@@ -21,6 +21,7 @@
           <ng-container *ngSwitchCase="1">Contraentrega 💵</ng-container>
           <ng-container *ngSwitchCase="2">Tarjeta 💳</ng-container>
           <ng-container *ngSwitchCase="3">Stripe 💳</ng-container>
+          <ng-container *ngSwitchCase="4">Plazos</ng-container>
           <ng-container *ngSwitchDefault
             >Método pago no reconocido</ng-container
           >

@@ -4,6 +4,7 @@ import { CompartidoService } from '../../../../services/compartido/compartido.se
 import { ProductosService } from '../../../../services/productos/productos.service';
 import { Producto } from '../../../../interfaces/productos/producto';
 import { RecetaService } from '../../../../services/receta/receta.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-stock-inicio',
@@ -24,11 +25,12 @@ export class StockInicioComponent implements OnInit {
     private alertasService: AlertasService,
     private _productosService: ProductosService,
     private _recetasService: RecetaService,
+    private title: Title
   ) {}
 
   ngOnInit() {
     this.obtenerProductos();
-
+    this.title.setTitle('Stock');
     this._CompartidoService.actualizarTitulo('Stock');
   }
 
@@ -38,10 +40,10 @@ export class StockInicioComponent implements OnInit {
     this.productosCarouselFiltrados = this.productosCarousel.filter(producto =>
       producto.nombre.toLowerCase().includes(searchTermLower) ||
       producto.especificaciones.toLowerCase().includes(searchTermLower) ||
-      producto.cantidadEnStock.toString().toLowerCase().includes(searchTermLower) 
+      producto.cantidadEnStock.toString().toLowerCase().includes(searchTermLower)
     );
   }
-  
+
   public obtenerProductos() {
     this._recetasService.obtenerRecetasLanding().subscribe({
       next: (productosCarouselResponse) => {

@@ -2,7 +2,7 @@
   <p-toolbar styleClass="mb-1">
     <ng-template pTemplate="start">
       <p-button
-        lablel="Nuevo paso"
+        label="Nuevo paso"
         icon="pi pi-plus"
         (click)="agregarNuevoPaso()"
       ></p-button>
@@ -10,39 +10,58 @@
   </p-toolbar>
   <form [formGroup]="form">
     <div formArrayName="pasos">
-      <p-card class="mx-1" *ngFor="let paso of pasos.controls; let i = index">
-        <div [formGroupName]="i" class="grid gap-1 justify-content-center">
-          <input
-            pInputText
-            formControlName="orden"
-            placeholder="orden"
-            class="w-1"
-          />
-          <input
-            type="text"
-            pInputText
-            formControlName="descripcion"
-            placeholder="Descripción"
-          />
-          <p-inputNumber
-            formControlName="tiempo"
-            placeholder="Tiempo horas"
-            suffix=" Horas"
-          />
-          <p-button
-            icon="pi pi-times"
-            class="p-button-danger"
-            (click)="eliminarPaso(i)"
-          ></p-button>
+      <p-card
+        class="mx-1"
+        styleClass="shadow-5"
+        *ngFor="let paso of pasos.controls; let i = index"
+      >
+        <div [formGroupName]="i" class="grid justify-content-center">
+          <div class="col-2">
+            <p-button
+              icon="pi pi-times"
+              class="p-button-danger"
+              severity="danger"
+              (click)="eliminarPaso(i)"
+            ></p-button>
+          </div>
+
+          <div class="col-4">
+            <p-inputNumber
+              formControlName="orden"
+              placeholder="orden"
+              class="w-full"
+            />
+          </div>
+          <div class="col-6">
+            <p-inputNumber
+              formControlName="tiempo"
+              placeholder="Tiempo horas"
+              suffix=" Horas"
+              [minFractionDigits]="2"
+              class="w-full"
+            />
+          </div>
+          <div class="col-12">
+            <textarea
+              pInputTextarea
+              [rows]="3"
+              formControlName="descripcion"
+              placeholder="Descripción"
+              class="w-full"
+              styleClass="w-full"
+            ></textarea>
+          </div>
         </div>
       </p-card>
     </div>
   </form>
   <ng-template pTemplate="footer">
-    <p-button
-      label="Guardar"
-      icon="pi pi-save"
-      (click)="modificar ? modicarPasos() : crearPasos()"
-    ></p-button>
+    <div class="text-center">
+      <p-button
+        label="Guardar"
+        icon="pi pi-save"
+        (click)="modificar ? modicarPasos() : crearPasos()"
+      ></p-button>
+    </div>
   </ng-template>
 </p-dialog>

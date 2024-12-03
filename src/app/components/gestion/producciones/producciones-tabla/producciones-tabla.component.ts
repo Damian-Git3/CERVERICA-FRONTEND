@@ -5,7 +5,8 @@ import { AlertasService } from '../../../../services/shared/alertas/alertas.serv
 import { ProduccionesService } from '../../../../services/producciones/producciones.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
 import { SesionDTO } from '../../../../interfaces/usuario/sesion-dto';
-
+import { Title } from '@angular/platform-browser';
+import {} from '@angular/animations';
 @Component({
   selector: 'app-producciones-tabla',
   templateUrl: './producciones-tabla.component.html',
@@ -28,10 +29,11 @@ export class ProduccionesTablaComponent implements OnInit {
   _CompartidoService = inject(CompartidoService);
 
   constructor(
-    private usuariosService: UsuariosService,
-    private alertasService: AlertasService,
-    private produccionesService: ProduccionesService,
-    private compartidoService: CompartidoService,
+    private readonly usuariosService: UsuariosService,
+    private readonly alertasService: AlertasService,
+    private readonly produccionesService: ProduccionesService,
+    private readonly compartidoService: CompartidoService,
+    private readonly title: Title
   ) {
     this.items = [
       {
@@ -45,7 +47,7 @@ export class ProduccionesTablaComponent implements OnInit {
     ];
 
     this._CompartidoService.actualizarTitulo('Producciones');
-
+    this.title.setTitle('Producciones');
     this.usuario = this.compartidoService.obtenerSesion();
     console.log('Usuario:', this.usuario);
   }
@@ -57,8 +59,8 @@ export class ProduccionesTablaComponent implements OnInit {
 
   obtenerOperadores() {
     this.usuariosService.obtenerUsuarios().subscribe({
-      next: (data: any) => {
-        this.usuariosOperador = data
+      next: (res: any) => {
+        this.usuariosOperador = res
           .filter((usuario: any) => usuario.rol === 'Operador')
           .map((usuario: any) => {
             return {
@@ -68,39 +70,54 @@ export class ProduccionesTablaComponent implements OnInit {
           });
       },
       error: (error: any) => {
-        console.error('Error al obtener los usuarios operador');
+        console.error('Error al obtener los operadores', error);
       },
     });
   }
 
+  comenzarProduccionMayorista(idProduccion: number) {
+    this.produccionesService
+      .comenzarProduccionMayorista(idProduccion)
+      .subscribe({
+        next: (res: any) => {
+          this.alertasService.showSuccess(res.message);
+          this.obtenerProducciones();
+        },
+        error: (error: any) => {
+          if (error.status === 400) {
+            this.alertasService.showError(error.error.message);
+          }
+        },
+      });
+  }
+
   obtenerProducciones() {
     this.produccionesService.obtener().subscribe({
-      next: (data: any) => {
+      next: (res: any) => {
         if (this.usuario.rol === 'Operador') {
-          this.producciones = data.filter(
-            (produccion: any) =>
-              produccion.idUsuario === this.usuario.idUsuario,
+          this.producciones = res.filter(
+            (produccion: any) => produccion.idUsuario === this.usuario.idUsuario
           );
         } else {
-          this.producciones = data;
+          this.producciones = res;
         }
 
         console.log('Producciones obtenidas', this.producciones);
       },
       error: (error: any) => {
-        console.error('Error al obtener las producciones');
+        console.error('Error al obtener las producciones', error);
       },
     });
   }
   eliminar(id: number) {
     this.produccionesService.eliminar(id).subscribe({
-      next: (data: any) => {
-        console.log('Produccion eliminada');
+      next: (res: any) => {
+        console.log('Produccion eliminada', res);
         this.alertasService.showSuccess('Produccion eliminada');
         this.obtenerProducciones();
       },
       error: (error: any) => {
-        console.error('Error al eliminar la produccion');
+        console.error('Error al eliminar la produccion', error);
         this.alertasService.showSuccess('Error al eliminar la produccion');
       },
     });
@@ -108,13 +125,13 @@ export class ProduccionesTablaComponent implements OnInit {
 
   aceptar(id: number) {
     this.produccionesService.aceptarSolicutud(id).subscribe({
-      next: (data: any) => {
-        console.log('Produccion aceptada');
+      next: (res: any) => {
+        console.log('Produccion aceptada', res);
         this.alertasService.showSuccess('Produccion aceptada');
         this.obtenerProducciones();
       },
       error: (error: any) => {
-        console.error('Error al aceptar la produccion');
+        console.error('Error al aceptar la produccion', error);
         this.alertasService.showError('Error al aceptar la produccion');
       },
     });
@@ -124,8 +141,8 @@ export class ProduccionesTablaComponent implements OnInit {
     this.produccionesService
       .rechazarSolicitud(this.idSeleccionado, this.motivo)
       .subscribe({
-        next: (data: any) => {
-          console.log('Produccion rechazada');
+        next: (res: any) => {
+          console.log('Produccion rechazada', res);
           this.alertasService.showSuccess('Produccion rechazada');
           this.displayMensaje = false;
           this.rechazarBtn = false;
@@ -133,7 +150,7 @@ export class ProduccionesTablaComponent implements OnInit {
           this.obtenerProducciones();
         },
         error: (error: any) => {
-          console.error('Error al rechazar la produccion');
+          console.error('Error al rechazar la produccion', error);
           this.alertasService.showError('Error al rechazar la produccion');
         },
       });
@@ -143,8 +160,8 @@ export class ProduccionesTablaComponent implements OnInit {
     this.produccionesService
       .posponerSolicitud(this.idSeleccionado, this.motivo)
       .subscribe({
-        next: (data: any) => {
-          console.log('Produccion pospuesta');
+        next: (res: any) => {
+          console.log('Produccion pospuesta', res);
           this.alertasService.showSuccess('Produccion pospuesta');
           this.displayMensaje = false;
           this.posponerBtn = false;
@@ -152,7 +169,7 @@ export class ProduccionesTablaComponent implements OnInit {
           this.obtenerProducciones();
         },
         error: (error: any) => {
-          console.error('Error al posponer la produccion');
+          console.error('Error al posponer la produccion', error);
           this.alertasService.showError('Error al posponer la produccion');
         },
       });
@@ -160,13 +177,13 @@ export class ProduccionesTablaComponent implements OnInit {
 
   reenviar(id: number) {
     this.produccionesService.resolicitar(id).subscribe({
-      next: (data: any) => {
-        console.log('Produccion resolicitada');
+      next: (res: any) => {
+        console.log('Produccion resolicitada', res);
         this.alertasService.showSuccess('Produccion resolicitada');
         this.obtenerProducciones();
       },
       error: (error: any) => {
-        console.error('Error al resolicitar la produccion');
+        console.error('Error al resolicitar la produccion', error);
         this.alertasService.showError('Error al resolicitar la produccion');
       },
     });
@@ -174,13 +191,13 @@ export class ProduccionesTablaComponent implements OnInit {
 
   almacenar(id: number) {
     this.produccionesService.almacenar(id, {}).subscribe({
-      next: (data: any) => {
-        console.log('Produccion almacenada');
+      next: (res: any) => {
+        console.log('Produccion almacenada', res);
         this.alertasService.showSuccess('Produccion almacenada');
         this.obtenerProducciones();
       },
       error: (error: any) => {
-        console.error('Error al almacenar la produccion');
+        console.error('Error al almacenar la produccion', error);
         this.alertasService.showError('Error al almacenar la produccion');
       },
     });
@@ -190,14 +207,14 @@ export class ProduccionesTablaComponent implements OnInit {
     this.produccionesService
       .asignarOperador(this.idSeleccionado, this.idUsuarioSeleccionado)
       .subscribe({
-        next: (data: any) => {
-          console.log('Usuario asignado');
+        next: (res: any) => {
+          console.log('Usuario asignado', res);
           this.alertasService.showSuccess('Usuario asignado');
           this.displayAsignarUsuario = false;
           this.obtenerProducciones();
         },
         error: (error: any) => {
-          console.error('Error al asignar el usuario');
+          console.error('Error al asignar el usuario', error);
           this.alertasService.showError('Error al asignar el usuario');
         },
       });
@@ -205,13 +222,13 @@ export class ProduccionesTablaComponent implements OnInit {
 
   avanzarPaso(id: number) {
     this.produccionesService.avanzarPaso({ idProduccion: id }).subscribe({
-      next: (data: any) => {
-        console.log('Paso avanzado');
+      next: (res: any) => {
+        console.log('Paso avanzado', res);
         this.alertasService.showSuccess('Paso avanzado');
         this.obtenerProducciones();
       },
       error: (error: any) => {
-        console.error('Error al avanzar el paso');
+        console.error('Error al avanzar el paso', error);
         this.alertasService.showError('Error al avanzar el paso');
       },
     });

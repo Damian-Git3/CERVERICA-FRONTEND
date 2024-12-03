@@ -104,8 +104,9 @@ export class CarritoComponent implements OnInit {
         let nuevoDetalleVenta: DetalleVentaDTO = {
           idReceta: productoCarrito.idReceta,
           cantidad: productoCarrito.cantidad,
-          pack: productoCarrito.cantidadLote,
+          pack: productoCarrito.cantidadPaquete,
         };
+
         detallesVenta.push(nuevoDetalleVenta);
       });
 
@@ -197,7 +198,7 @@ export class CarritoComponent implements OnInit {
       productosCarrito.forEach((productoCarrito) => {
         let precioPaquete;
         // Selecciona el precio correspondiente según la cantidadLote
-        switch (productoCarrito.cantidadLote) {
+        switch (productoCarrito.cantidadPaquete) {
           case 1:
             precioPaquete = productoCarrito.receta.precioPaquete1;
             break;
@@ -247,5 +248,14 @@ export class CarritoComponent implements OnInit {
         console.log(e);
       },
     });
+  }
+
+  cupon: string = '';
+
+  aplicarCupon() {
+    if (this.cupon) {
+      console.log('Aplicar cupón:', this.cupon);
+      // Lógica para aplicar el cupón
+    }
   }
 }

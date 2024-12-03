@@ -4,6 +4,7 @@ import { InsumosService } from '../../../../services/insumos/insumos.service';
 import { finalize } from 'rxjs';
 import { AlertasService } from '../../../../services/shared/alertas/alertas.service';
 import { CompartidoService } from '../../../../services/compartido/compartido.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-insumos-tabla',
@@ -21,11 +22,12 @@ export class InsumosTablaComponent implements OnInit {
   constructor(
     private insumosService: InsumosService,
     private alertasService: AlertasService,
+    private title: Title
   ) {}
 
   ngOnInit() {
     this.obtenerInsumos();
-
+    this.title.setTitle('Insumos');
     this._CompartidoService.actualizarTitulo('Insumos');
   }
 

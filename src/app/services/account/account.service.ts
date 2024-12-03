@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { LoginDTO } from '../../interfaces/usuario/login-dto';
-import { RegistrarDTO } from '../../interfaces/usuario/registrar-dto';
+import { RegistrarDTO, RegistrarMayoristaDTO } from '../../interfaces/usuario/registrar-dto';
 import { SesionDTO } from '../../interfaces/usuario/sesion-dto';
 import { CarritoService } from '../carrito/carrito.service';
 import { ChangePasswordDTO } from '../../interfaces/usuario/change-password-dto';
@@ -13,9 +13,14 @@ import { ChangePasswordDTO } from '../../interfaces/usuario/change-password-dto'
 })
 export class AccountService {
   _baseURL: string = `${environment.APIURL}/Account`;
+  _baseURLMayorista: string = `${environment.APIURL}/ClienteMayorista`;
   _CarritoService = inject(CarritoService);
 
   constructor(private http: HttpClient) {}
+
+  registrarCuentaMayorista(request: RegistrarMayoristaDTO): Observable<SesionDTO> {
+    return this.http.post<SesionDTO>(`${this._baseURLMayorista}`, request);
+  }
 
   registrarCuenta(request: RegistrarDTO): Observable<SesionDTO> {
     return this.http.post<SesionDTO>(`${this._baseURL}/register`, request);

@@ -29,4 +29,9 @@ export class MenuComponent {
     const iniciales = partes.map((parte) => parte.charAt(0)).join('');
     return iniciales.toUpperCase();
   }
+
+  redirigirCRM() {
+    let token = this._CompartidoService.obtenerSesion().token;
+    window.location.href = `http://localhost:5173?token=${token}`;
+  }
 }

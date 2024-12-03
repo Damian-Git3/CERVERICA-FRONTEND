@@ -35,3 +35,29 @@ h1 {
     margin: 0 10rem;
   }
 }
+
+input.ng-valid {
+  border-color: #ed9224;
+  padding: 0.75rem;
+  color: #ed9224;
+}
+
+input::placeholder {
+  color: #ed9224;
+}
+
+:host ::ng-deep p-dropdown.ng-valid > div {
+  border-color: #ed9224;
+  border-width: 2px;
+  color: #ed9224;
+}
+
+:host ::ng-deep p-dropdown.ng-valid > div > span{
+  
+  color: #ed9224;
+}
+
+:host ::ng-deep p-button.p-element > button {
+  padding: 0.75rem;
+  border-width: 2px;
+}
