@@ -33,7 +33,7 @@ export class DetallesPedidoComponent {
           this.cantidadTotalProductos = this.venta.productosPedido.length;
           this.totalPrecioCervezas = this.venta.productosPedido.reduce(
             (total, detalle) => total + (detalle.montoVenta ?? 0), // Usa ?? 0 para proporcionar un valor predeterminado
-            0,
+            0
           );
 
           this.cargandoPedido = false;
@@ -50,5 +50,16 @@ export class DetallesPedidoComponent {
   obtenerUltimosCuatroDigitosTarjeta(): string {
     const numeroTarjeta = this.venta?.numeroTarjeta || '';
     return numeroTarjeta.slice(-4).padStart(numeroTarjeta.length, '*');
+  }
+
+  calcularPrecioConDescuento(): number {
+    if (this.venta?.cupon) {
+      if (this.venta?.cupon.tipo === 1) {
+        return this.totalPrecioCervezas * (1 - this.venta?.cupon.valor / 100);
+      } else {
+        return this.totalPrecioCervezas - this.venta?.cupon.valor;
+      }
+    }
+    return this.totalPrecioCervezas;
   }
 }

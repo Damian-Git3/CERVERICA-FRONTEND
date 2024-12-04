@@ -3,7 +3,7 @@ export interface Cupon {
   fechaCreacion: Date;
   fechaExpiracion: Date;
   codigo: string;
-  tipo: string;
+  tipo: number;
   paquete: number;
   cantidad: number;
   valor: number;

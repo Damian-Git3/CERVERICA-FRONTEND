@@ -123,15 +123,50 @@
       </div>
     </form>
 
-    <div class="inputgroup flex gap-3 mb-5 justify-content-end">
-      <input pInputText type="text" placeholder="Ingresa tu cupón" [(ngModel)]="cupon" />
-      <button pButton type="button" label="Aplicar" icon="pi pi-check" (click)="aplicarCupon()" [disabled]="!cupon"
-        class="button-secondary"></button>
+    <div class="flex gap-2 mb-5">
+      <p-iconField iconPosition="left" class="w-full">
+        <p-inputIcon styleClass="pi pi-tag" />
+        <input type="text" pInputText placeholder="Ingresa tu cupón" [(ngModel)]="codigoCupon" class="w-full" />
+      </p-iconField>
+      <button pButton type="button" label="Aplicar" (click)="aplicarCupon()" [disabled]="!codigoCupon"
+        severity="secondary" class="w-10rem" icon="pi pi-check"></button>
     </div>
+
+    <p-progressBar mode="indeterminate" *ngIf="buscandoCupon" />
+
+    <div *ngIf="cuponActual" class="mb-5">
+      <span class="m-0 titulo-summary">Detalles del cupón</span>
+      <div class="flex justify-content-between">
+        <p><strong>Código:</strong> {{ cuponActual.codigo }}</p>
+        <p><strong>Descuento:</strong> {{ cuponActual.tipo == 1 ? "%" + cuponActual.valor : cuponActual.valor | currency
+          : "MXN" }}</p>
+      </div>
+    </div>
+
+    <!-- <div class="mb-5">
+      <span class="m-0 titulo-summary">PistoPoints</span>
+      <div class="flex justify-content-between align-items-center mt-2">
+        <div>
+          <p class="m-0"><strong>Disponibles:</strong> {{ pistoPointsUsuario | number }} puntos</p>
+          <small class="text-muted">Valor: {{ reglaPuntos?.valorMXNPunto| currency:'MXN' }}</small>
+        </div>
+        <div class="flex align-items-center gap-2">
+          <label class="mr-2">Utilizar mis PistoPoints</label>
+          {{usarPistoPoints ? 'Sí' : 'No'}}
+          <p-inputSwitch [(ngModel)]="usarPistoPoints" [disabled]="pistoPointsUsuario === 0">
+          </p-inputSwitch>
+        </div>
+      </div>
+    </div> -->
 
     <div class="summary-item total">
       <span>PRECIO TOTAL</span>
-      <span>{{ totalPrecioCervezas | currency : "MXN" }}</span>
+      <span [ngClass]="{'tachado': cuponActual !== null}">{{ totalPrecioCervezas | currency : "MXN" }}</span>
+    </div>
+
+    <div *ngIf="cuponActual" class="summary-item total">
+      <span>PRECIO CON DESCUENTO</span>
+      <span>{{ calcularPrecioConDescuento() | currency : "MXN" }}</span>
     </div>
 
     <p-progressBar mode="indeterminate" *ngIf="creandoVenta" />

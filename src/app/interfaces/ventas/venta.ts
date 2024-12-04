@@ -1,3 +1,4 @@
+import { Cupon } from '../cupones/Cupon';
 import { DetalleVentaDTO } from './detalle-venta-dto';
 
 export interface Venta {
@@ -10,4 +11,5 @@ export interface Venta {
   numeroTarjeta: string;
   productosPedido: DetalleVentaDTO[];
   estatusVenta: number;
+  cupon: Cupon | null;
 }
