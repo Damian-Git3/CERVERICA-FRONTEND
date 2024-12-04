@@ -44,6 +44,8 @@ import { CardModule } from 'primeng/card';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
+import { InputSwitchModule } from 'primeng/inputswitch';
+
 @NgModule({
   declarations: [],
   imports: [CommonModule, NgOptimizedImage],
@@ -86,6 +88,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     RatingModule,
     CardModule,
     ProgressSpinnerModule,
+    InputSwitchModule,
   ],
 })
 export class PrimeModule {}

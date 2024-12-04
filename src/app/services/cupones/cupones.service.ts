@@ -1,24 +1,8 @@
-// cupon.interface.ts
-export interface Cupon {
-  id?: number;
-  fechaCreacion: Date;
-  fechaExpiracion: Date;
-  codigo: string;
-  tipo: string;
-  paquete: number;
-  cantidad: number;
-  valor: number;
-  usos: number;
-  montoMaximo: number;
-  montoMinimo: number;
-  activo: boolean;
-}
-
-// cupon.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Cupon } from '../../interfaces/cupones/Cupon';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +26,11 @@ export class CuponService {
 
   obtenerTodosLosCupones(): Observable<Cupon[]> {
     return this.http.get<Cupon[]>(`${this.baseUrl}/obtener-todos-los-cupones`);
+  }
+
+  buscarCupon(codigo: string): Observable<Cupon> {
+    return this.http.get<Cupon>(`${this.baseUrl}/buscar-cupon`, {
+      params: { textoCupon: codigo }
+    });
   }
 }

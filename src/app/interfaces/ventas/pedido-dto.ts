@@ -1,3 +1,5 @@
+import { Cupon } from '../cupones/Cupon';
+
 export interface PedidoDTO {
   id: number;
   fechaVenta: string;
@@ -6,4 +8,5 @@ export interface PedidoDTO {
   total: number;
   metodoEnvio: number;
   estatusVenta: number;
+  cupon: Cupon; 
 }

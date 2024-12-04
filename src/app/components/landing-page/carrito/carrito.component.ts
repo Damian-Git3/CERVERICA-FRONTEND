@@ -20,6 +20,13 @@ import { Producto } from '../../../interfaces/productos/producto';
 import { AlertasService } from '../../../services/shared/alertas/alertas.service';
 import { StripeEmbeddedCheckout } from '@stripe/stripe-js';
 import { PuntosService } from '../../../services/puntos/puntos.service';
+import { CuponService } from '../../../services/cupones/cupones.service';
+import { Cupon } from '../../../interfaces/cupones/Cupon';
+import { finalize } from 'rxjs';
+import { ConfiguracionesService } from '../../../services/configuraciones/configuraciones.service';
+import { ConfiguracionVentasMayoreo } from '../../../interfaces/configuracionesVentaMayoreo/ConfiguracionVentasMayoreo';
+import { ConfiguracionesGenerales } from '../../../interfaces/configuracionesGenerales/ConfiguracionGeneral';
+import { ReglaPuntos } from '../../../interfaces/puntos-fidelidad/ReglaPuntos';
 
 @Component({
   selector: 'app-carrito',
@@ -28,6 +35,8 @@ import { PuntosService } from '../../../services/puntos/puntos.service';
 })
 export class CarritoComponent implements OnInit {
   _PuntosFidelidadService = inject(PuntosService);
+  _ConfiguracionesService = inject(ConfiguracionesService);
+  _CuponesService = inject(CuponService);
   _CompartidoService = inject(CompartidoService);
   _CarritoService = inject(CarritoService);
   _VentasService = inject(VentasService);
@@ -58,6 +67,13 @@ export class CarritoComponent implements OnInit {
   pagandoCarrito: boolean = false;
 
   componenteStripe!: StripeEmbeddedCheckout;
+
+  cuponActual: Cupon | null = null;
+
+  usarPistoPoints: boolean = false;
+  buscandoCupon: boolean = false;
+  pistoPointsUsuario: number = 0;
+  reglaPuntos: ReglaPuntos | null = null;
 
   constructor() {
     this.formPedido = this.formBuilder.group({
@@ -116,6 +132,12 @@ export class CarritoComponent implements OnInit {
 
       crearVenta.metodoPago = 3;
 
+      if (this.cuponActual) {
+        crearVenta.idCupon = this.cuponActual.id;
+      } else {
+        crearVenta.idCupon = null;
+      }
+
       this.creandoVenta = true;
       this.componenteStripe = await this._CarritoService.checkout(crearVenta);
       this.creandoVenta = false;
@@ -124,11 +146,11 @@ export class CarritoComponent implements OnInit {
   }
 
   registrarPuntosFidelidad() {
-    let precioCompraCervezas = 0;  // Cambiar a let para que se pueda modificar
+    let precioCompraCervezas = 0; // Cambiar a let para que se pueda modificar
     this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
       this.productosCarrito = productosCarrito;
       this.contadorProductosCarrito = productosCarrito.length;
-  
+
       productosCarrito.forEach((productoCarrito) => {
         let precioPaquete;
         // Selecciona el precio correspondiente según la cantidadPaquete
@@ -148,53 +170,58 @@ export class CarritoComponent implements OnInit {
           default:
             precioPaquete = 0; // O algún valor por defecto o manejar el error
         }
-  
+
         productoCarrito.precioPaquete = precioPaquete;
-  
+
         // Sumar el precio de cada producto al total
-        precioCompraCervezas += productoCarrito.cantidad * productoCarrito.precioPaquete;
+        precioCompraCervezas +=
+          productoCarrito.cantidad * productoCarrito.precioPaquete;
       });
-  
-      console.log("SE REGISTRARAN LOS PUNTOS DE FIDELIDAD");
+
+      console.log('SE REGISTRARAN LOS PUNTOS DE FIDELIDAD');
       const fechaSolicitud = new Date();
       const year = fechaSolicitud.getFullYear();
-      const month = String(fechaSolicitud.getMonth() + 1).padStart(2, "0"); // Mes comienza en 0
-      const day = String(fechaSolicitud.getDate()).padStart(2, "0");
-      const hours = String(fechaSolicitud.getHours()).padStart(2, "0");
-      const minutes = String(fechaSolicitud.getMinutes()).padStart(2, "0");
-      const seconds = String(fechaSolicitud.getSeconds()).padStart(2, "0");
-      const milliseconds = String(fechaSolicitud.getMilliseconds()).padStart(3, "0");
-  
+      const month = String(fechaSolicitud.getMonth() + 1).padStart(2, '0'); // Mes comienza en 0
+      const day = String(fechaSolicitud.getDate()).padStart(2, '0');
+      const hours = String(fechaSolicitud.getHours()).padStart(2, '0');
+      const minutes = String(fechaSolicitud.getMinutes()).padStart(2, '0');
+      const seconds = String(fechaSolicitud.getSeconds()).padStart(2, '0');
+      const milliseconds = String(fechaSolicitud.getMilliseconds()).padStart(
+        3,
+        '0'
+      );
+
       // Formatear como cadena ISO
       const fechaFormatoAPI = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
-  
-      console.log("PRECIO CERVEZAS");
+
+      console.log('PRECIO CERVEZAS');
       console.log(precioCompraCervezas);
 
       const puntosFidelidadDto: any = {
         montoCompra: precioCompraCervezas,
-        fechaUltimaActualizacion: fechaFormatoAPI
+        fechaUltimaActualizacion: fechaFormatoAPI,
       };
-  
+
       // ASIGNAR LOS PUNTOS DE FIDELIDAD
-      this._PuntosFidelidadService.registrarPuntosFidelidad(puntosFidelidadDto).subscribe({
-        next: (data) => {
-          console.log(data);
-          console.log("Se asignaron correctamente los puntos de fidelidad");
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+      this._PuntosFidelidadService
+        .registrarPuntosFidelidad(puntosFidelidadDto)
+        .subscribe({
+          next: (data) => {
+            console.log(data);
+            console.log('Se asignaron correctamente los puntos de fidelidad');
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
     });
   }
-  
 
   limpiarCheckout() {
     if (this.componenteStripe) {
       try {
         this.componenteStripe.destroy();
-      } catch (error) { }
+      } catch (error) {}
     }
   }
 
@@ -257,6 +284,23 @@ export class CarritoComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerProductos();
+    this._PuntosFidelidadService.getPuntosFidelidad().subscribe({
+      next: (puntosFidelidad) => {
+        this.pistoPointsUsuario = puntosFidelidad.puntosDisponibles;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+    
+    this._PuntosFidelidadService.getReglaPuntos().subscribe({
+      next: (reglaPuntos) => {
+        this.reglaPuntos = reglaPuntos;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
 
     this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
       this.productosCarrito = productosCarrito;
@@ -298,8 +342,8 @@ export class CarritoComponent implements OnInit {
 
       let crearVentaDTO = JSON.parse(decodedJson);
 
-      this.realizarPedido(crearVentaDTO);
       this.registrarPuntosFidelidad();
+      this.realizarPedido(crearVentaDTO);
     }
   }
 
@@ -320,12 +364,70 @@ export class CarritoComponent implements OnInit {
     });
   }
 
-  cupon: string = '';
+  codigoCupon: string = '';
+
+  calcularPrecioConDescuento(): number {
+    if (this.cuponActual) {
+      if (this.cuponActual.tipo === 1) {
+        return this.totalPrecioCervezas * (1 - this.cuponActual.valor / 100);
+      } else {
+        return this.totalPrecioCervezas - this.cuponActual.valor;
+      }
+    }
+    return this.totalPrecioCervezas;
+  }
 
   aplicarCupon() {
-    if (this.cupon) {
-      console.log('Aplicar cupón:', this.cupon);
-      // Lógica para aplicar el cupón
+    if (this.codigoCupon) {
+      this.buscandoCupon = true;
+
+      this._CuponesService
+        .buscarCupon(this.codigoCupon)
+        .pipe(finalize(() => (this.buscandoCupon = false)))
+        .subscribe({
+          next: (cupon) => {
+            if (cupon.activo === true) {
+              if (cupon.montoMinimo > this.totalPrecioCervezas) {
+                this._MessageService.add({
+                  severity: 'info',
+                  summary: 'Cupón no válido',
+                  detail: `El monto mínimo para aplicar este cupón es ${
+                    cupon.montoMinimo
+                  } MXN. Agrega ${
+                    cupon.montoMinimo - this.totalPrecioCervezas
+                  } MXN más a tu carrito.`,
+                });
+                return;
+              }
+
+              this.cuponActual = cupon;
+
+              this._MessageService.add({
+                severity: 'success',
+                summary: 'Cupón aplicado',
+                detail:
+                  'Se ha aplicado el cupón correctamente, finaliza la compra para usar el cupón',
+              });
+            } else {
+              this._MessageService.add({
+                severity: 'error',
+                summary: 'Cupón no válido',
+                detail: 'El cupón no se encuentra activo',
+              });
+            }
+          },
+          error: (error) => {
+            if (
+              error.error.message == 'No se encontró ningún cupón con ese texto'
+            ) {
+              this._MessageService.add({
+                severity: 'error',
+                summary: 'Cupón no válido',
+                detail: 'No se encontró ningún cupón con este código',
+              });
+            }
+          },
+        });
     }
   }
 }

@@ -66,9 +66,23 @@
 
     <div class="mensajes-error" #mensajesErrorMetodoPago></div>
 
+    <div *ngIf="venta?.cupon" class="mb-5">
+      <span class="m-0 titulo-summary">Detalles del cupón</span>
+      <div class="flex justify-content-between">
+        <p><strong>Código:</strong> {{ venta?.cupon?.codigo }}</p>
+        <p><strong>Descuento: </strong> <span class="descuento">{{ venta?.cupon?.tipo == 1 ? "%" + venta?.cupon?.valor : venta?.cupon?.valor | currency
+          : "MXN" }}</span></p>
+      </div>
+    </div>
+
     <div class="summary-item total">
       <span>PRECIO TOTAL</span>
-      <span>{{ totalPrecioCervezas | currency: "MXN" }}</span>
+      <span [ngClass]="{'tachado': venta?.cupon !== null}">{{ totalPrecioCervezas | currency : "MXN" }}</span>
+    </div>
+
+    <div *ngIf="venta?.cupon" class="summary-item total">
+      <span>PRECIO CON DESCUENTO</span>
+      <span>{{ calcularPrecioConDescuento() | currency : "MXN" }}</span>
     </div>
   </div>
 </div>

@@ -1,3 +1,4 @@
+import { Cupon } from '../cupones/Cupon';
 import { DetalleVentaDTO } from './detalle-venta-dto';
 
 export interface CrearVentaDTO {
@@ -21,4 +22,6 @@ export interface CrearVentaDTO {
 
   // DETALLES DE VENTA
   detalles?: DetalleVentaDTO[];
+
+  idCupon?: number | null;
 }

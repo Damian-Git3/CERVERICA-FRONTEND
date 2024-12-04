@@ -1,69 +1,43 @@
 <nav class="barra-navegacion">
   <div class="contenedor-logo">
-    <img
-      ngSrc="./img/logo-navbar.png"
-      alt="Logo Cerverica"
-      height="50"
-      width="100"
-      priority
-    />
+    <img ngSrc="./img/logo-navbar.png" alt="Logo Cerverica" height="50" width="100" priority />
   </div>
 
   <div class="contenedor-enlaces">
-    <a
-      class="nav-link"
-      [routerLink]="['/cerverica/inicio']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
+    <a class="nav-link" [routerLink]="['/cerverica/inicio']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
       Inicio
     </a>
-    <a
-      class="nav-link"
-      [routerLink]="['/cerverica/productos']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
+    <a class="nav-link" [routerLink]="['/cerverica/productos']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
       Productos
     </a>
-    <a
-      class="nav-link"
-      [routerLink]="['/cerverica/nosotros']"
-      routerLinkActive="active"
-      >Nosotros
+    <a class="nav-link" [routerLink]="['/cerverica/nosotros']" routerLinkActive="active">Nosotros
     </a>
   </div>
 
   <div class="contenedor-acciones-usuario">
-    <a
-      class="nav-link"
-      [routerLink]="['/cerverica/cuenta']"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
+    <a pRipple (click)="redirigirCRM()" *ngIf="isLoggedIn"
+      class="p-4-rem global-hover-effect hover:surface-100 flex align-items-center cursor-pointer p-3 border-round p-ripple nav-link">
+      <i class="pi pi-wave-pulse mr-2"></i>
+      <span class="font-medium">CRM</span>
+    </a>
+
+    <a class="nav-link" [routerLink]="['/cerverica/cuenta']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
       <i class="pi pi-user"></i>
       <p *ngIf="isLoggedIn" class="nombre">{{ primerNombre }}</p>
     </a>
     <ng-container *ngIf="productosEnCarrito > 0; else noBadge">
-      <a
-        class="nav-link"
-        [routerLink]="['/cerverica/carrito']"
-        pBadge
-        [value]="productosEnCarrito"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+      <a class="nav-link" [routerLink]="['/cerverica/carrito']" pBadge [value]="productosEnCarrito"
+        routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <i class="pi pi-shopping-cart"></i>
       </a>
     </ng-container>
 
     <ng-template #noBadge>
-      <a
-        class="nav-link"
-        [routerLink]="['/cerverica/carrito']"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+      <a class="nav-link" [routerLink]="['/cerverica/carrito']" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
         <i class="pi pi-shopping-cart"></i>
       </a>
     </ng-template>
