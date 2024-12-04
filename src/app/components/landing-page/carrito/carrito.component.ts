@@ -19,6 +19,7 @@ import { ProductosService } from '../../../services/productos/productos.service'
 import { Producto } from '../../../interfaces/productos/producto';
 import { AlertasService } from '../../../services/shared/alertas/alertas.service';
 import { StripeEmbeddedCheckout } from '@stripe/stripe-js';
+import { PuntosService } from '../../../services/puntos/puntos.service';
 
 @Component({
   selector: 'app-carrito',
@@ -26,6 +27,7 @@ import { StripeEmbeddedCheckout } from '@stripe/stripe-js';
   styleUrl: './carrito.component.css',
 })
 export class CarritoComponent implements OnInit {
+  _PuntosFidelidadService = inject(PuntosService);
   _CompartidoService = inject(CompartidoService);
   _CarritoService = inject(CarritoService);
   _VentasService = inject(VentasService);
@@ -121,11 +123,78 @@ export class CarritoComponent implements OnInit {
     }
   }
 
+  registrarPuntosFidelidad() {
+    let precioCompraCervezas = 0;  // Cambiar a let para que se pueda modificar
+    this._CarritoService.ProductosCarrito.subscribe((productosCarrito) => {
+      this.productosCarrito = productosCarrito;
+      this.contadorProductosCarrito = productosCarrito.length;
+  
+      productosCarrito.forEach((productoCarrito) => {
+        let precioPaquete;
+        // Selecciona el precio correspondiente según la cantidadPaquete
+        switch (productoCarrito.cantidadPaquete) {
+          case 1:
+            precioPaquete = productoCarrito.receta.precioPaquete1;
+            break;
+          case 6:
+            precioPaquete = productoCarrito.receta.precioPaquete6;
+            break;
+          case 12:
+            precioPaquete = productoCarrito.receta.precioPaquete12;
+            break;
+          case 24:
+            precioPaquete = productoCarrito.receta.precioPaquete24;
+            break;
+          default:
+            precioPaquete = 0; // O algún valor por defecto o manejar el error
+        }
+  
+        productoCarrito.precioPaquete = precioPaquete;
+  
+        // Sumar el precio de cada producto al total
+        precioCompraCervezas += productoCarrito.cantidad * productoCarrito.precioPaquete;
+      });
+  
+      console.log("SE REGISTRARAN LOS PUNTOS DE FIDELIDAD");
+      const fechaSolicitud = new Date();
+      const year = fechaSolicitud.getFullYear();
+      const month = String(fechaSolicitud.getMonth() + 1).padStart(2, "0"); // Mes comienza en 0
+      const day = String(fechaSolicitud.getDate()).padStart(2, "0");
+      const hours = String(fechaSolicitud.getHours()).padStart(2, "0");
+      const minutes = String(fechaSolicitud.getMinutes()).padStart(2, "0");
+      const seconds = String(fechaSolicitud.getSeconds()).padStart(2, "0");
+      const milliseconds = String(fechaSolicitud.getMilliseconds()).padStart(3, "0");
+  
+      // Formatear como cadena ISO
+      const fechaFormatoAPI = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+  
+      console.log("PRECIO CERVEZAS");
+      console.log(precioCompraCervezas);
+
+      const puntosFidelidadDto: any = {
+        montoCompra: precioCompraCervezas,
+        fechaUltimaActualizacion: fechaFormatoAPI
+      };
+  
+      // ASIGNAR LOS PUNTOS DE FIDELIDAD
+      this._PuntosFidelidadService.registrarPuntosFidelidad(puntosFidelidadDto).subscribe({
+        next: (data) => {
+          console.log(data);
+          console.log("Se asignaron correctamente los puntos de fidelidad");
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+    });
+  }
+  
+
   limpiarCheckout() {
     if (this.componenteStripe) {
       try {
         this.componenteStripe.destroy();
-      } catch (error) {}
+      } catch (error) { }
     }
   }
 
@@ -230,6 +299,7 @@ export class CarritoComponent implements OnInit {
       let crearVentaDTO = JSON.parse(decodedJson);
 
       this.realizarPedido(crearVentaDTO);
+      this.registrarPuntosFidelidad();
     }
   }
 
